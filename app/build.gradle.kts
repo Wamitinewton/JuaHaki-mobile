@@ -42,4 +42,7 @@ android {
 dependencies {
     addComposeDependencies()
     addTestDependencies()
+
+    implementation(project(Modules.commonui))
+    implementation(project(Modules.auth))
 }
