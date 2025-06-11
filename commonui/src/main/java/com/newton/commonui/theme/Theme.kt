@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
@@ -61,8 +62,14 @@ fun JuaHakiTheme(
     val systemUiController = rememberSystemUiController()
     if (!view.isInEditMode) {
         SideEffect {
-            systemUiController.setSystemBarsColor(
-                color = DemocraticGreen
+            systemUiController.setStatusBarColor(
+                color = DemocraticGreen,
+                darkIcons = false
+            )
+
+            systemUiController.setNavigationBarColor(
+                color = Color.Transparent,
+                darkIcons = true
             )
         }
     }

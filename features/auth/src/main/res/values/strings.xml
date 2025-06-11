@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_title_1">Understand Your Constitution</string>
+    <string name="onboarding_desc_1">Use AI to explore and understand Kenya\'s constitution in simple, accessible language tailored for every citizen.</string>
+
+    <string name="onboarding_title_2">Know Your Democratic Rights</string>
+    <string name="onboarding_desc_2">Learn about your fundamental rights as a citizen and how to exercise them effectively in your daily life.</string>
+
+    <string name="onboarding_title_3">Promote Good Governance</string>
+    <string name="onboarding_desc_3">Stay informed about governance issues and learn how to hold your leaders accountable for better community development.</string>
+</resources>
