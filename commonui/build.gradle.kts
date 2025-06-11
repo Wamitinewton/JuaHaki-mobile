@@ -38,4 +38,6 @@ dependencies {
    addComposeDependencies()
     addTestDependencies()
     implementation(Dependencies.systemUi)
+
+    implementation(project(Modules.core))
 }
