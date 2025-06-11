@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.newton.auth.presentation.onboarding.OnboardingScreen
+import com.newton.auth.presentation.signup.view.SignUpScreen
 import com.newton.auth.presentation.splash.SplashScreen
 import com.newton.core.enums.TransitionType
 import com.newton.navigation.NavigationRoutes
@@ -49,7 +50,32 @@ class AuthNavigationApiImpl: AuthNavigationApi {
                 popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300)
             ) {
                 OnboardingScreen(
-                    onOnboardingComplete = {},
+                    onOnboardingComplete = {
+                        navHostController.navigate(NavigationRoutes.SignupRoute.route) {
+                            popUpTo(NavigationRoutes.OnboardingRoute.route) {
+                                inclusive = true
+                            }
+                        }
+
+                    },
+                )
+            }
+
+            composable(
+                route = NavigationRoutes.SignupRoute.route,
+                enterTransition = navigationTransitions.getEnterTransition(TransitionType.ZOOM, 300),
+                exitTransition = navigationTransitions.getExitTransition(TransitionType.ZOOM, 300),
+                popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.ZOOM, 300),
+                popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300)
+            ) {
+                SignUpScreen(
+                    onNavigateBack = {},
+                    onNavigateToLogin = {},
+                    onSignUpWithEmail = {},
+                    onSignUpWithGoogle = {},
+                    onPrivacyPolicyClick = {},
+                    onTermsOfServiceClick = {},
+                    isLoading = false
                 )
             }
         }
