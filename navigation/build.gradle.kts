@@ -40,4 +40,8 @@ dependencies {
 
   addHiltDependencies()
     addTestDependencies()
+
+
+    //Modules
+    implementation(project(Modules.core))
 }

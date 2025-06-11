@@ -2,6 +2,10 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-parcelize")
+    id("kotlinx-serialization")
+    id("com.google.devtools.ksp")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -37,6 +41,10 @@ dependencies {
 
     addComposeDependencies()
     addTestDependencies()
+    addHiltDependencies()
 
+    // Modules
     implementation(project(Modules.commonui))
+    implementation(project(Modules.navigation))
+    implementation(project(Modules.core))
 }

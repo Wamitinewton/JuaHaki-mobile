@@ -114,7 +114,8 @@ fun SplashScreen(
                 Modifier
                     .fillMaxSize()
                     .padding(bottom = 80.dp),
-            contentAlignment = Alignment.Center,
+
+                        contentAlignment = Alignment.Center,
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,

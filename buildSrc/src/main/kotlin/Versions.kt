@@ -9,7 +9,7 @@ object Versions {
     const val hilt = "2.51.1"
     const val hiltNavigationCompose = "1.2.0"
     const val composeNav = "2.8.2"
-    const val room = "2.7.1"
+    const val room = "2.6.1"
     const val workRuntimeKtx = "2.9.0"
     const val timber = "5.0.1"
     const val retrofit = "2.9.0"
