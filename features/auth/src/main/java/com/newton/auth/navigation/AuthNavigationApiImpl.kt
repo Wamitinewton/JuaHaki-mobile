@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.newton.auth.presentation.login.view.LoginScreen
 import com.newton.auth.presentation.onboarding.OnboardingScreen
+import com.newton.auth.presentation.otp.view.OtpVerificationScreen
 import com.newton.auth.presentation.signup.view.SignUpScreen
 import com.newton.auth.presentation.splash.SplashScreen
 import com.newton.core.enums.TransitionType
@@ -76,7 +77,11 @@ class AuthNavigationApiImpl: AuthNavigationApi {
                             popUpTo(NavigationRoutes.SignupRoute.route)
                         }
                     },
-                    onSignUpWithEmail = {},
+                    onSignUpWithEmail = {
+                        navHostController.navigate(NavigationRoutes.OTPRoute.route) {
+                            popUpTo(NavigationRoutes.SignupRoute.route)
+                        }
+                    },
                     onSignUpWithGoogle = {},
                     onPrivacyPolicyClick = {},
                     onTermsOfServiceClick = {},
@@ -104,6 +109,24 @@ class AuthNavigationApiImpl: AuthNavigationApi {
                     onLoginWithEmail = {},
                     onLoginWithGoogle = {},
                     onForgotPasswordClick = {},
+                )
+            }
+
+            composable(
+                route = NavigationRoutes.OTPRoute.route,
+                enterTransition = navigationTransitions.getEnterTransition(TransitionType.ZOOM, 300),
+                exitTransition = navigationTransitions.getExitTransition(TransitionType.ZOOM, 300),
+                popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.ZOOM, 300),
+                popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300)
+            ) {
+                OtpVerificationScreen(
+                    onNavigateBack = { /* navigation */ },
+                    onVerifyOtp = { otp -> /* verify OTP */ },
+                    onResendCode = { /* resend logic */ },
+                    isLoading = false,
+                    contactInfo = "user@example.com",
+                    otpLength = 6,
+                    resendCooldownSeconds = 60
                 )
             }
         }
