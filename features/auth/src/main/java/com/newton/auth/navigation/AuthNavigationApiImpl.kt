@@ -8,6 +8,7 @@ import com.newton.auth.presentation.forgotpassword.view.ForgotPasswordScreen
 import com.newton.auth.presentation.login.view.LoginScreen
 import com.newton.auth.presentation.onboarding.OnboardingScreen
 import com.newton.auth.presentation.otp.view.OtpVerificationScreen
+import com.newton.auth.presentation.resetpassword.view.ResetPasswordScreen
 import com.newton.auth.presentation.signup.view.SignUpScreen
 import com.newton.auth.presentation.splash.SplashScreen
 import com.newton.core.enums.TransitionType
@@ -15,24 +16,23 @@ import com.newton.navigation.NavigationRoutes
 import com.newton.navigation.NavigationSubgraphRoutes
 import com.newton.navigation.NavigationTransitions
 
-class AuthNavigationApiImpl: AuthNavigationApi {
-
+class AuthNavigationApiImpl : AuthNavigationApi {
     private val navigationTransitions = NavigationTransitions()
 
     override fun registerNavigationGraph(
         navGraphBuilder: NavGraphBuilder,
-        navHostController: NavHostController
+        navHostController: NavHostController,
     ) {
         navGraphBuilder.navigation(
             route = NavigationSubgraphRoutes.AuthSubgraph.route,
-            startDestination = NavigationRoutes.SplashScreenRoute.route
+            startDestination = NavigationRoutes.SplashScreenRoute.route,
         ) {
             composable(
                 route = NavigationRoutes.SplashScreenRoute.route,
                 enterTransition = navigationTransitions.getEnterTransition(TransitionType.ZOOM, 300),
                 exitTransition = navigationTransitions.getExitTransition(TransitionType.ZOOM, 300),
                 popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.ZOOM, 300),
-                popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300)
+                popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300),
             ) {
                 SplashScreen(
                     onSplashComplete = {
@@ -41,7 +41,7 @@ class AuthNavigationApiImpl: AuthNavigationApi {
                                 inclusive = true
                             }
                         }
-                    }
+                    },
                 )
             }
 
@@ -50,7 +50,7 @@ class AuthNavigationApiImpl: AuthNavigationApi {
                 enterTransition = navigationTransitions.getEnterTransition(TransitionType.ZOOM, 300),
                 exitTransition = navigationTransitions.getExitTransition(TransitionType.ZOOM, 300),
                 popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.ZOOM, 300),
-                popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300)
+                popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300),
             ) {
                 OnboardingScreen(
                     onOnboardingComplete = {
@@ -59,7 +59,6 @@ class AuthNavigationApiImpl: AuthNavigationApi {
                                 inclusive = true
                             }
                         }
-
                     },
                 )
             }
@@ -69,7 +68,7 @@ class AuthNavigationApiImpl: AuthNavigationApi {
                 enterTransition = navigationTransitions.getEnterTransition(TransitionType.ZOOM, 300),
                 exitTransition = navigationTransitions.getExitTransition(TransitionType.ZOOM, 300),
                 popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.ZOOM, 300),
-                popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300)
+                popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300),
             ) {
                 SignUpScreen(
                     onNavigateBack = {},
@@ -86,7 +85,7 @@ class AuthNavigationApiImpl: AuthNavigationApi {
                     onSignUpWithGoogle = {},
                     onPrivacyPolicyClick = {},
                     onTermsOfServiceClick = {},
-                    isLoading = false
+                    isLoading = false,
                 )
             }
 
@@ -95,7 +94,7 @@ class AuthNavigationApiImpl: AuthNavigationApi {
                 enterTransition = navigationTransitions.getEnterTransition(TransitionType.ZOOM, 300),
                 exitTransition = navigationTransitions.getExitTransition(TransitionType.ZOOM, 300),
                 popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.ZOOM, 300),
-                popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300)
+                popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300),
             ) {
                 LoginScreen(
                     onNavigateBack = {},
@@ -122,16 +121,18 @@ class AuthNavigationApiImpl: AuthNavigationApi {
                 enterTransition = navigationTransitions.getEnterTransition(TransitionType.ZOOM, 300),
                 exitTransition = navigationTransitions.getExitTransition(TransitionType.ZOOM, 300),
                 popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.ZOOM, 300),
-                popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300)
+                popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300),
             ) {
                 OtpVerificationScreen(
                     onNavigateBack = { /* navigation */ },
-                    onVerifyOtp = { otp -> /* verify OTP */ },
+                    onVerifyOtp = {
+                        navHostController.navigate(NavigationRoutes.ResetPassword.route)
+                    },
                     onResendCode = { /* resend logic */ },
                     isLoading = false,
                     contactInfo = "user@example.com",
                     otpLength = 6,
-                    resendCooldownSeconds = 60
+                    resendCooldownSeconds = 60,
                 )
             }
 
@@ -140,7 +141,7 @@ class AuthNavigationApiImpl: AuthNavigationApi {
                 enterTransition = navigationTransitions.getEnterTransition(TransitionType.ZOOM, 300),
                 exitTransition = navigationTransitions.getExitTransition(TransitionType.ZOOM, 300),
                 popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.ZOOM, 300),
-                popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300)
+                popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300),
             ) {
                 ForgotPasswordScreen(
                     onNavigateBack = {},
@@ -150,7 +151,29 @@ class AuthNavigationApiImpl: AuthNavigationApi {
                             popUpTo(NavigationRoutes.ForgotPasswordRoute.route)
                         }
                     },
-                    isLoading = false
+                    isLoading = false,
+                )
+            }
+
+            composable(
+                route = NavigationRoutes.ResetPassword.route,
+                enterTransition = navigationTransitions.getEnterTransition(TransitionType.ZOOM, 300),
+                exitTransition = navigationTransitions.getExitTransition(TransitionType.ZOOM, 300),
+                popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.ZOOM, 300),
+                popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300),
+            ) {
+                ResetPasswordScreen(
+                    onNavigateBack = {},
+                    onNavigateToLogin = {},
+                    onResetPassword = {
+                        navHostController.navigate(NavigationRoutes.LoginRoute.route) {
+                            popUpTo(NavigationRoutes.ResetPassword.route) {
+                                inclusive = true
+                            }
+                        }
+                    },
+                    isLoading = false,
+                    email = "example@gmail.com"
                 )
             }
         }
