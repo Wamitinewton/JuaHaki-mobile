@@ -64,6 +64,7 @@ fun OtpVerificationScreen(
     otpLength: Int = 6,
     resendCooldownSeconds: Int = 60,
     showResendOption: Boolean = true,
+
 ) {
     var screenState by remember {
         mutableStateOf(

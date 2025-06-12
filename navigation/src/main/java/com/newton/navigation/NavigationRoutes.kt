@@ -1,5 +1,7 @@
 package com.newton.navigation
 
+import com.newton.core.enums.OtpContext
+
 sealed class NavigationRoutes(
     val route: String,
 ) {
@@ -12,7 +14,11 @@ sealed class NavigationRoutes(
 
     data object LoginRoute : NavigationRoutes("login_screen_route")
 
-    data object OTPRoute : NavigationRoutes("otp_screen_route")
+    object OTPRoute : NavigationRoutes("otp/{context}") {
+        const val CONTEXT_ARG = "context"
+
+        fun createRoute(context: OtpContext): String = "otp/${context.name}"
+    }
 
     data object ForgotPasswordRoute : NavigationRoutes("forgot_password_route")
 

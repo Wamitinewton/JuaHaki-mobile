@@ -104,7 +104,6 @@ fun ResetPasswordScreen(
             ) {
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // Header Section
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.fillMaxWidth(),
@@ -148,8 +147,7 @@ fun ResetPasswordScreen(
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                // Password Form Card
-                Card(
+                    Card(
                     modifier = Modifier.fillMaxWidth(),
                     colors =
                         CardDefaults.cardColors(
