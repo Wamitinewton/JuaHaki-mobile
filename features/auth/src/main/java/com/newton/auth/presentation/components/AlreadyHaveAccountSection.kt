@@ -14,10 +14,12 @@ import androidx.compose.ui.unit.dp
 import com.newton.commonui.components.CustomTextButton
 
 @Composable
-fun AlreadyHaveAccountSection(
-    onNavigateToLogin: () -> Unit,
+fun AlreadyOrDontHaveAccountSection(
+    onNavigate: () -> Unit,
     enabled: Boolean,
     modifier: Modifier = Modifier,
+    titleText: String,
+    buttonText: String,
 ) {
     Row(
         modifier = modifier,
@@ -25,7 +27,7 @@ fun AlreadyHaveAccountSection(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = "Already have an account?",
+            text = titleText,
             style =
                 MaterialTheme.typography.bodyMedium.copy(
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
@@ -35,9 +37,9 @@ fun AlreadyHaveAccountSection(
         Spacer(modifier = Modifier.width(4.dp))
 
         CustomTextButton(
-            onClick = onNavigateToLogin,
+            onClick = onNavigate,
             enabled = enabled,
-            text = "Sign In",
+            text = buttonText,
             textStyle = MaterialTheme.typography.bodyMedium.copy(
                 fontWeight = FontWeight.SemiBold,
                 color =

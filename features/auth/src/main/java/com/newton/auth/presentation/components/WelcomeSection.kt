@@ -14,13 +14,17 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun WelcomeSection(modifier: Modifier = Modifier) {
+fun WelcomeSection(
+    modifier: Modifier = Modifier,
+    title: String,
+    description: String,
+) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "Join Our Community",
+            text = title,
             style =
                 MaterialTheme.typography.headlineMedium.copy(
                     fontWeight = FontWeight.Bold,
@@ -32,7 +36,7 @@ fun WelcomeSection(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "Create your account to start making a difference in your community and stay informed about civic matters that matter to you.",
+            text = description,
             style =
                 MaterialTheme.typography.bodyLarge.copy(
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),

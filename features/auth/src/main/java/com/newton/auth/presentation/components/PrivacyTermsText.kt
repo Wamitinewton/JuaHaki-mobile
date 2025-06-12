@@ -20,7 +20,7 @@ fun PrivacyTermsText(
 ) {
     val annotatedString =
         buildAnnotatedString {
-            append("By creating an account, you agree to our ")
+            append("By continuing, you agree to our ")
 
             withLink(
                 LinkAnnotation.Clickable(

@@ -1,4 +1,4 @@
-package com.newton.auth.presentation.signup.view
+package com.newton.auth.presentation.login.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -37,26 +37,27 @@ import com.newton.auth.presentation.components.GoogleSignInButton
 import com.newton.auth.presentation.components.OrDivider
 import com.newton.auth.presentation.components.PrivacyTermsText
 import com.newton.auth.presentation.components.WelcomeSection
-import com.newton.auth.presentation.signup.state.SignUpScreenState
-import com.newton.auth.presentation.signup.view.components.SignUpForm
-import com.newton.auth.presentation.signup.view.components.SignUpFormData
+import com.newton.auth.presentation.login.state.LoginScreenState
+import com.newton.auth.presentation.login.view.components.LoginForm
+import com.newton.auth.presentation.login.view.components.LoginFormData
 import com.newton.commonui.components.PrimaryButton
 import com.newton.commonui.theme.backgroundGradient
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignUpScreen(
+fun LoginScreen(
     onNavigateBack: () -> Unit,
-    onNavigateToLogin: () -> Unit,
-    onSignUpWithEmail: (SignUpFormData) -> Unit,
-    onSignUpWithGoogle: () -> Unit,
+    onNavigateToSignUp: () -> Unit,
+    onLoginWithEmail: (LoginFormData) -> Unit,
+    onLoginWithGoogle: () -> Unit,
+    onForgotPasswordClick: () -> Unit,
     onPrivacyPolicyClick: () -> Unit,
     onTermsOfServiceClick: () -> Unit,
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
 ) {
     var screenState by remember {
-        mutableStateOf(SignUpScreenState(isLoading = isLoading))
+        mutableStateOf(LoginScreenState(isLoading = isLoading))
     }
 
     screenState = screenState.copy(isLoading = isLoading)
@@ -66,7 +67,7 @@ fun SignUpScreen(
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = "Create Account",
+                        text = "Sign In",
                         style =
                             MaterialTheme.typography.headlineSmall.copy(
                                 fontWeight = FontWeight.SemiBold,
@@ -106,14 +107,14 @@ fun SignUpScreen(
             ) {
                 WelcomeSection(
                     modifier = Modifier.padding(vertical = 16.dp),
-                    title = "Join Our Community",
-                    description = "Create your account to start making a difference in your community and stay informed about civic matters that matter to you."
+                    title = "Welcome Back",
+                    description = "Sign in to your account to continue staying connected with your community and civic engagement.",
                 )
 
                 GoogleSignInButton(
-                    onClick = onSignUpWithGoogle,
+                    onClick = onLoginWithGoogle,
                     enabled = !screenState.isLoading,
-                    text = "Sign up with Google",
+                    text = "Sign in with Google",
                     modifier = Modifier.fillMaxWidth(),
                 )
 
@@ -121,36 +122,30 @@ fun SignUpScreen(
                     modifier = Modifier.padding(vertical = 24.dp),
                 )
 
-                SignUpForm(
+                LoginForm(
                     formData = screenState.formData,
                     onFormDataChange = { newFormData ->
-
                         screenState =
                             screenState.copy(
                                 formData = newFormData,
-                                isFormValid = true,
+                                isFormValid =
+                                    newFormData.emailOrUsername.isNotBlank() &&
+                                        newFormData.password.isNotBlank(),
                             )
                     },
                     errors = screenState.formErrors,
+                    onForgotPasswordClick = onForgotPasswordClick,
                     enabled = !screenState.isLoading,
                     modifier = Modifier.fillMaxWidth(),
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                PrivacyTermsText(
-                    onPrivacyPolicyClick = onPrivacyPolicyClick,
-                    onTermsOfServiceClick = onTermsOfServiceClick,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
                 PrimaryButton(
-                    text = if (screenState.isLoading) "Creating Account..." else "Create Account",
+                    text = if (screenState.isLoading) "Signing In..." else "Sign In",
                     onClick = {
                         if (screenState.isFormValid && !screenState.isLoading) {
-                            onSignUpWithEmail(screenState.formData)
+                            onLoginWithEmail(screenState.formData)
                         }
                     },
                     enabled = screenState.isFormValid && !screenState.isLoading,
@@ -172,10 +167,18 @@ fun SignUpScreen(
                     }
                 }
 
+                Spacer(modifier = Modifier.height(16.dp))
+
+                PrivacyTermsText(
+                    onPrivacyPolicyClick = onPrivacyPolicyClick,
+                    onTermsOfServiceClick = onTermsOfServiceClick,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+
                 AlreadyOrDontHaveAccountSection(
-                    titleText = "Already have an account?",
-                    buttonText = "Sign In",
-                    onNavigate = onNavigateToLogin,
+                    titleText = "Don't have an account?",
+                    buttonText = "Sign Up",
+                    onNavigate = onNavigateToSignUp,
                     enabled = !screenState.isLoading,
                     modifier =
                         Modifier
