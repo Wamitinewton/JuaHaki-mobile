@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.newton.auth.presentation.forgotpassword.view.ForgotPasswordScreen
 import com.newton.auth.presentation.login.view.LoginScreen
 import com.newton.auth.presentation.onboarding.OnboardingScreen
 import com.newton.auth.presentation.otp.view.OtpVerificationScreen
@@ -108,7 +109,11 @@ class AuthNavigationApiImpl: AuthNavigationApi {
                     },
                     onLoginWithEmail = {},
                     onLoginWithGoogle = {},
-                    onForgotPasswordClick = {},
+                    onForgotPasswordClick = {
+                        navHostController.navigate(NavigationRoutes.ForgotPasswordRoute.route) {
+                            popUpTo(NavigationRoutes.LoginRoute.route)
+                        }
+                    },
                 )
             }
 
@@ -127,6 +132,25 @@ class AuthNavigationApiImpl: AuthNavigationApi {
                     contactInfo = "user@example.com",
                     otpLength = 6,
                     resendCooldownSeconds = 60
+                )
+            }
+
+            composable(
+                route = NavigationRoutes.ForgotPasswordRoute.route,
+                enterTransition = navigationTransitions.getEnterTransition(TransitionType.ZOOM, 300),
+                exitTransition = navigationTransitions.getExitTransition(TransitionType.ZOOM, 300),
+                popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.ZOOM, 300),
+                popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300)
+            ) {
+                ForgotPasswordScreen(
+                    onNavigateBack = {},
+                    onNavigateToLogin = {},
+                    onSendResetEmail = {
+                        navHostController.navigate(NavigationRoutes.OTPRoute.route) {
+                            popUpTo(NavigationRoutes.ForgotPasswordRoute.route)
+                        }
+                    },
+                    isLoading = false
                 )
             }
         }

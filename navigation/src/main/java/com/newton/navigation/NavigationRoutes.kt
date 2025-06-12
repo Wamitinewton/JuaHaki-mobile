@@ -5,5 +5,6 @@ sealed class NavigationRoutes(val route: String) {
     data object OnboardingRoute: NavigationRoutes("onboarding_screen_route")
     data object SignupRoute: NavigationRoutes("signup_screen_route")
     data object LoginRoute: NavigationRoutes("login_screen_route")
-    data object OTPRoute: NavigationRoutes("otp_screen_input")
+    data object OTPRoute: NavigationRoutes("otp_screen_route")
+    data object ForgotPasswordRoute: NavigationRoutes("forgot_password_route")
 }
