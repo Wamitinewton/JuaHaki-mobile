@@ -36,5 +36,7 @@ android {
 
 dependencies {
 
+    implementation(project(Modules.core))
+
    addHiltDependencies()
 }

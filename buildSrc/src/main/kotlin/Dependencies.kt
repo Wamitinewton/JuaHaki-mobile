@@ -72,20 +72,14 @@ object Dependencies {
 
     // Accompanist
     const val systemUi = "com.google.accompanist:accompanist-systemuicontroller:0.24.10-beta"
-    const val pager = "com.google.accompanist:accompanist-pager:0.24.10-beta"
-    const val pagerIndicators = "com.google.accompanist:accompanist-pager-indicators:0.18.0"
-    const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:0.36.0"
-    const val accompanistPermissions = "com.google.accompanist:accompanist-permissions:0.32.0"
 
-    // Utils
-    const val jaroWinkler = "info.debatty:java-string-similarity:2.0.0"
-    const val zxingQr = "com.journeyapps:zxing-android-embedded:4.1.0"
-    const val initializer = "androidx.startup:startup-runtime:${Versions.initilizer}"
-    const val reorderable = "org.burnoutcrew.composereorderable:reorderable:${Versions.reordable}"
-    const val chromeView = "androidx.browser:browser:1.8.0"
+
 
     // Testing
     const val junit = "junit:junit:${Versions.junit}"
     const val androidXJunit = "androidx.test.ext:junit:${Versions.androidXJunit}"
     const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+    const val roboelectric = "org.robolectric:robolectric:4.11.1"
+    const val mockk = "io.mockk:mockk:1.13.8"
+    const val workTest = "androidx.work:work-testing:2.9.0"
 }

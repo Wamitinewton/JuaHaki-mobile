@@ -5,4 +5,5 @@ object Modules {
     val navigation = ":navigation"
     val data= ":data"
     val domain= ":domain"
+    val database= ":database"
 }

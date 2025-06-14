@@ -69,6 +69,9 @@ fun DependencyHandler.addTestDependencies() {
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.androidXJunit)
     androidTestImplementation(Dependencies.espressoCore)
+    androidTestImplementation(Dependencies.workTest)
+    testImplementation(Dependencies.mockk)
+    testImplementation(Dependencies.roboelectric)
 }
 
 /**

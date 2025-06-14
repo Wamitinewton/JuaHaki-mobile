@@ -1,11 +1,17 @@
 package com.newton.data.mappers
 
 import com.newton.data.dto.auth.JwtResponse
+import com.newton.data.dto.auth.LoginRequest
+import com.newton.data.dto.auth.RefreshTokenRequest
 import com.newton.data.dto.auth.SignupRequest
 import com.newton.data.dto.auth.UserDto
+import com.newton.data.dto.auth.VerifyOtpRequest
 import com.newton.domain.models.auth.JwtData
+import com.newton.domain.models.auth.LoginData
+import com.newton.domain.models.auth.RefreshTokenData
 import com.newton.domain.models.auth.SignupData
 import com.newton.domain.models.auth.UserInfo
+import com.newton.domain.models.auth.VerifyOtpData
 
 fun SignupData.toRequestDto(): SignupRequest {
     return SignupRequest(
@@ -34,5 +40,25 @@ fun JwtResponse.toJwtData(): JwtData {
         accessToken = accessToken,
         refreshToken = refreshToken,
         userInfo = userDto.toUserDomain()
+    )
+}
+
+fun LoginData.toLoginRequest(): LoginRequest {
+    return LoginRequest(
+        usernameOrEmail = usernameOrEmail,
+        password = password
+    )
+}
+
+fun RefreshTokenData.toRefreshTokenRequest(): RefreshTokenRequest {
+    return RefreshTokenRequest(
+        refreshToken = refreshToken
+    )
+}
+
+fun VerifyOtpData.toVerifyOtpRequest(): VerifyOtpRequest {
+    return VerifyOtpRequest(
+        email = email,
+        otp = otp
     )
 }

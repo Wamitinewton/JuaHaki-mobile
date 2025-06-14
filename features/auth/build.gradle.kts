@@ -42,9 +42,12 @@ dependencies {
     addComposeDependencies()
     addTestDependencies()
     addHiltDependencies()
-
+    addWorkManagerDependencies()
     // Modules
     implementation(project(Modules.commonui))
     implementation(project(Modules.navigation))
     implementation(project(Modules.core))
+    implementation(project(Modules.data))
+    implementation(project(Modules.domain))
+    implementation(project(Modules.database))
 }
