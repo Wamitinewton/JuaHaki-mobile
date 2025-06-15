@@ -1,5 +1,6 @@
-package com.newton.core.ui
+package com.newton.commonui.ui
 
+import androidx.compose.material3.SnackbarDuration
 import com.newton.core.enums.SnackbarType
 
 data class SnackbarData(

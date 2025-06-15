@@ -2,16 +2,16 @@ package com.newton.auth.di
 
 import com.newton.auth.navigation.AuthNavigationApi
 import com.newton.auth.navigation.AuthNavigationApiImpl
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AuthNavigationModule {
-    @Provides
+abstract class AuthNavigationModule {
+    @Binds
     @Singleton
-    fun provideAuthNavigationApi(): AuthNavigationApi = AuthNavigationApiImpl()
+    abstract fun bindAuthNavigationApi(authNavigationApiImpl: AuthNavigationApiImpl): AuthNavigationApi
 }

@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.devtools.ksp")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -20,7 +22,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -35,8 +37,9 @@ android {
 
 dependencies {
 
-   addComposeDependencies()
+    addComposeDependencies()
     addTestDependencies()
+    addHiltDependencies()
     implementation(Dependencies.systemUi)
 
     implementation(project(Modules.core))

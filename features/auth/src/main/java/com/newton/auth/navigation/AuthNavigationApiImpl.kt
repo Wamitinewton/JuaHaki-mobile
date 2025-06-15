@@ -15,13 +15,17 @@ import com.newton.auth.presentation.resetpassword.view.ResetPasswordScreen
 import com.newton.auth.presentation.signup.view.SignUpContainer
 import com.newton.auth.presentation.signup.viewmodel.SignupViewModel
 import com.newton.auth.presentation.splash.SplashScreen
+import com.newton.commonui.ui.SnackbarManager
 import com.newton.core.enums.OtpContext
 import com.newton.core.enums.TransitionType
 import com.newton.navigation.NavigationRoutes
 import com.newton.navigation.NavigationSubgraphRoutes
 import com.newton.navigation.NavigationTransitions
+import javax.inject.Inject
 
-class AuthNavigationApiImpl : AuthNavigationApi {
+class AuthNavigationApiImpl @Inject constructor(
+    private val snackbarManager: SnackbarManager
+) : AuthNavigationApi {
     private val navigationTransitions = NavigationTransitions()
 
     override fun registerNavigationGraph(
@@ -76,7 +80,6 @@ class AuthNavigationApiImpl : AuthNavigationApi {
                 popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300),
             ) {
                 val signupViewModel = hiltViewModel<SignupViewModel>()
-
                 SignUpContainer(
                     onNavigateBack = {
                         navHostController.popBackStack()
@@ -98,7 +101,7 @@ class AuthNavigationApiImpl : AuthNavigationApi {
                     onTermsOfServiceClick = {
                     },
                     onShowSnackbar = { message ->
-
+                        snackbarManager.showError(message)
                     },
 
                     viewModel = signupViewModel
