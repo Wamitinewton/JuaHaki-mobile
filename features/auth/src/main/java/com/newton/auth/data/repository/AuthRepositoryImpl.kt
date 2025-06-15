@@ -22,6 +22,7 @@ import com.newton.domain.models.auth.VerifyOtpData
 import com.newton.domain.repository.auth.AuthRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class AuthRepositoryImpl
@@ -42,7 +43,13 @@ constructor(
             apiCall = {
                 val response = authApiService.createUser(request.toRequestDto())
                 response.data?.toUserDomain()
-                    ?: throw IllegalStateException("User data is null in the response")
+                    ?: throw IllegalStateException("User creation failed: No user data received from server")
+            },
+            errorHandler = { throwable ->
+                when (throwable) {
+                    is IllegalStateException -> throwable.message ?: "User creation failed"
+                    else -> "Failed to create user account. Please try again."
+                }
             }
         )
     }
@@ -51,8 +58,18 @@ constructor(
         return safeApiCall(
             apiCall = {
                 val response = authApiService.login(request.toLoginRequest())
-                response.data?.toJwtData()
-                    ?: throw IllegalStateException("User data is null in the response")
+                val jwtData = response.data?.toJwtData()
+                    ?: throw IllegalStateException("Login failed: No authentication data received from server")
+
+                // Store tokens after successful login
+                storeSessionTokens(jwtData.accessToken, jwtData.refreshToken)
+                jwtData
+            },
+            errorHandler = { throwable ->
+                when (throwable) {
+                    is IllegalStateException -> throwable.message ?: "Login failed"
+                    else -> "Login failed. Please check your credentials and try again."
+                }
             }
         )
     }
@@ -62,10 +79,16 @@ constructor(
             apiCall = {
                 val response = authApiService.refreshToken(request.toRefreshTokenRequest())
                 val jwtData = response.data?.toJwtData()
-                    ?: throw IllegalStateException("JWT data is null in the response")
+                    ?: throw IllegalStateException("Token refresh failed: No authentication data received from server")
 
                 storeSessionTokens(jwtData.accessToken, jwtData.refreshToken)
                 jwtData
+            },
+            errorHandler = { throwable ->
+                when (throwable) {
+                    is IllegalStateException -> throwable.message ?: "Token refresh failed"
+                    else -> "Session expired. Please log in again."
+                }
             }
         )
     }
@@ -74,6 +97,9 @@ constructor(
         return safeApiCall(
             apiCall = {
                 authApiService.verifyEmail(request.toVerifyOtpRequest())
+            },
+            errorHandler = {
+                "Account activation failed. Please check your verification code and try again."
             }
         )
     }
@@ -82,6 +108,9 @@ constructor(
         return safeApiCall(
             apiCall = {
                 authApiService.resendEmailVerification(email)
+            },
+            errorHandler = {
+                "Failed to resend verification code. Please try again later."
             }
         )
     }
@@ -95,11 +124,11 @@ constructor(
             AuthTokenHolder.refreshToken = refreshToken
             sessionManager.saveTokens(accessToken, refreshToken)
         } catch (e: Exception) {
-            throw e
+            throw IllegalStateException("Failed to store authentication tokens: ${e.message}", e)
         }
     }
 
-    override fun getAccessToken(): String?  = sessionManager.fetchAccessToken()
+    override fun getAccessToken(): String? = sessionManager.fetchAccessToken()
 
     override fun getRefreshToken(): String? = sessionManager.fetchRefreshToken()
 
@@ -111,9 +140,20 @@ constructor(
         flow {
             emit(Resource.Loading(true))
 
-            AuthTokenHolder.accessToken = null
-            AuthTokenHolder.refreshToken = null
+            try {
+                AuthTokenHolder.accessToken = null
+                AuthTokenHolder.refreshToken = null
 
-            sessionManager.clearTokens()
+                sessionManager.clearTokens()
+
+                emit(Resource.Success(Unit))
+            } catch (e: Exception) {
+                emit(Resource.Error(
+                    message = "Logout failed: ${e.message ?: "Unknown error occurred"}",
+                    errorType = com.newton.core.enums.ErrorType.UNKNOWN
+                ))
+            } finally {
+                emit(Resource.Loading(false))
+            }
         }
 }
