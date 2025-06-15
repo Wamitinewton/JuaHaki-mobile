@@ -293,6 +293,8 @@ fun EmailTextField(
 fun PasswordTextField(
     value: String,
     onValueChange: (String) -> Unit,
+    isPasswordVisible: Boolean,
+    onTogglePasswordVisibility: () -> Unit,
     modifier: Modifier = Modifier,
     label: String = "Password",
     placeholder: String = "Enter your password",
@@ -305,8 +307,6 @@ fun PasswordTextField(
     visibilityOffIcon: ImageVector? = null,
     leadingIcon: ImageVector?,
 ) {
-    var passwordVisible by remember { mutableStateOf(false) }
-
     CustomTextField(
         value = value,
         onValueChange = onValueChange,
@@ -315,17 +315,17 @@ fun PasswordTextField(
         placeholder = placeholder,
         trailingIcon =
             if (showVisibilityToggle) {
-                if (passwordVisible) visibilityOffIcon else visibilityIcon
+                if (isPasswordVisible) visibilityOffIcon else visibilityIcon
             } else {
                 null
             },
         onTrailingIconClick =
             if (showVisibilityToggle) {
-                { passwordVisible = !passwordVisible }
+                onTogglePasswordVisibility
             } else {
                 null
             },
-        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+        visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         singleLine = true,
         isError = isError,
@@ -335,6 +335,7 @@ fun PasswordTextField(
         leadingIcon = leadingIcon,
     )
 }
+
 
 /**
  * Phone TextField with proper formatting

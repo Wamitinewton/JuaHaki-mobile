@@ -1,5 +1,6 @@
 package com.newton.auth.navigation
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -11,7 +12,8 @@ import com.newton.auth.presentation.login.view.LoginScreen
 import com.newton.auth.presentation.onboarding.OnboardingScreen
 import com.newton.auth.presentation.otp.view.OtpVerificationScreen
 import com.newton.auth.presentation.resetpassword.view.ResetPasswordScreen
-import com.newton.auth.presentation.signup.view.SignUpScreen
+import com.newton.auth.presentation.signup.view.SignUpContainer
+import com.newton.auth.presentation.signup.viewmodel.SignupViewModel
 import com.newton.auth.presentation.splash.SplashScreen
 import com.newton.core.enums.OtpContext
 import com.newton.core.enums.TransitionType
@@ -73,22 +75,33 @@ class AuthNavigationApiImpl : AuthNavigationApi {
                 popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.ZOOM, 300),
                 popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300),
             ) {
-                SignUpScreen(
-                    onNavigateBack = {},
+                val signupViewModel = hiltViewModel<SignupViewModel>()
+
+                SignUpContainer(
+                    onNavigateBack = {
+                        navHostController.popBackStack()
+                    },
                     onNavigateToLogin = {
                         navHostController.navigate(NavigationRoutes.LoginRoute.route) {
                             popUpTo(NavigationRoutes.SignupRoute.route)
                         }
                     },
-                    onSignUpWithEmail = {
+                    onNavigateToEmailVerification = {
                         navHostController.navigate(NavigationRoutes.OTPRoute.createRoute(OtpContext.SIGN_UP)) {
                             popUpTo(NavigationRoutes.SignupRoute.route)
                         }
                     },
-                    onSignUpWithGoogle = {},
-                    onPrivacyPolicyClick = {},
-                    onTermsOfServiceClick = {},
-                    isLoading = false,
+                    onSignUpWithGoogle = {
+                    },
+                    onPrivacyPolicyClick = {
+                    },
+                    onTermsOfServiceClick = {
+                    },
+                    onShowSnackbar = { message ->
+
+                    },
+
+                    viewModel = signupViewModel
                 )
             }
 

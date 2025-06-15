@@ -87,6 +87,8 @@ fun LoginForm(
             visibilityIcon = Icons.Default.Visibility,
             visibilityOffIcon = Icons.Default.VisibilityOff,
             modifier = Modifier.fillMaxWidth(),
+            isPasswordVisible = true,
+            onTogglePasswordVisibility = {}
         )
 
         CustomTextButton(

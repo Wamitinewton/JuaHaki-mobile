@@ -18,6 +18,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -53,6 +54,9 @@ fun SignUpForm(
     formData: SignUpFormData,
     onFormDataChange: (SignUpFormData) -> Unit,
     errors: SignUpFormErrors = SignUpFormErrors(),
+    isPasswordVisible: Boolean = false,
+    onTogglePasswordVisibility: () -> Unit = {},
+    onFieldValidation: (String) -> Unit = {},
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
 ) {
@@ -62,11 +66,10 @@ fun SignUpForm(
     ) {
         Text(
             text = "Required Information",
-            style =
-                MaterialTheme.typography.titleMedium.copy(
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onSurface,
-                ),
+            style = MaterialTheme.typography.titleMedium.copy(
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onSurface,
+            ),
             modifier = Modifier.padding(bottom = 8.dp),
         )
 
@@ -82,7 +85,13 @@ fun SignUpForm(
             errorMessage = errors.email,
             enabled = enabled,
             size = TextFieldSize.Medium,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .onFocusChanged { focusState ->
+                    if (!focusState.isFocused && formData.email.isNotBlank()) {
+                        onFieldValidation("email")
+                    }
+                },
         )
 
         PhoneTextField(
@@ -97,7 +106,13 @@ fun SignUpForm(
             errorMessage = errors.phone,
             enabled = enabled,
             size = TextFieldSize.Medium,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .onFocusChanged { focusState ->
+                    if (!focusState.isFocused && formData.phone.isNotBlank()) {
+                        onFieldValidation("phone")
+                    }
+                },
         )
 
         PasswordTextField(
@@ -112,29 +127,35 @@ fun SignUpForm(
             errorMessage = errors.password,
             enabled = enabled,
             size = TextFieldSize.Medium,
+            isPasswordVisible = isPasswordVisible,
+            onTogglePasswordVisibility = onTogglePasswordVisibility,
             visibilityIcon = Icons.Default.Visibility,
             visibilityOffIcon = Icons.Default.VisibilityOff,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .onFocusChanged { focusState ->
+                    if (!focusState.isFocused && formData.password.isNotBlank()) {
+                        onFieldValidation("password")
+                    }
+                },
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
             text = "Optional Information",
-            style =
-                MaterialTheme.typography.titleMedium.copy(
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
-                ),
+            style = MaterialTheme.typography.titleMedium.copy(
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+            ),
             modifier = Modifier.padding(bottom = 8.dp),
         )
 
         Text(
             text = "Help us personalize your experience (you can skip these)",
-            style =
-                MaterialTheme.typography.bodySmall.copy(
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                ),
+            style = MaterialTheme.typography.bodySmall.copy(
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+            ),
             textAlign = TextAlign.Start,
             modifier = Modifier.padding(bottom = 16.dp),
         )
@@ -155,7 +176,13 @@ fun SignUpForm(
                 errorMessage = errors.firstName,
                 enabled = enabled,
                 size = TextFieldSize.Medium,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .onFocusChanged { focusState ->
+                        if (!focusState.isFocused && formData.firstName.isNotBlank()) {
+                            onFieldValidation("firstName")
+                        }
+                    },
             )
 
             CustomTextField(
@@ -169,7 +196,13 @@ fun SignUpForm(
                 errorMessage = errors.lastName,
                 enabled = enabled,
                 size = TextFieldSize.Medium,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .onFocusChanged { focusState ->
+                        if (!focusState.isFocused && formData.lastName.isNotBlank()) {
+                            onFieldValidation("lastName")
+                        }
+                    },
             )
         }
 
@@ -185,7 +218,13 @@ fun SignUpForm(
             errorMessage = errors.username,
             enabled = enabled,
             size = TextFieldSize.Medium,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .onFocusChanged { focusState ->
+                    if (!focusState.isFocused && formData.username.isNotBlank()) {
+                        onFieldValidation("username")
+                    }
+                },
         )
     }
 }

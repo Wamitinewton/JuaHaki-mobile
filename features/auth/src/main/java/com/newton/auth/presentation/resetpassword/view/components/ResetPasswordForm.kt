@@ -86,6 +86,8 @@ fun ResetPasswordForm(
             visibilityIcon = Icons.Default.Visibility,
             visibilityOffIcon = Icons.Default.VisibilityOff,
             modifier = Modifier.fillMaxWidth(),
+            isPasswordVisible = true,
+            onTogglePasswordVisibility = {}
         )
 
         if (formData.newPassword.isNotBlank()) {
@@ -142,6 +144,8 @@ fun ResetPasswordForm(
             visibilityIcon = Icons.Default.Visibility,
             visibilityOffIcon = Icons.Default.VisibilityOff,
             modifier = Modifier.fillMaxWidth(),
+            isPasswordVisible = true,
+            onTogglePasswordVisibility = {}
         )
 
         if (formData.confirmPassword.isNotBlank()) {

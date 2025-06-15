@@ -23,10 +23,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,30 +33,26 @@ import com.newton.auth.presentation.components.GoogleSignInButton
 import com.newton.auth.presentation.components.OrDivider
 import com.newton.auth.presentation.components.PrivacyTermsText
 import com.newton.auth.presentation.components.WelcomeSection
-import com.newton.auth.presentation.signup.state.SignUpScreenState
+import com.newton.auth.presentation.signup.event.SignupUiEvent
+import com.newton.auth.presentation.signup.state.SignupUiState
 import com.newton.auth.presentation.signup.view.components.SignUpForm
 import com.newton.auth.presentation.signup.view.components.SignUpFormData
+import com.newton.auth.presentation.signup.view.components.SignUpFormErrors
 import com.newton.commonui.components.PrimaryButton
 import com.newton.commonui.theme.backgroundGradient
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpScreen(
+    uiState: SignupUiState,
+    onEvent: (SignupUiEvent) -> Unit,
     onNavigateBack: () -> Unit,
     onNavigateToLogin: () -> Unit,
-    onSignUpWithEmail: (SignUpFormData) -> Unit,
     onSignUpWithGoogle: () -> Unit,
     onPrivacyPolicyClick: () -> Unit,
     onTermsOfServiceClick: () -> Unit,
     modifier: Modifier = Modifier,
-    isLoading: Boolean = false,
 ) {
-    var screenState by remember {
-        mutableStateOf(SignUpScreenState(isLoading = isLoading))
-    }
-
-    screenState = screenState.copy(isLoading = isLoading)
-
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -74,7 +66,13 @@ fun SignUpScreen(
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
+                    IconButton(
+                        onClick = {
+                            if (!uiState.isLoading) {
+                                onEvent(SignupUiEvent.OnNavigateBack)
+                            }
+                        },
+                    ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
@@ -107,12 +105,12 @@ fun SignUpScreen(
                 WelcomeSection(
                     modifier = Modifier.padding(vertical = 16.dp),
                     title = "Join Our Community",
-                    description = "Create your account to start making a difference in your community and stay informed about civic matters that matter to you."
+                    description = "Create your account to start making a difference in your community and stay informed about civic matters that matter to you.",
                 )
 
                 GoogleSignInButton(
                     onClick = onSignUpWithGoogle,
-                    enabled = !screenState.isLoading,
+                    enabled = !uiState.isLoading,
                     text = "Sign up with Google",
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -122,17 +120,59 @@ fun SignUpScreen(
                 )
 
                 SignUpForm(
-                    formData = screenState.formData,
+                    formData =
+                        SignUpFormData(
+                            email = uiState.email,
+                            phone = uiState.phoneNumber,
+                            password = uiState.password,
+                            firstName = uiState.firstName,
+                            lastName = uiState.lastName,
+                            username = uiState.username,
+                        ),
                     onFormDataChange = { newFormData ->
-
-                        screenState =
-                            screenState.copy(
-                                formData = newFormData,
-                                isFormValid = true,
-                            )
+                        if (newFormData.email != uiState.email) {
+                            onEvent(SignupUiEvent.OnEmailChanged(newFormData.email))
+                        }
+                        if (newFormData.phone != uiState.phoneNumber) {
+                            onEvent(SignupUiEvent.OnPhoneNumberChanged(newFormData.phone))
+                        }
+                        if (newFormData.password != uiState.password) {
+                            onEvent(SignupUiEvent.OnPasswordChanged(newFormData.password))
+                        }
+                        if (newFormData.firstName != uiState.firstName) {
+                            onEvent(SignupUiEvent.OnFirstNameChanged(newFormData.firstName))
+                        }
+                        if (newFormData.lastName != uiState.lastName) {
+                            onEvent(SignupUiEvent.OnLastNameChanged(newFormData.lastName))
+                        }
+                        if (newFormData.username != uiState.username) {
+                            onEvent(SignupUiEvent.OnUsernameChanged(newFormData.username))
+                        }
                     },
-                    errors = screenState.formErrors,
-                    enabled = !screenState.isLoading,
+                    errors =
+                        SignUpFormErrors(
+                            email = uiState.emailError?.message,
+                            phone = uiState.phoneNumberError?.message,
+                            password = uiState.passwordError?.message,
+                            firstName = uiState.firstNameError?.message,
+                            lastName = uiState.lastNameError?.message,
+                            username = uiState.usernameError?.message,
+                        ),
+                    enabled = !uiState.isLoading,
+                    isPasswordVisible = uiState.isPasswordVisible,
+                    onTogglePasswordVisibility = {
+                        onEvent(SignupUiEvent.OnTogglePasswordVisibility)
+                    },
+                    onFieldValidation = { fieldType ->
+                        when (fieldType) {
+                            "email" -> onEvent(SignupUiEvent.OnValidateEmail)
+                            "phone" -> onEvent(SignupUiEvent.OnValidatePhoneNumber)
+                            "password" -> onEvent(SignupUiEvent.OnValidatePassword)
+                            "firstName" -> onEvent(SignupUiEvent.OnValidateFirstName)
+                            "lastName" -> onEvent(SignupUiEvent.OnValidateLastName)
+                            "username" -> onEvent(SignupUiEvent.OnValidateUsername)
+                        }
+                    },
                     modifier = Modifier.fillMaxWidth(),
                 )
 
@@ -147,17 +187,15 @@ fun SignUpScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 PrimaryButton(
-                    text = if (screenState.isLoading) "Creating Account..." else "Create Account",
+                    text = if (uiState.isLoading) "Creating Account..." else "Create Account",
                     onClick = {
-                        if (screenState.isFormValid && !screenState.isLoading) {
-                            onSignUpWithEmail(screenState.formData)
-                        }
+                        onEvent(SignupUiEvent.OnSignupClicked)
                     },
-                    enabled = screenState.isFormValid && !screenState.isLoading,
+                    enabled = uiState.isFormValid && !uiState.isLoading,
                     modifier = Modifier.fillMaxWidth(),
                 )
 
-                if (screenState.isLoading) {
+                if (uiState.isLoading) {
                     Box(
                         modifier =
                             Modifier
@@ -176,7 +214,7 @@ fun SignUpScreen(
                     titleText = "Already have an account?",
                     buttonText = "Sign In",
                     onNavigate = onNavigateToLogin,
-                    enabled = !screenState.isLoading,
+                    enabled = !uiState.isLoading,
                     modifier =
                         Modifier
                             .fillMaxWidth()
