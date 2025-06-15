@@ -23,10 +23,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,31 +33,24 @@ import com.newton.auth.presentation.components.GoogleSignInButton
 import com.newton.auth.presentation.components.OrDivider
 import com.newton.auth.presentation.components.PrivacyTermsText
 import com.newton.auth.presentation.components.WelcomeSection
-import com.newton.auth.presentation.login.state.LoginScreenState
+import com.newton.auth.presentation.login.event.LoginUiEvent
+import com.newton.auth.presentation.login.state.LoginUiState
 import com.newton.auth.presentation.login.view.components.LoginForm
-import com.newton.auth.presentation.login.view.components.LoginFormData
 import com.newton.commonui.components.PrimaryButton
 import com.newton.commonui.theme.backgroundGradient
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
+    uiState: LoginUiState,
+    onEvent: (LoginUiEvent) -> Unit,
     onNavigateBack: () -> Unit,
     onNavigateToSignUp: () -> Unit,
-    onLoginWithEmail: (LoginFormData) -> Unit,
     onLoginWithGoogle: () -> Unit,
-    onForgotPasswordClick: () -> Unit,
     onPrivacyPolicyClick: () -> Unit,
     onTermsOfServiceClick: () -> Unit,
     modifier: Modifier = Modifier,
-    isLoading: Boolean = false,
 ) {
-    var screenState by remember {
-        mutableStateOf(LoginScreenState(isLoading = isLoading))
-    }
-
-    screenState = screenState.copy(isLoading = isLoading)
-
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -113,7 +102,7 @@ fun LoginScreen(
 
                 GoogleSignInButton(
                     onClick = onLoginWithGoogle,
-                    enabled = !screenState.isLoading,
+                    enabled = !uiState.isLoading,
                     text = "Sign in with Google",
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -123,36 +112,29 @@ fun LoginScreen(
                 )
 
                 LoginForm(
-                    formData = screenState.formData,
-                    onFormDataChange = { newFormData ->
-                        screenState =
-                            screenState.copy(
-                                formData = newFormData,
-                                isFormValid =
-                                    newFormData.emailOrUsername.isNotBlank() &&
-                                        newFormData.password.isNotBlank(),
-                            )
-                    },
-                    errors = screenState.formErrors,
-                    onForgotPasswordClick = onForgotPasswordClick,
-                    enabled = !screenState.isLoading,
+                    email = uiState.email,
+                    password = uiState.password,
+                    isPasswordVisible = uiState.isPasswordVisible,
+                    onEmailChange = { onEvent(LoginUiEvent.OnEmailChanged(it)) },
+                    onPasswordChange = { onEvent(LoginUiEvent.OnPasswordChanged(it)) },
+                    onTogglePasswordVisibility = { onEvent(LoginUiEvent.OnTogglePasswordVisibility) },
+                    onForgotPasswordClick = { onEvent(LoginUiEvent.OnNavigateToForgotPassword) },
+                    enabled = !uiState.isLoading,
+                    loginError = uiState.loginError,
+                    onClearError = { onEvent(LoginUiEvent.OnClearError) },
                     modifier = Modifier.fillMaxWidth(),
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
 
                 PrimaryButton(
-                    text = if (screenState.isLoading) "Signing In..." else "Sign In",
-                    onClick = {
-                        if (screenState.isFormValid && !screenState.isLoading) {
-                            onLoginWithEmail(screenState.formData)
-                        }
-                    },
-                    enabled = screenState.isFormValid && !screenState.isLoading,
+                    text = if (uiState.isLoading) "Signing In..." else "Sign In",
+                    onClick = { onEvent(LoginUiEvent.OnLoginClicked) },
+                    enabled = uiState.isFormValid && !uiState.isLoading,
                     modifier = Modifier.fillMaxWidth(),
                 )
 
-                if (screenState.isLoading) {
+                if (uiState.isLoading) {
                     Box(
                         modifier =
                             Modifier
@@ -179,7 +161,7 @@ fun LoginScreen(
                     titleText = "Don't have an account?",
                     buttonText = "Sign Up",
                     onNavigate = onNavigateToSignUp,
-                    enabled = !screenState.isLoading,
+                    enabled = !uiState.isLoading,
                     modifier =
                         Modifier
                             .fillMaxWidth()

@@ -8,7 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.newton.auth.presentation.forgotpassword.view.ForgotPasswordScreen
-import com.newton.auth.presentation.login.view.LoginScreen
+import com.newton.auth.presentation.login.view.LoginContainer
+import com.newton.auth.presentation.login.viewmodel.LoginViewModel
 import com.newton.auth.presentation.onboarding.OnboardingScreen
 import com.newton.auth.presentation.otp.view.OtpVerificationScreen
 import com.newton.auth.presentation.resetpassword.view.ResetPasswordScreen
@@ -115,23 +116,34 @@ class AuthNavigationApiImpl @Inject constructor(
                 popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.ZOOM, 300),
                 popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300),
             ) {
-                LoginScreen(
-                    onNavigateBack = {},
-                    onPrivacyPolicyClick = {},
-                    onTermsOfServiceClick = {},
-                    isLoading = false,
+                val loginViewModel = hiltViewModel<LoginViewModel>()
+                LoginContainer(
+                    onNavigateBack = {
+                        navHostController.popBackStack()
+                    },
                     onNavigateToSignUp = {
                         navHostController.navigate(NavigationRoutes.SignupRoute.route) {
                             popUpTo(NavigationRoutes.LoginRoute.route)
                         }
                     },
-                    onLoginWithEmail = {},
-                    onLoginWithGoogle = {},
-                    onForgotPasswordClick = {
+                    onNavigateToHome = {
+                        navHostController.navigate(NavigationRoutes.OTPRoute.route) {
+                            popUpTo(NavigationRoutes.OTPRoute.route)
+                        }
+                    },
+                    onNavigateToForgotPassword = {
                         navHostController.navigate(NavigationRoutes.ForgotPasswordRoute.route) {
                             popUpTo(NavigationRoutes.LoginRoute.route)
                         }
                     },
+                    onLoginWithGoogle = {},
+                    onPrivacyPolicyClick = {},
+                    onTermsOfServiceClick = {},
+                    onShowSnackbar = { snackbarData ->
+                        snackbarManager.showSnackbar(snackbarData)
+                    },
+                    onShowToast = {},
+                    viewModel = loginViewModel
                 )
             }
 
