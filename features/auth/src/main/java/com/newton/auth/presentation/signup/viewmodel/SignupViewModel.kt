@@ -2,6 +2,10 @@ package com.newton.auth.presentation.signup.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.newton.auth.extensions.sendErrorSnackbar
+import com.newton.auth.extensions.sendInfoSnackbar
+import com.newton.auth.extensions.sendSuccessSnackbar
+import com.newton.auth.extensions.sendWarningSnackbar
 import com.newton.auth.presentation.signup.event.SignupUiEffect
 import com.newton.auth.presentation.signup.event.SignupUiEvent
 import com.newton.auth.presentation.signup.state.SignupUiState
@@ -231,7 +235,7 @@ class SignupViewModel
 
             if (!currentState.isFormValid || currentState.hasAnyError()) {
                 viewModelScope.launch {
-                    _uiEffect.send(SignupUiEffect.ShowSnackbar("Please fix the errors before proceeding"))
+                    _uiEffect.sendWarningSnackbar("Please fix the errors before proceeding")
                 }
                 return
             }
@@ -248,6 +252,7 @@ class SignupViewModel
 
             viewModelScope.launch {
                 try {
+                    _uiEffect.sendInfoSnackbar("Creating your account....")
                     authRepository.createUser(signupData).collect { resource ->
                         resource.handle(
                             onLoading = { isLoading ->
@@ -267,8 +272,10 @@ class SignupViewModel
                                     )
 
                                 _uiEffect.send(SignupUiEffect.NavigateToEmailVerification)
-                                _uiEffect.send(SignupUiEffect.ShowSnackbar("Account created successfully! Please verify your email."))
-                            },
+                                _uiEffect.sendSuccessSnackbar(
+                                    message = "Account created successfully! Please verify your email.",
+                                    actionLabel = "OK"
+                                )                            },
                             onError = { message, errorType, httpCode ->
 
                                 _uiState.value =
@@ -278,8 +285,11 @@ class SignupViewModel
                                         signupSuccess = false,
                                     )
 
-                                _uiEffect.send(SignupUiEffect.ShowSnackbar(message ?: "Unknown error occurred"))
-                            },
+                                _uiEffect.sendErrorSnackbar(
+                                    message = message ?: "Unknown error occurred",
+                                    actionLabel = "Retry",
+                                    onActionClick = { performSignup() }
+                                )                            },
                         )
                     }
                 } catch (e: Exception) {
@@ -291,8 +301,11 @@ class SignupViewModel
                         )
 
                     viewModelScope.launch {
-                        _uiEffect.send(SignupUiEffect.ShowSnackbar("An unexpected error occurred"))
-                    }
+                        _uiEffect.sendErrorSnackbar(
+                            message = "An unexpected error occurred",
+                            actionLabel = "Try Again",
+                            onActionClick = { performSignup() }
+                        )                    }
                 }
             }
         }

@@ -5,9 +5,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.newton.auth.extensions.toSnackbarData
 import com.newton.auth.presentation.signup.event.SignupUiEffect
 import com.newton.auth.presentation.signup.event.SignupUiEvent
 import com.newton.auth.presentation.signup.viewmodel.SignupViewModel
+import com.newton.commonui.ui.SnackbarData
 
 @Composable
 fun SignUpContainer(
@@ -17,7 +19,7 @@ fun SignUpContainer(
     onSignUpWithGoogle: () -> Unit,
     onPrivacyPolicyClick: () -> Unit,
     onTermsOfServiceClick: () -> Unit,
-    onShowSnackbar: (String) -> Unit,
+    onShowSnackbar: (SnackbarData) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SignupViewModel,
 ) {
@@ -29,7 +31,7 @@ fun SignUpContainer(
                 is SignupUiEffect.NavigateToLogin -> onNavigateToLogin()
                 is SignupUiEffect.NavigateToEmailVerification -> onNavigateToEmailVerification()
                 is SignupUiEffect.ShowSnackbar -> {
-                    onShowSnackbar(effect.message)
+                    onShowSnackbar(effect.toSnackbarData())
                     viewModel.onEvent(SignupUiEvent.OnClearError)
                 }
                 is SignupUiEffect.ShowToast -> null
