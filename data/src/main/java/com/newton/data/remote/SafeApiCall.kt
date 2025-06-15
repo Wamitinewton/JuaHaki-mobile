@@ -116,7 +116,7 @@ private fun handleHttpError(error: HttpException): ErrorResponse {
             errorType = ErrorType.AUTHORIZATION
         )
         404 -> ErrorResponse(
-            message = serverMessage ?: "Resource not found",
+            message = "Resource not found",
             errorType = ErrorType.NOT_FOUND
         )
         408 -> ErrorResponse(
@@ -186,7 +186,7 @@ private fun parseAsApiResponse(errorBody: String): String? {
 private fun parseAsGenericError(errorBody: String): String? {
     return try {
         val gson = Gson()
-        val errorMap = gson.fromJson(errorBody, Map::class.java) as? Map<String, Any>
+        val errorMap = gson.fromJson(errorBody, Map::class.java)
 
         val messageFields = listOf("message", "error", "error_description", "detail", "msg")
 

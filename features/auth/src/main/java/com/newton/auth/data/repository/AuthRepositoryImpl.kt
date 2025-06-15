@@ -22,7 +22,6 @@ import com.newton.domain.models.auth.VerifyOtpData
 import com.newton.domain.repository.auth.AuthRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class AuthRepositoryImpl

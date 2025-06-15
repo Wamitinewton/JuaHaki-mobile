@@ -143,16 +143,16 @@ fun SignUpForm(
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "Optional Information",
+            text = "Personal Information",
             style = MaterialTheme.typography.titleMedium.copy(
                 fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+                color = MaterialTheme.colorScheme.onSurface,
             ),
             modifier = Modifier.padding(bottom = 8.dp),
         )
 
         Text(
-            text = "Help us personalize your experience (you can skip these)",
+            text = "Please provide your personal details to complete registration",
             style = MaterialTheme.typography.bodySmall.copy(
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
             ),
@@ -169,7 +169,7 @@ fun SignUpForm(
                 onValueChange = { firstName ->
                     onFormDataChange(formData.copy(firstName = firstName))
                 },
-                label = "First Name",
+                label = "First Name *",
                 placeholder = "First name",
                 leadingIcon = Icons.Default.Person,
                 isError = errors.firstName != null,
@@ -190,7 +190,7 @@ fun SignUpForm(
                 onValueChange = { lastName ->
                     onFormDataChange(formData.copy(lastName = lastName))
                 },
-                label = "Last Name",
+                label = "Last Name *",
                 placeholder = "Last name",
                 isError = errors.lastName != null,
                 errorMessage = errors.lastName,
@@ -211,7 +211,7 @@ fun SignUpForm(
             onValueChange = { username ->
                 onFormDataChange(formData.copy(username = username))
             },
-            label = "Username",
+            label = "Username *",
             placeholder = "Choose a unique username",
             helperText = "This will be your unique identifier in the app",
             isError = errors.username != null,

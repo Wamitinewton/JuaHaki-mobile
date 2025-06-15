@@ -7,7 +7,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.newton.auth.extensions.showSnackbar
 import com.newton.auth.presentation.forgotpassword.view.ForgotPasswordScreen
 import com.newton.auth.presentation.login.view.LoginScreen
 import com.newton.auth.presentation.onboarding.OnboardingScreen

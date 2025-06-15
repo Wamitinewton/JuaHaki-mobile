@@ -2,13 +2,13 @@ package com.newton.auth.presentation.signup.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newton.auth.extensions.sendErrorSnackbar
-import com.newton.auth.extensions.sendInfoSnackbar
-import com.newton.auth.extensions.sendSuccessSnackbar
-import com.newton.auth.extensions.sendWarningSnackbar
 import com.newton.auth.presentation.signup.event.SignupUiEffect
 import com.newton.auth.presentation.signup.event.SignupUiEvent
 import com.newton.auth.presentation.signup.state.SignupUiState
+import com.newton.core.extensions.sendErrorSnackbar
+import com.newton.core.extensions.sendInfoSnackbar
+import com.newton.core.extensions.sendSuccessSnackbar
+import com.newton.core.extensions.sendWarningSnackbar
 import com.newton.core.utils.InputValidator
 import com.newton.core.utils.ValidationResult
 import com.newton.domain.models.auth.SignupData

@@ -1,14 +1,12 @@
 package com.newton.auth.presentation.signup.view
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.newton.auth.extensions.toSnackbarData
 import com.newton.auth.presentation.signup.event.SignupUiEffect
-import com.newton.auth.presentation.signup.event.SignupUiEvent
 import com.newton.auth.presentation.signup.viewmodel.SignupViewModel
+import com.newton.commonui.ui.HandleUiEffects
 import com.newton.commonui.ui.SnackbarData
 
 @Composable
@@ -20,24 +18,28 @@ fun SignUpContainer(
     onPrivacyPolicyClick: () -> Unit,
     onTermsOfServiceClick: () -> Unit,
     onShowSnackbar: (SnackbarData) -> Unit,
+    onShowToast: ((String) -> Unit)? = null,
     modifier: Modifier = Modifier,
     viewModel: SignupViewModel,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        viewModel.uiEffect.collect { effect ->
+
+    HandleUiEffects(
+        uiEffects = viewModel.uiEffect,
+        onShowSnackbar = onShowSnackbar,
+        onShowToast = onShowToast,
+        onCustomEffect = { effect ->
             when (effect) {
-                is SignupUiEffect.NavigateToLogin -> onNavigateToLogin()
-                is SignupUiEffect.NavigateToEmailVerification -> onNavigateToEmailVerification()
-                is SignupUiEffect.ShowSnackbar -> {
-                    onShowSnackbar(effect.toSnackbarData())
-                    viewModel.onEvent(SignupUiEvent.OnClearError)
+                is SignupUiEffect.NavigateToLogin -> {
+                    onNavigateToLogin()
                 }
-                is SignupUiEffect.ShowToast -> null
+                is SignupUiEffect.NavigateToEmailVerification -> {
+                    onNavigateToEmailVerification()
+                }
             }
         }
-    }
+    )
 
     SignUpScreen(
         uiState = uiState,
