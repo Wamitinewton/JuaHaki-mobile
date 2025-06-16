@@ -271,7 +271,7 @@ class SignupViewModel
                                         signupError = null,
                                     )
 
-                                _uiEffect.send(SignupUiEffect.NavigateToEmailVerification)
+                                _uiEffect.send(SignupUiEffect.NavigateToEmailVerification(currentState.email.trim()))
                                 _uiEffect.sendSuccessSnackbar(
                                     message = "Account created successfully! Please verify your email.",
                                     actionLabel = "OK"

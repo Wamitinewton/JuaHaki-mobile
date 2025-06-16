@@ -13,7 +13,7 @@ import com.newton.commonui.ui.SnackbarData
 fun SignUpContainer(
     onNavigateBack: () -> Unit,
     onNavigateToLogin: () -> Unit,
-    onNavigateToEmailVerification: () -> Unit,
+    onNavigateToEmailVerification: (String) -> Unit,
     onSignUpWithGoogle: () -> Unit,
     onPrivacyPolicyClick: () -> Unit,
     onTermsOfServiceClick: () -> Unit,
@@ -35,7 +35,7 @@ fun SignUpContainer(
                     onNavigateToLogin()
                 }
                 is SignupUiEffect.NavigateToEmailVerification -> {
-                    onNavigateToEmailVerification()
+                    onNavigateToEmailVerification(effect.email)
                 }
             }
         }

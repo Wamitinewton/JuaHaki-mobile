@@ -11,7 +11,9 @@ import com.newton.auth.presentation.forgotpassword.view.ForgotPasswordScreen
 import com.newton.auth.presentation.login.view.LoginContainer
 import com.newton.auth.presentation.login.viewmodel.LoginViewModel
 import com.newton.auth.presentation.onboarding.OnboardingScreen
+import com.newton.auth.presentation.otp.view.AccountVerificationScreen
 import com.newton.auth.presentation.otp.view.OtpVerificationScreen
+import com.newton.auth.presentation.otp.viewmodel.AccountVerificationViewModel
 import com.newton.auth.presentation.resetpassword.view.ResetPasswordScreen
 import com.newton.auth.presentation.signup.view.SignUpContainer
 import com.newton.auth.presentation.signup.viewmodel.SignupViewModel
@@ -90,8 +92,8 @@ class AuthNavigationApiImpl @Inject constructor(
                             popUpTo(NavigationRoutes.SignupRoute.route)
                         }
                     },
-                    onNavigateToEmailVerification = {
-                        navHostController.navigate(NavigationRoutes.OTPRoute.createRoute(OtpContext.SIGN_UP)) {
+                    onNavigateToEmailVerification = { email ->
+                        navHostController.navigate(NavigationRoutes.OTPRoute.createRoute(email)) {
                             popUpTo(NavigationRoutes.SignupRoute.route)
                         }
                     },
@@ -153,59 +155,31 @@ class AuthNavigationApiImpl @Inject constructor(
                 exitTransition = navigationTransitions.getExitTransition(TransitionType.ZOOM, 300),
                 popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.ZOOM, 300),
                 popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300),
-                arguments =
-                    listOf(
-                        navArgument(NavigationRoutes.OTPRoute.CONTEXT_ARG) {
-                            type = NavType.StringType
-                        },
-                    ),
+                arguments = listOf(
+                    navArgument(NavigationRoutes.OTPRoute.EMAIL_ARG) {
+                        type = NavType.StringType
+                    }
+                ),
             ) { backstackEntry ->
-                val contextString = backstackEntry.arguments?.getString(NavigationRoutes.OTPRoute.CONTEXT_ARG)
-                val context = OtpContext.valueOf(contextString ?: OtpContext.SIGN_UP.name)
 
-                OtpVerificationScreen(
+                val accountVerificationViewModel = hiltViewModel<AccountVerificationViewModel>()
+                AccountVerificationScreen(
                     onNavigateBack = {
                         navHostController.popBackStack()
                     },
-                    onVerifyOtp = { otpCode ->
-                        when (context) {
-                            OtpContext.SIGN_UP -> {
-                                navHostController.navigate(NavigationRoutes.LoginRoute.route) {
-                                    popUpTo(NavigationRoutes.OTPRoute.route) {
-                                        inclusive = true
-                                    }
-                                }
-                            }
-                            OtpContext.FORGOT_PASSWORD -> {
-                                navHostController.navigate(NavigationRoutes.ResetPassword.route) {
-                                    popUpTo(NavigationRoutes.OTPRoute.route) {
-                                        inclusive = true
-                                    }
-                                }
+                    onNavigateToLogin = {
+                        navHostController.navigate(NavigationRoutes.LoginRoute.route) {
+                            popUpTo(NavigationRoutes.OTPRoute.route) {
+                                inclusive = true
                             }
                         }
                     },
-                    onResendCode = { /* resend logic */ },
-                    isLoading = false,
-                    contactInfo = "user@example.com",
-                    otpLength = 6,
-                    resendCooldownSeconds = 60,
-                    title =
-                        when (context) {
-                            OtpContext.SIGN_UP -> "Complete Your Registration"
-                            OtpContext.FORGOT_PASSWORD -> "Verify Your Identity"
-                        },
-                    subtitle =
-                        when (context) {
-                            OtpContext.SIGN_UP -> "We've sent you a verification code"
-                            OtpContext.FORGOT_PASSWORD -> "We've sent you a password reset code"
-                        },
-                    description =
-                        when (context) {
-                            OtpContext.SIGN_UP -> "Enter the code we sent to complete your account setup"
-                            OtpContext.FORGOT_PASSWORD -> "Enter the code we sent to reset your password"
-                        },
+                    onShowSnackbar = { snackbarData ->
+                        snackbarManager.showSnackbar(snackbarData)
+                    },
+                    viewModel = accountVerificationViewModel
                 )
+
             }
 
             composable(
@@ -219,7 +193,7 @@ class AuthNavigationApiImpl @Inject constructor(
                     onNavigateBack = {},
                     onNavigateToLogin = {},
                     onSendResetEmail = {
-                        navHostController.navigate(NavigationRoutes.OTPRoute.createRoute(OtpContext.FORGOT_PASSWORD)) {
+                        navHostController.navigate(NavigationRoutes.OTPRoute.createRoute("wamitinewton@gmail.com")) {
                             popUpTo(NavigationRoutes.ForgotPasswordRoute.route)
                         }
                     },

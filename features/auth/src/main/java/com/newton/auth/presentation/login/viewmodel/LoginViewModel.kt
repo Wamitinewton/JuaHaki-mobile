@@ -138,11 +138,39 @@ class LoginViewModel
                                         loginError = null,
                                     )
 
-                                _uiEffect.send(LoginUiEffect.NavigateToHome)
-                                _uiEffect.sendSuccessSnackbar(
-                                    message = "Welcome back! ${jwtData?.userInfo?.username}. Login Success",
-                                    actionLabel = "OK",
-                                )
+                                jwtData?.userInfo?.let { userInfo ->
+                                    viewModelScope.launch {
+                                        try {
+                                            authRepository.storeLoggedInUser(userInfo)
+
+                                            _uiEffect.send(LoginUiEffect.NavigateToHome)
+                                            _uiEffect.sendSuccessSnackbar(
+                                                message = "Welcome back! ${userInfo.username}. Login Success",
+                                                actionLabel = "OK",
+                                            )
+                                        } catch (e: Exception) {
+                                            _uiEffect.sendErrorSnackbar(
+                                                message = "Login successful but failed to save user data: ${e.localizedMessage}",
+                                                actionLabel = "Continue",
+                                                onActionClick = {
+                                                    viewModelScope.launch {
+                                                        _uiEffect.send(LoginUiEffect.NavigateToHome)
+                                                    }
+                                                }
+                                            )
+                                        }
+                                    }
+                                } ?: run {
+                                    _uiEffect.sendErrorSnackbar(
+                                        message = "Login successful but user data is missing",
+                                        actionLabel = "Continue",
+                                        onActionClick = {
+                                            viewModelScope.launch {
+                                                _uiEffect.send(LoginUiEffect.NavigateToHome)
+                                            }
+                                        }
+                                    )
+                                }
                             },
                             onError = { message, errorType, httpCode ->
                                 _uiState.value =
@@ -170,7 +198,7 @@ class LoginViewModel
 
                     viewModelScope.launch {
                         _uiEffect.sendErrorSnackbar(
-                            message = "An unexpected error occurred",
+                            message = "An unexpected error occurred: ${e.localizedMessage ?: "Unknown error"}",
                             actionLabel = "Try Again",
                             onActionClick = { performLogin() },
                         )

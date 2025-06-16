@@ -28,85 +28,41 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.newton.auth.presentation.otp.state.OtpVerificationScreenState
 import com.newton.commonui.components.CompactButton
 import com.newton.commonui.components.OtpTextField
 import com.newton.commonui.components.PrimaryButton
 import com.newton.commonui.theme.backgroundGradient
 import com.newton.core.enums.ButtonVariant
-import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OtpVerificationScreen(
+    otpCode: String,
     onNavigateBack: () -> Unit,
+    onOtpValueChange: (String) -> Unit,
     onVerifyOtp: (String) -> Unit,
     onResendCode: () -> Unit,
+    onOtpComplete: (String) -> Unit,
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
     isResendingCode: Boolean = false,
     errorMessage: String? = null,
+    isFormValid: Boolean = false,
+    isResendButtonEnabled: Boolean = true,
+    otpLength: Int = 6,
+    resendCooldownSeconds: Int = 0,
+    showResendOption: Boolean = true,
     title: String = "Verify Your Code",
     subtitle: String = "We've sent you a verification code",
     description: String = "Enter the code we sent to continue",
     contactInfo: String? = null,
-    otpLength: Int = 6,
-    resendCooldownSeconds: Int = 60,
-    showResendOption: Boolean = true,
-
 ) {
-    var screenState by remember {
-        mutableStateOf(
-            OtpVerificationScreenState(
-                isLoading = isLoading,
-                isResendingCode = isResendingCode,
-                errorMessage = errorMessage,
-                otpLength = otpLength,
-                resendCooldownSeconds = if (isResendingCode || isLoading) resendCooldownSeconds else 0,
-            ),
-        )
-    }
-
-    screenState =
-        screenState.copy(
-            isLoading = isLoading,
-            isResendingCode = isResendingCode,
-            errorMessage = errorMessage,
-        )
-
-    LaunchedEffect(screenState.isResendingCode) {
-        if (screenState.isResendingCode) {
-            screenState =
-                screenState.copy(
-                    resendCooldownSeconds = resendCooldownSeconds,
-                    canResend = false,
-                )
-        }
-    }
-
-    LaunchedEffect(screenState.resendCooldownSeconds) {
-        if (screenState.resendCooldownSeconds > 0) {
-            delay(1000)
-            screenState =
-                screenState.copy(
-                    resendCooldownSeconds = screenState.resendCooldownSeconds - 1,
-                )
-        } else if (screenState.resendCooldownSeconds == 0 && !screenState.canResend) {
-            screenState = screenState.copy(canResend = true)
-        }
-    }
-
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -206,27 +162,16 @@ fun OtpVerificationScreen(
                         Spacer(modifier = Modifier.height(24.dp))
 
                         OtpTextField(
-                            value = screenState.otpCode,
-                            onValueChange = { newOtp ->
-                                screenState =
-                                    screenState.copy(
-                                        otpCode = newOtp,
-                                        isFormValid = newOtp.length == otpLength,
-                                        errorMessage = null,
-                                    )
-                            },
+                            value = otpCode,
+                            onValueChange = onOtpValueChange,
                             otpLength = otpLength,
-                            enabled = !screenState.isLoading && !screenState.isResendingCode,
-                            isError = screenState.errorMessage != null,
-                            onOtpComplete = { completedOtp ->
-                                if (screenState.isFormValid && !screenState.isLoading) {
-                                    onVerifyOtp(completedOtp)
-                                }
-                            },
+                            enabled = !isLoading && !isResendingCode,
+                            isError = errorMessage != null,
+                            onOtpComplete = onOtpComplete,
                             modifier = Modifier.fillMaxWidth(),
                         )
 
-                        screenState.errorMessage?.let { error ->
+                        errorMessage?.let { error ->
                             Spacer(modifier = Modifier.height(16.dp))
                             Text(
                                 text = error,
@@ -241,19 +186,19 @@ fun OtpVerificationScreen(
                         PrimaryButton(
                             text =
                                 when {
-                                    screenState.isLoading -> "Verifying..."
+                                    isLoading -> "Verifying..."
                                     else -> "Verify Code"
                                 },
                             onClick = {
-                                if (screenState.isFormValid && !screenState.isLoading) {
-                                    onVerifyOtp(screenState.otpCode)
+                                if (isFormValid && !isLoading) {
+                                    onVerifyOtp(otpCode)
                                 }
                             },
-                            enabled = screenState.isFormValid && !screenState.isLoading && !screenState.isResendingCode,
+                            enabled = isFormValid && !isLoading && !isResendingCode,
                             modifier = Modifier.fillMaxWidth(),
                         )
 
-                        if (screenState.isLoading) {
+                        if (isLoading) {
                             Spacer(modifier = Modifier.height(16.dp))
                             CircularProgressIndicator(
                                 modifier = Modifier.padding(8.dp),
@@ -286,17 +231,17 @@ fun OtpVerificationScreen(
                             CompactButton(
                                 text =
                                     when {
-                                        screenState.isResendingCode -> "Sending..."
-                                        screenState.resendCooldownSeconds > 0 -> "Resend in ${screenState.resendCooldownSeconds}s"
+                                        isResendingCode -> "Sending..."
+                                        resendCooldownSeconds > 0 -> "Resend in ${resendCooldownSeconds}s"
                                         else -> "Resend Code"
                                     },
                                 onClick = onResendCode,
-                                enabled = screenState.isResendButtonEnabled,
+                                enabled = isResendButtonEnabled,
                                 variant = ButtonVariant.Text,
-                                leadingIcon = if (!screenState.isResendingCode) Icons.Default.Refresh else null,
+                                leadingIcon = if (!isResendingCode) Icons.Default.Refresh else null,
                             )
 
-                            if (screenState.isResendingCode) {
+                            if (isResendingCode) {
                                 CircularProgressIndicator(
                                     modifier = Modifier.padding(4.dp),
                                     color = MaterialTheme.colorScheme.primary,

@@ -14,11 +14,12 @@ sealed class NavigationRoutes(
 
     data object LoginRoute : NavigationRoutes("login_screen_route")
 
-    object OTPRoute : NavigationRoutes("otp/{context}") {
-        const val CONTEXT_ARG = "context"
+    object OTPRoute : NavigationRoutes("otp/{email}") {
+        const val EMAIL_ARG = "email"
 
-        fun createRoute(context: OtpContext): String = "otp/${context.name}"
+        fun createRoute(email: String): String = "otp/$email"
     }
+
 
     data object ForgotPasswordRoute : NavigationRoutes("forgot_password_route")
 
