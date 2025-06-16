@@ -57,11 +57,14 @@ constructor(
         return safeApiCall(
             apiCall = {
                 val response = authApiService.login(request.toLoginRequest())
-                val jwtData = response.data?.toJwtData()
-                    ?: throw IllegalStateException("Login failed: No authentication data received from server")
 
-                // Store tokens after successful login
-                storeSessionTokens(jwtData.accessToken, jwtData.refreshToken)
+                println("Login response: $response")
+                println("Response data: ${response.data}")
+
+                val jwtData = response.data?.toJwtData()
+
+
+                storeSessionTokens(jwtData!!.accessToken, jwtData.refreshToken)
                 jwtData
             },
             errorHandler = { throwable ->

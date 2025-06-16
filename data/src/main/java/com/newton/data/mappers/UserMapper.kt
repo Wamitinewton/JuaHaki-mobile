@@ -39,7 +39,7 @@ fun JwtResponse.toJwtData(): JwtData {
     return JwtData(
         accessToken = accessToken,
         refreshToken = refreshToken,
-        userInfo = userDto.toUserDomain()
+        userInfo = user.toUserDomain()
     )
 }
 
