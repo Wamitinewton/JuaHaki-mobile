@@ -145,7 +145,10 @@ class AuthNavigationApiImpl @Inject constructor(
                         snackbarManager.showSnackbar(snackbarData)
                     },
                     onShowToast = {},
-                    viewModel = loginViewModel
+                    viewModel = loginViewModel,
+                    onNavigateToActivateAccount = { email ->
+                        navHostController.navigate(NavigationRoutes.OTPRoute.createRoute(email))
+                    },
                 )
             }
 

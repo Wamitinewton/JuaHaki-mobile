@@ -21,206 +21,221 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel
-    @Inject
-    constructor(
-        private val authRepository: AuthRepository,
-    ) : ViewModel() {
-        private val _uiState = MutableStateFlow(LoginUiState())
-        val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
+@Inject
+constructor(
+    private val authRepository: AuthRepository,
+) : ViewModel() {
+    private val _uiState = MutableStateFlow(LoginUiState())
+    val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
-        private val _uiEffect = Channel<LoginUiEffect>()
-        val uiEffect = _uiEffect.receiveAsFlow()
+    private val _uiEffect = Channel<LoginUiEffect>()
+    val uiEffect = _uiEffect.receiveAsFlow()
 
-        /**
-         * Handles all UI events
-         */
-        fun onEvent(event: LoginUiEvent) {
-            when (event) {
-                is LoginUiEvent.OnEmailChanged -> updateEmail(event.email)
-                is LoginUiEvent.OnPasswordChanged -> updatePassword(event.password)
+    companion object {
+        private const val ACCOUNT_DISABLED_MESSAGE = "Account is disabled. Please verify your email to activate your account"
+    }
 
-                LoginUiEvent.OnTogglePasswordVisibility -> togglePasswordVisibility()
-                LoginUiEvent.OnLoginClicked -> performLogin()
-                LoginUiEvent.OnClearError -> clearError()
-                LoginUiEvent.OnNavigateToSignup -> navigateToSignup()
-                LoginUiEvent.OnNavigateToForgotPassword -> navigateToForgotPassword()
-            }
+    /**
+     * Handles all UI events
+     */
+    fun onEvent(event: LoginUiEvent) {
+        when (event) {
+            is LoginUiEvent.OnEmailChanged -> updateEmail(event.email)
+            is LoginUiEvent.OnPasswordChanged -> updatePassword(event.password)
+
+            LoginUiEvent.OnTogglePasswordVisibility -> togglePasswordVisibility()
+            LoginUiEvent.OnLoginClicked -> performLogin()
+            LoginUiEvent.OnClearError -> clearError()
+            LoginUiEvent.OnNavigateToSignup -> navigateToSignup()
+            LoginUiEvent.OnNavigateToForgotPassword -> navigateToForgotPassword()
         }
+    }
 
-        private fun updateEmail(email: String) {
-            _uiState.value =
-                _uiState.value.copy(
-                    email = email,
-                    loginError = null,
-                )
-            updateFormValidity()
+    private fun updateEmail(email: String) {
+        _uiState.value =
+            _uiState.value.copy(
+                email = email,
+                loginError = null,
+            )
+        updateFormValidity()
+    }
+
+    private fun updatePassword(password: String) {
+        _uiState.value =
+            _uiState.value.copy(
+                password = password,
+                loginError = null,
+            )
+        updateFormValidity()
+    }
+
+    private fun togglePasswordVisibility() {
+        _uiState.value =
+            _uiState.value.copy(
+                isPasswordVisible = !_uiState.value.isPasswordVisible,
+            )
+    }
+
+    private fun clearError() {
+        _uiState.value =
+            _uiState.value.copy(
+                loginError = null,
+            )
+    }
+
+    private fun navigateToSignup() {
+        viewModelScope.launch {
+            _uiEffect.send(LoginUiEffect.NavigateToSignup)
         }
+    }
 
-        private fun updatePassword(password: String) {
-            _uiState.value =
-                _uiState.value.copy(
-                    password = password,
-                    loginError = null,
-                )
-            updateFormValidity()
+    private fun navigateToForgotPassword() {
+        viewModelScope.launch {
+            _uiEffect.send(LoginUiEffect.NavigateToForgotPassword)
         }
+    }
 
-        private fun togglePasswordVisibility() {
-            _uiState.value =
-                _uiState.value.copy(
-                    isPasswordVisible = !_uiState.value.isPasswordVisible,
-                )
-        }
+    private fun updateFormValidity() {
+        val currentState = _uiState.value
+        val isValid = currentState.areAllFieldsFilled()
+        _uiState.value = currentState.copy(isFormValid = isValid)
+    }
 
-        private fun clearError() {
-            _uiState.value =
-                _uiState.value.copy(
-                    loginError = null,
-                )
-        }
+    /**
+     * Performs the login operation
+     */
+    private fun performLogin() {
+        val currentState = _uiState.value
 
-        private fun navigateToSignup() {
+        if (!currentState.isFormValid) {
             viewModelScope.launch {
-                _uiEffect.send(LoginUiEffect.NavigateToSignup)
+                _uiEffect.sendErrorSnackbar("Please fill in all fields")
             }
+            return
         }
 
-        private fun navigateToForgotPassword() {
-            viewModelScope.launch {
-                _uiEffect.send(LoginUiEffect.NavigateToForgotPassword)
-            }
-        }
+        val loginData =
+            LoginData(
+                password = currentState.password,
+                usernameOrEmail = currentState.email.trim(),
+            )
 
-        private fun updateFormValidity() {
-            val currentState = _uiState.value
-            val isValid = currentState.areAllFieldsFilled()
-            _uiState.value = currentState.copy(isFormValid = isValid)
-        }
+        viewModelScope.launch {
+            try {
+                _uiEffect.sendInfoSnackbar("Signing you in...")
 
-        /**
-         * Performs the login operation
-         */
-        private fun performLogin() {
-            val currentState = _uiState.value
+                authRepository.login(loginData).collect { resource ->
+                    resource.handle(
+                        onLoading = { isLoading ->
+                            _uiState.value =
+                                _uiState.value.copy(
+                                    isLoading = isLoading,
+                                    loginError = null,
+                                )
+                        },
+                        onSuccess = { jwtData ->
+                            _uiState.value =
+                                _uiState.value.copy(
+                                    isLoading = false,
+                                    loginSuccess = true,
+                                    jwtData = jwtData,
+                                    loginError = null,
+                                )
 
-            if (!currentState.isFormValid) {
-                viewModelScope.launch {
-                    _uiEffect.sendErrorSnackbar("Please fill in all fields")
-                }
-                return
-            }
+                            jwtData?.userInfo?.let { userInfo ->
+                                viewModelScope.launch {
+                                    try {
+                                        authRepository.storeLoggedInUser(userInfo)
 
-            val loginData =
-                LoginData(
-                    password = currentState.password,
-                    usernameOrEmail = currentState.email.trim(),
-                )
-
-            viewModelScope.launch {
-                try {
-                    _uiEffect.sendInfoSnackbar("Signing you in...")
-
-                    authRepository.login(loginData).collect { resource ->
-                        resource.handle(
-                            onLoading = { isLoading ->
-                                _uiState.value =
-                                    _uiState.value.copy(
-                                        isLoading = isLoading,
-                                        loginError = null,
-                                    )
-                            },
-                            onSuccess = { jwtData ->
-                                _uiState.value =
-                                    _uiState.value.copy(
-                                        isLoading = false,
-                                        loginSuccess = true,
-                                        jwtData = jwtData,
-                                        loginError = null,
-                                    )
-
-                                jwtData?.userInfo?.let { userInfo ->
-                                    viewModelScope.launch {
-                                        try {
-                                            authRepository.storeLoggedInUser(userInfo)
-
-                                            _uiEffect.send(LoginUiEffect.NavigateToHome)
-                                            _uiEffect.sendSuccessSnackbar(
-                                                message = "Welcome back! ${userInfo.username}. Login Success",
-                                                actionLabel = "OK",
-                                            )
-                                        } catch (e: Exception) {
-                                            _uiEffect.sendErrorSnackbar(
-                                                message = "Login successful but failed to save user data: ${e.localizedMessage}",
-                                                actionLabel = "Continue",
-                                                onActionClick = {
-                                                    viewModelScope.launch {
-                                                        _uiEffect.send(LoginUiEffect.NavigateToHome)
-                                                    }
+                                        _uiEffect.send(LoginUiEffect.NavigateToHome)
+                                        _uiEffect.sendSuccessSnackbar(
+                                            message = "Welcome back! ${userInfo.username}. Login Success",
+                                            actionLabel = "OK",
+                                        )
+                                    } catch (e: Exception) {
+                                        _uiEffect.sendErrorSnackbar(
+                                            message = "Login successful but failed to save user data: ${e.localizedMessage}",
+                                            actionLabel = "Continue",
+                                            onActionClick = {
+                                                viewModelScope.launch {
+                                                    _uiEffect.send(LoginUiEffect.NavigateToHome)
                                                 }
-                                            )
-                                        }
-                                    }
-                                } ?: run {
-                                    _uiEffect.sendErrorSnackbar(
-                                        message = "Login successful but user data is missing",
-                                        actionLabel = "Continue",
-                                        onActionClick = {
-                                            viewModelScope.launch {
-                                                _uiEffect.send(LoginUiEffect.NavigateToHome)
                                             }
-                                        }
-                                    )
+                                        )
+                                    }
                                 }
-                            },
-                            onError = { message, errorType, httpCode ->
-                                _uiState.value =
-                                    _uiState.value.copy(
-                                        isLoading = false,
-                                        loginError = message,
-                                        loginSuccess = false,
-                                    )
+                            }
+                        },
+                        onError = { message, errorType, httpCode ->
+                            _uiState.value =
+                                _uiState.value.copy(
+                                    isLoading = false,
+                                    loginError = message,
+                                    loginSuccess = false,
+                                )
 
+                            if (message == ACCOUNT_DISABLED_MESSAGE) {
+                                handleAccountDisabledError(currentState.email.trim())
+                            } else {
                                 _uiEffect.sendErrorSnackbar(
                                     message = message ?: "Login failed. Please try again.",
                                     actionLabel = "Retry",
                                     onActionClick = { performLogin() },
                                 )
-                            },
-                        )
-                    }
-                } catch (e: Exception) {
-                    _uiState.value =
-                        _uiState.value.copy(
-                            isLoading = false,
-                            loginError = "An unexpected error occurred: ${e.localizedMessage}",
-                            loginSuccess = false,
-                        )
+                            }
+                        },
+                    )
+                }
+            } catch (e: Exception) {
+                _uiState.value =
+                    _uiState.value.copy(
+                        isLoading = false,
+                        loginError = "An unexpected error occurred: ${e.localizedMessage}",
+                        loginSuccess = false,
+                    )
 
-                    viewModelScope.launch {
-                        _uiEffect.sendErrorSnackbar(
-                            message = "An unexpected error occurred: ${e.localizedMessage ?: "Unknown error"}",
-                            actionLabel = "Try Again",
-                            onActionClick = { performLogin() },
-                        )
-                    }
+                viewModelScope.launch {
+                    _uiEffect.sendErrorSnackbar(
+                        message = "An unexpected error occurred: ${e.localizedMessage ?: "Unknown error"}",
+                        actionLabel = "Try Again",
+                        onActionClick = { performLogin() },
+                    )
                 }
             }
         }
+    }
 
-        fun resetLoginState() {
-            _uiState.value =
-                _uiState.value.copy(
-                    loginSuccess = false,
-                    loginError = null,
-                    jwtData = null,
-                    isLoading = false,
-                )
-        }
-
-        /**
-         * Clears all form data
-         */
-        fun clearForm() {
-            _uiState.value = LoginUiState()
+    /**
+     * Handles account disabled error by offering to navigate to verification screen
+     */
+    private fun handleAccountDisabledError(email: String) {
+        viewModelScope.launch {
+            _uiEffect.sendErrorSnackbar(
+                message = "Account not verified. Please verify your email to continue.",
+                actionLabel = "Verify Now",
+                onActionClick = {
+                    viewModelScope.launch {
+                        _uiEffect.send(LoginUiEffect.NavigateToVerification(email))
+                    }
+                }
+            )
         }
     }
+
+    fun resetLoginState() {
+        _uiState.value =
+            _uiState.value.copy(
+                loginSuccess = false,
+                loginError = null,
+                jwtData = null,
+                isLoading = false,
+            )
+    }
+
+    /**
+     * Clears all form data
+     */
+    fun clearForm() {
+        _uiState.value = LoginUiState()
+    }
+}

@@ -6,4 +6,5 @@ sealed class LoginUiEffect: SnackbarUiEffect {
     object NavigateToSignup : LoginUiEffect()
     object NavigateToHome : LoginUiEffect()
     object NavigateToForgotPassword : LoginUiEffect()
+    data class NavigateToVerification(val email: String): LoginUiEffect()
 }

@@ -15,6 +15,7 @@ fun LoginContainer(
     onNavigateToSignUp: () -> Unit,
     onNavigateToHome: () -> Unit,
     onNavigateToForgotPassword: () -> Unit,
+    onNavigateToActivateAccount: (String) -> Unit,
     onLoginWithGoogle: () -> Unit,
     onPrivacyPolicyClick: () -> Unit,
     onTermsOfServiceClick: () -> Unit,
@@ -40,6 +41,9 @@ fun LoginContainer(
                 is LoginUiEffect.NavigateToForgotPassword -> {
                     onNavigateToForgotPassword()
                 }
+
+                is LoginUiEffect.NavigateToVerification ->
+                    onNavigateToActivateAccount(effect.email)
             }
         },
     )

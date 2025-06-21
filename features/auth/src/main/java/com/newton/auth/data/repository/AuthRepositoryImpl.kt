@@ -41,8 +41,8 @@ constructor(
         return safeApiCall(
             apiCall = {
                 val response = authApiService.createUser(request.toRequestDto())
-                response.data?.toUserDomain()
-                    ?: throw IllegalStateException("User creation failed: No user data received from server")
+                response.data!!.toUserDomain()
+
             },
             errorHandler = { throwable ->
                 when (throwable) {
@@ -61,10 +61,10 @@ constructor(
                 println("Login response: $response")
                 println("Response data: ${response.data}")
 
-                val jwtData = response.data?.toJwtData()
+                val jwtData = response.data!!.toJwtData()
 
 
-                storeSessionTokens(jwtData!!.accessToken, jwtData.refreshToken)
+                storeSessionTokens(jwtData.accessToken, jwtData.refreshToken)
                 jwtData
             },
             errorHandler = { throwable ->
@@ -80,8 +80,7 @@ constructor(
         return safeApiCall(
             apiCall = {
                 val response = authApiService.refreshToken(request.toRefreshTokenRequest())
-                val jwtData = response.data?.toJwtData()
-                    ?: throw IllegalStateException("Token refresh failed: No authentication data received from server")
+                val jwtData = response.data!!.toJwtData()
 
                 storeSessionTokens(jwtData.accessToken, jwtData.refreshToken)
                 jwtData
