@@ -19,6 +19,7 @@ import com.newton.auth.presentation.accountverification.viewmodel.AccountVerific
 import com.newton.auth.presentation.signup.view.SignUpContainer
 import com.newton.auth.presentation.signup.viewmodel.SignupViewModel
 import com.newton.auth.presentation.splash.SplashScreen
+import com.newton.auth.presentation.splash.SplashViewModel
 import com.newton.commonui.ui.SnackbarManager
 import com.newton.core.enums.TransitionType
 import com.newton.navigation.NavigationRoutes
@@ -48,14 +49,25 @@ class AuthNavigationApiImpl
                     popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.ZOOM, 300),
                     popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300),
                 ) {
+                    val splashViewModel = hiltViewModel<SplashViewModel>()
                     SplashScreen(
-                        onSplashComplete = {
-                            navHostController.navigate(NavigationRoutes.OnboardingRoute.route) {
-                                popUpTo(NavigationRoutes.SplashScreenRoute.route) {
-                                    inclusive = true
+                        onSplashComplete = { hasTokens ->
+                            if (hasTokens) {
+                                navHostController.navigate(NavigationRoutes.HomeScreenRoute.route) {
+                                    popUpTo(NavigationRoutes.SplashScreenRoute.route) {
+                                        inclusive = true
+                                    }
+                                }
+                            } else {
+                                navHostController.navigate(NavigationRoutes.OnboardingRoute.route) {
+                                    popUpTo(NavigationRoutes.SplashScreenRoute.route) {
+                                        inclusive = true
+                                    }
                                 }
                             }
+
                         },
+                        viewModel = splashViewModel
                     )
                 }
 
@@ -192,7 +204,7 @@ class AuthNavigationApiImpl
                     exitTransition = navigationTransitions.getExitTransition(TransitionType.ZOOM, 300),
                     popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.ZOOM, 300),
                     popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300),
-                ) { backstackEntry ->
+                ) {
                     val initiatePasswordResetViewModel = hiltViewModel<InitiatePasswordResetViewModel>()
                     ForgotPasswordContainer(
                         onNavigateBack = {
@@ -230,7 +242,7 @@ class AuthNavigationApiImpl
                                 type = NavType.StringType
                             },
                         ),
-                ) {
+                ) { backstackEntry ->
                     val resetPasswordViewModel = hiltViewModel<ResetPasswordViewModel>()
                     ResetPasswordContainer(
                         onNavigateBack = {

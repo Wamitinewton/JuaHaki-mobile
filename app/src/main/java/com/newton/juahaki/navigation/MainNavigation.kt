@@ -18,6 +18,11 @@ fun JuaHakiNavigation(
             navHostController = navHostController,
             navGraphBuilder = this
         )
+
+        navigationSubGraphs.homeNavigationApi.registerNavigationGraph(
+            navHostController = navHostController,
+            navGraphBuilder = this
+        )
     }
     
 }

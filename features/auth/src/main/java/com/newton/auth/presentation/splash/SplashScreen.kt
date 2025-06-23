@@ -39,6 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
@@ -47,18 +48,21 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
-    onSplashComplete: () -> Unit,
+    onSplashComplete: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: SplashViewModel
 ) {
     var showFlag by remember { mutableStateOf(false) }
     var showText by remember { mutableStateOf(false) }
     var showSubtleGlow by remember { mutableStateOf(false) }
-    var showLoadingIndicator by remember { mutableStateOf(false) }
+    var animationComplete by remember { mutableStateOf(false) }
 
     val flagScale = remember { Animatable(0f) }
     val flagAlpha = remember { Animatable(0f) }
     val textScale = remember { Animatable(0f) }
     val textAlpha = remember { Animatable(0f) }
+
+    val hasTokens by viewModel.hasTokens.collectAsStateWithLifecycle()
 
     val infiniteTransition = rememberInfiniteTransition(label = "flag_pulse")
     val flagPulse by infiniteTransition.animateFloat(
@@ -71,6 +75,19 @@ fun SplashScreen(
             ),
         label = "flag_pulse",
     )
+
+    LaunchedEffect(animationComplete) {
+        if (animationComplete) {
+            viewModel.checkTokens()
+        }
+    }
+
+    LaunchedEffect(hasTokens) {
+        if (animationComplete && hasTokens != null) {
+            delay(300)
+            onSplashComplete(hasTokens == true)
+        }
+    }
 
     LaunchedEffect(Unit) {
         delay(300)
@@ -88,7 +105,6 @@ fun SplashScreen(
         delay(400)
         showText = true
         showSubtleGlow = true
-        showLoadingIndicator = true
 
         textAlpha.animateTo(
             targetValue = 1f,
@@ -100,7 +116,7 @@ fun SplashScreen(
         )
 
         delay(1500)
-        onSplashComplete()
+        animationComplete = true
     }
 
     Box(
@@ -114,8 +130,7 @@ fun SplashScreen(
                 Modifier
                     .fillMaxSize()
                     .padding(bottom = 80.dp),
-
-                        contentAlignment = Alignment.Center,
+            contentAlignment = Alignment.Center,
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -133,10 +148,10 @@ fun SplashScreen(
                             fadeIn(
                                 animationSpec = tween(800, easing = FastOutSlowInEasing),
                             ) +
-                                scaleIn(
-                                    animationSpec = tween(1000, easing = FastOutSlowInEasing),
-                                    initialScale = 0.3f,
-                                ),
+                                    scaleIn(
+                                        animationSpec = tween(1000, easing = FastOutSlowInEasing),
+                                        initialScale = 0.3f,
+                                    ),
                     ) {
                         Box(contentAlignment = Alignment.Center) {
                             if (showSubtleGlow) {
@@ -185,10 +200,10 @@ fun SplashScreen(
                             fadeIn(
                                 animationSpec = tween(600, easing = FastOutSlowInEasing),
                             ) +
-                                scaleIn(
-                                    animationSpec = tween(800, easing = FastOutSlowInEasing),
-                                    initialScale = 0.5f,
-                                ),
+                                    scaleIn(
+                                        animationSpec = tween(800, easing = FastOutSlowInEasing),
+                                        initialScale = 0.5f,
+                                    ),
                     ) {
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,

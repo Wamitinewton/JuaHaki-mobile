@@ -27,4 +27,7 @@ sealed class NavigationRoutes(
 
     data object ForgotPasswordRoute : NavigationRoutes("forgot_password_route")
 
+
+    data object HomeScreenRoute: NavigationRoutes("home_screen_route")
+
 }
