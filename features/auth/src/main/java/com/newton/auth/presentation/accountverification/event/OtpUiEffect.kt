@@ -1,4 +1,4 @@
-package com.newton.auth.presentation.otp.event
+package com.newton.auth.presentation.accountverification.event
 
 import com.newton.core.utils.SnackbarUiEffect
 

@@ -1,13 +1,13 @@
-package com.newton.auth.presentation.otp.view
+package com.newton.auth.presentation.accountverification.view
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.newton.auth.presentation.otp.event.OtpUiEffect
-import com.newton.auth.presentation.otp.event.OtpUiEvent
-import com.newton.auth.presentation.otp.viewmodel.AccountVerificationViewModel
+import com.newton.auth.presentation.accountverification.event.OtpUiEffect
+import com.newton.auth.presentation.accountverification.event.OtpUiEvent
+import com.newton.auth.presentation.accountverification.viewmodel.AccountVerificationViewModel
 import com.newton.commonui.ui.HandleUiEffects
 import com.newton.commonui.ui.SnackbarData
 

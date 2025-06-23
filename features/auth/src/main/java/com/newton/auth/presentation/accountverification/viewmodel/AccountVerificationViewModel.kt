@@ -1,11 +1,11 @@
-package com.newton.auth.presentation.otp.viewmodel
+package com.newton.auth.presentation.accountverification.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.newton.auth.presentation.otp.event.OtpUiEffect
-import com.newton.auth.presentation.otp.event.OtpUiEvent
-import com.newton.auth.presentation.otp.state.AccountVerificationUiState
+import com.newton.auth.presentation.accountverification.event.OtpUiEffect
+import com.newton.auth.presentation.accountverification.event.OtpUiEvent
+import com.newton.auth.presentation.accountverification.state.AccountVerificationUiState
 import com.newton.core.extensions.sendErrorSnackbar
 import com.newton.core.extensions.sendInfoSnackbar
 import com.newton.core.extensions.sendSuccessSnackbar

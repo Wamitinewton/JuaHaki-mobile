@@ -1,4 +1,4 @@
-package com.newton.auth.presentation.otp.state
+package com.newton.auth.presentation.accountverification.state
 
 data class OtpVerificationScreenState(
     val otpCode: String = "",

@@ -1,4 +1,4 @@
-package com.newton.auth.presentation.otp.view
+package com.newton.auth.presentation.accountverification.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
