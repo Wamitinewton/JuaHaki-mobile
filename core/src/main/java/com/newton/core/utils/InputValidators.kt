@@ -15,6 +15,8 @@ sealed class ValidationError(val message: String) {
     object PasswordNoLowercase : ValidationError("Password must contain at least one lowercase letter")
     object PasswordNoNumber : ValidationError("Password must contain at least one number")
     object PasswordNoSpecialChar : ValidationError("Password must contain at least one special character")
+    object InvalidOtp : ValidationError("Please enter a valid 6-character verification code")
+    object PasswordMismatch : ValidationError("Passwords do not match")
 }
 
 /**
@@ -111,12 +113,7 @@ object InputValidator {
         )
     }
 
-    /**
-     * Checks if all fields are valid
-     */
-    fun isAllFieldsValid(validationErrors: Map<String, ValidationError?>): Boolean {
-        return validationErrors.values.all { it == null }
-    }
+
 
     private fun isValidEmailFormat(email: String): Boolean {
         val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
@@ -138,5 +135,22 @@ object InputValidator {
         // Username: 3-20 characters, alphanumeric and underscores only
         val usernameRegex = "^[A-Za-z0-9_]{3,20}$"
         return username.matches(usernameRegex.toRegex())
+    }
+
+    fun validateOtp(otp: String): ValidationResult {
+        return when {
+            otp.isBlank() -> ValidationResult.Invalid(ValidationError.EmptyField)
+            otp.length != 6 -> ValidationResult.Invalid(ValidationError.InvalidOtp)
+            !otp.all { it.isLetterOrDigit() } -> ValidationResult.Invalid(ValidationError.InvalidOtp)
+            else -> ValidationResult.Valid
+        }
+    }
+
+    fun validatePasswordMatch(password: String, confirmPassword: String): ValidationResult {
+        return when {
+            confirmPassword.isBlank() -> ValidationResult.Invalid(ValidationError.EmptyField)
+            password != confirmPassword -> ValidationResult.Invalid(ValidationError.PasswordMismatch)
+            else -> ValidationResult.Valid
+        }
     }
 }

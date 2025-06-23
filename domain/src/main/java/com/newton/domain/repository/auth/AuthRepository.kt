@@ -32,4 +32,12 @@ interface AuthRepository {
     suspend fun storeLoggedInUser(user: UserInfo)
 
     suspend fun logout(): Flow<Resource<Unit>>
+
+    suspend fun initiatePasswordReset(email: String): Flow<Resource<Unit>>
+
+    suspend fun resetPassword(
+        email: String,
+        otp: String,
+        newPassword: String,
+    ): Flow<Resource<Unit>>
 }

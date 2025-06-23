@@ -14,26 +14,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.newton.commonui.components.CustomTextField
 import com.newton.core.enums.TextFieldSize
-
-/**
- * Data class to hold forgot password form data
- */
-data class ForgotPasswordFormData(
-    val email: String = "",
-)
-
-/**
- * Data class to hold forgot password form errors
- */
-data class ForgotPasswordFormErrors(
-    val email: String? = null,
-)
+import com.newton.core.utils.ValidationError
 
 @Composable
 fun ForgotPasswordForm(
-    formData: ForgotPasswordFormData,
-    onFormDataChange: (ForgotPasswordFormData) -> Unit,
-    errors: ForgotPasswordFormErrors = ForgotPasswordFormErrors(),
+    emailError: ValidationError? = null,
+    email: String,
+    onEmailChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
 ) {
@@ -43,24 +30,21 @@ fun ForgotPasswordForm(
     ) {
         Text(
             text = "Enter Your Email Address",
-            style =
-                MaterialTheme.typography.titleMedium.copy(
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onSurface,
-                ),
+            style = MaterialTheme.typography.titleMedium.copy(
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.onSurface,
+            ),
             modifier = Modifier.padding(bottom = 8.dp),
         )
 
         CustomTextField(
-            value = formData.email,
-            onValueChange = { email ->
-                onFormDataChange(formData.copy(email = email))
-            },
+            value = email,
+            onValueChange = onEmailChange,
             label = "Email Address",
             placeholder = "Enter your email address",
             leadingIcon = Icons.Default.AlternateEmail,
-            isError = errors.email != null,
-            errorMessage = errors.email,
+            isError = emailError != null,
+            errorMessage = emailError?.message,
             enabled = enabled,
             size = TextFieldSize.Medium,
             modifier = Modifier.fillMaxWidth(),
@@ -68,11 +52,10 @@ fun ForgotPasswordForm(
 
         Text(
             text = "We'll send a password reset link to this email address if it's associated with an account.",
-            style =
-                MaterialTheme.typography.bodySmall.copy(
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                    lineHeight = MaterialTheme.typography.bodySmall.lineHeight * 1.3,
-                ),
+            style = MaterialTheme.typography.bodySmall.copy(
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                lineHeight = MaterialTheme.typography.bodySmall.lineHeight * 1.3,
+            ),
             modifier = Modifier.padding(top = 4.dp),
         )
     }

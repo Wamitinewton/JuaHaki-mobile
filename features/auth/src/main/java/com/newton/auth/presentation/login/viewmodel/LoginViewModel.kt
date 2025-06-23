@@ -35,6 +35,21 @@ constructor(
         private const val ACCOUNT_DISABLED_MESSAGE = "Account is disabled. Please verify your email to activate your account"
     }
 
+    init {
+        viewModelScope.launch {
+            try {
+                val accessToken = authRepository.getAccessToken()
+                val refreshToken = authRepository.getRefreshToken()
+
+                println("🔐 ViewModel initialized. Access Token: $accessToken")
+                println("🔐 ViewModel initialized. Refresh Token: $refreshToken")
+            } catch (e: Exception) {
+                println("❌ Error fetching tokens: ${e.localizedMessage}")
+            }
+        }
+    }
+
+
     /**
      * Handles all UI events
      */

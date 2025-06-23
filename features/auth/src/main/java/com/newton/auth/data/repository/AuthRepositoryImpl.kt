@@ -9,6 +9,7 @@ import com.newton.data.mappers.toRequestDto
 import com.newton.data.mappers.toUserDomain
 import com.newton.data.mappers.toVerifyOtpRequest
 import com.newton.data.remote.auth.AuthApiService
+import com.newton.data.remote.auth.UserApiService
 import com.newton.data.remote.safeApiCall
 import com.newton.database.dao.UserDao
 import com.newton.database.mappers.toUserEntity
@@ -28,6 +29,7 @@ class AuthRepositoryImpl
 @Inject
 constructor(
     private val authApiService: AuthApiService,
+    private val userApiService: UserApiService,
     private val sessionManager: SessionManager,
     private val userDao: UserDao,
 ): AuthRepository
@@ -157,4 +159,27 @@ constructor(
                 emit(Resource.Loading(false))
             }
         }
+
+    override suspend fun initiatePasswordReset(email: String): Flow<Resource<Unit>> {
+        return safeApiCall(
+            apiCall = {
+                userApiService.initiatePasswordReset(email)
+            },
+            errorHandler = {
+                "Password Reset initiation Failed"
+            }
+        )
+    }
+
+    override suspend fun resetPassword(
+        email: String,
+        otp: String,
+        newPassword: String
+    ): Flow<Resource<Unit>> {
+        return safeApiCall(
+            apiCall = {
+                userApiService.resetPassword(email, otp, newPassword)
+            }
+        )
+    }
 }

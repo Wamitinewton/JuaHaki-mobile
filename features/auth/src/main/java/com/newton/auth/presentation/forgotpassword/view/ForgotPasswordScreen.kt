@@ -23,10 +23,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,37 +30,30 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.newton.auth.presentation.components.AlreadyOrDontHaveAccountSection
-import com.newton.auth.presentation.forgotpassword.state.ForgotPasswordScreenState
+import com.newton.auth.presentation.forgotpassword.event.InitiatePasswordResetUiEvent
+import com.newton.auth.presentation.forgotpassword.state.InitiatePasswordResetUiState
 import com.newton.auth.presentation.forgotpassword.view.components.ForgotPasswordForm
-import com.newton.auth.presentation.forgotpassword.view.components.ForgotPasswordFormData
 import com.newton.commonui.components.PrimaryButton
 import com.newton.commonui.theme.backgroundGradient
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ForgotPasswordScreen(
+    uiState: InitiatePasswordResetUiState,
+    onEvent: (InitiatePasswordResetUiEvent) -> Unit,
     onNavigateBack: () -> Unit,
     onNavigateToLogin: () -> Unit,
-    onSendResetEmail: (ForgotPasswordFormData) -> Unit,
     modifier: Modifier = Modifier,
-    isLoading: Boolean = false,
 ) {
-    var screenState by remember {
-        mutableStateOf(ForgotPasswordScreenState(isLoading = isLoading))
-    }
-
-    screenState = screenState.copy(isLoading = isLoading)
-
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
                     Text(
                         text = "Reset Password",
-                        style =
-                            MaterialTheme.typography.headlineSmall.copy(
-                                fontWeight = FontWeight.SemiBold,
-                            ),
+                        style = MaterialTheme.typography.headlineSmall.copy(
+                            fontWeight = FontWeight.SemiBold,
+                        ),
                     )
                 },
                 navigationIcon = {
@@ -75,28 +64,25 @@ fun ForgotPasswordScreen(
                         )
                     }
                 },
-                colors =
-                    TopAppBarDefaults.centerAlignedTopAppBarColors(
-                        containerColor = Color.Transparent,
-                    ),
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = Color.Transparent,
+                ),
             )
         },
         modifier = modifier.fillMaxSize(),
     ) { paddingValues ->
         Box(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .background(backgroundGradient())
-                    .padding(paddingValues),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(backgroundGradient())
+                .padding(paddingValues),
         ) {
             Column(
-                modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
-                        .padding(horizontal = 24.dp)
-                        .imePadding(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 24.dp)
+                    .imePadding(),
             ) {
                 Column(
                     modifier = Modifier.padding(vertical = 24.dp),
@@ -127,38 +113,31 @@ fun ForgotPasswordScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 ForgotPasswordForm(
-                    formData = screenState.formData,
-                    onFormDataChange = { newFormData ->
-                        screenState =
-                            screenState.copy(
-                                formData = newFormData,
-                                isFormValid = isValidEmail(newFormData.email),
-                            )
+                    onEmailChange = { email ->
+                        onEvent(InitiatePasswordResetUiEvent.OnEmailChanged(email))
                     },
-                    errors = screenState.formErrors,
-                    enabled = !screenState.isLoading,
+                    enabled = !uiState.isLoading,
                     modifier = Modifier.fillMaxWidth(),
+                    emailError = uiState.emailError,
+                    email = uiState.email,
                 )
 
                 Spacer(modifier = Modifier.height(32.dp))
 
                 PrimaryButton(
-                    text = if (screenState.isLoading) "Sending Reset Link..." else "Send Reset Link",
+                    text = if (uiState.isLoading) "Sending Reset Link..." else "Send Reset Link",
                     onClick = {
-                        if (screenState.isFormValid && !screenState.isLoading) {
-                            onSendResetEmail(screenState.formData)
-                        }
+                        onEvent(InitiatePasswordResetUiEvent.OnInitiatePasswordResetClicked)
                     },
-                    enabled = screenState.isFormValid && !screenState.isLoading,
+                    enabled = uiState.isFormValid && !uiState.isLoading,
                     modifier = Modifier.fillMaxWidth(),
                 )
 
-                if (screenState.isLoading) {
+                if (uiState.isLoading) {
                     Box(
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 8.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp),
                         contentAlignment = Alignment.Center,
                     ) {
                         CircularProgressIndicator(
@@ -174,23 +153,14 @@ fun ForgotPasswordScreen(
                     titleText = "Remember your password?",
                     buttonText = "Back to Sign In",
                     onNavigate = onNavigateToLogin,
-                    enabled = !screenState.isLoading,
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 16.dp),
+                    enabled = !uiState.isLoading,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp),
                 )
 
                 Spacer(modifier = Modifier.height(32.dp))
             }
         }
     }
-}
-
-private fun isValidEmail(email: String): Boolean {
-    return email.isNotBlank() &&
-            email.contains("@") &&
-            email.contains(".") &&
-            email.length > 5 &&
-            email.matches(Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"))
 }

@@ -1,4 +1,4 @@
-package com.newton.auth.presentation.resetpassword.view.components
+package com.newton.auth.presentation.forgotpassword.view.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

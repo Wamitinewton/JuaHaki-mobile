@@ -2,6 +2,7 @@ package com.newton.auth.di
 
 import com.newton.auth.data.repository.AuthRepositoryImpl
 import com.newton.data.remote.auth.AuthApiService
+import com.newton.data.remote.auth.UserApiService
 import com.newton.database.dao.UserDao
 import com.newton.database.sessionmanager.SessionManager
 import com.newton.domain.repository.auth.AuthRepository
@@ -19,13 +20,15 @@ object AuthRepositoryModule {
     @Singleton
     fun provideAuthRepositoryModule(
         authApiService: AuthApiService,
+        userApiService: UserApiService,
         sessionManager: SessionManager,
         userDao: UserDao
     ): AuthRepository {
         return AuthRepositoryImpl(
             authApiService = authApiService,
             sessionManager = sessionManager,
-            userDao = userDao
+            userDao = userDao,
+            userApiService = userApiService
         )
     }
 }
