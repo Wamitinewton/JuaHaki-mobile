@@ -1,21 +1,13 @@
 package com.newton.quiz.presentation.view.results
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EmojiEvents
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -25,7 +17,7 @@ import com.newton.commonui.components.SecondaryButton
 import com.newton.domain.models.quiz.UserQuizSummary
 
 @Composable
- fun QuizResultsContent(
+fun QuizResultsContent(
     quizSummary: UserQuizSummary,
     onViewLeaderboard: () -> Unit,
     onRetakeQuiz: () -> Unit,
@@ -33,10 +25,9 @@ import com.newton.domain.models.quiz.UserQuizSummary
 ) {
     LazyColumn(
         modifier = modifier,
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        contentPadding = PaddingValues(20.dp),
+        verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        // Score Header
         item {
             ScoreHeaderCard(
                 score = quizSummary.score,
@@ -57,8 +48,8 @@ import com.newton.domain.models.quiz.UserQuizSummary
 
         item {
             Text(
-                text = "Question by Question",
-                style = MaterialTheme.typography.titleMedium.copy(
+                text = "Question Details",
+                style = MaterialTheme.typography.headlineSmall.copy(
                     fontWeight = FontWeight.Bold
                 ),
                 color = MaterialTheme.colorScheme.onSurface,
@@ -72,11 +63,11 @@ import com.newton.domain.models.quiz.UserQuizSummary
 
         item {
             Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     SecondaryButton(
                         text = "Leaderboard",
@@ -103,7 +94,7 @@ import com.newton.domain.models.quiz.UserQuizSummary
         }
 
         item {
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }

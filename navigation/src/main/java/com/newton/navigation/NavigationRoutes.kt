@@ -37,7 +37,7 @@ sealed class NavigationRoutes(
         fun createRoute(sessionId: String): String = "quiz_game/$sessionId"
     }
 
-    data object QuizResultsRoute: NavigationRoutes("quiz_results") {
+    data object QuizResultsRoute: NavigationRoutes("quiz_results/{sessionId}") {
         fun createRoute(sessionId: String): String = "quiz_results/$sessionId"
     }
 

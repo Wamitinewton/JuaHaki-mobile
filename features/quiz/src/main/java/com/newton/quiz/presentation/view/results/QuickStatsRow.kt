@@ -1,8 +1,6 @@
 package com.newton.quiz.presentation.view.results
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.EmojiEvents
@@ -15,18 +13,18 @@ import com.newton.domain.models.quiz.UserQuizSummary
 import com.newton.quiz.presentation.view.components.QuizStatsCard
 
 @Composable
- fun QuickStatsRow(
+fun QuickStatsRow(
     quizSummary: UserQuizSummary,
     modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         QuizStatsCard(
             title = "Correct",
             value = "${quizSummary.correctAnswers}/${quizSummary.totalQuestions}",
-            subtitle = "Questions",
+            subtitle = "Answers",
             icon = Icons.Default.CheckCircle,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.weight(1f)
@@ -35,7 +33,7 @@ import com.newton.quiz.presentation.view.components.QuizStatsCard
         QuizStatsCard(
             title = "Duration",
             value = quizSummary.durationFormatted,
-            subtitle = "Time",
+            subtitle = "Total Time",
             icon = Icons.Default.Timer,
             color = MaterialTheme.colorScheme.secondary,
             modifier = Modifier.weight(1f)

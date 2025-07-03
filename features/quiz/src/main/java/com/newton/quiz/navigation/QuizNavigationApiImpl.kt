@@ -2,7 +2,9 @@ package com.newton.quiz.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.newton.commonui.ui.SnackbarManager
 import com.newton.navigation.NavigationRoutes
@@ -15,6 +17,10 @@ import javax.inject.Inject
 class QuizNavigationApiImpl @Inject constructor(
     private val snackbarManager: SnackbarManager
 ): QuizNavigationApi {
+
+    companion object {
+        const val STATIC_SESSION_ID = "session_12345"
+    }
 
     override fun registerNavigationGraph(
         navGraphBuilder: NavGraphBuilder,
@@ -29,9 +35,9 @@ class QuizNavigationApiImpl @Inject constructor(
                 route = NavigationRoutes.QuizInfoRoute.route
             ) {
                 QuizInfoScreen(
-                    onStartQuiz = { sessionId ->
+                    onStartQuiz = { _ ->
                         navHostController.navigate(
-                            NavigationRoutes.QuizGameRoute.createRoute(sessionId)
+                            NavigationRoutes.QuizGameRoute.createRoute(STATIC_SESSION_ID)
                         )
                     },
                     onViewLeaderboard = {
@@ -43,14 +49,20 @@ class QuizNavigationApiImpl @Inject constructor(
             }
 
             composable(
-                route = NavigationRoutes.QuizGameRoute.route
+                route = NavigationRoutes.QuizGameRoute.route,
+                arguments = listOf(
+                    navArgument("sessionId") {
+                        type = NavType.StringType
+                        defaultValue = STATIC_SESSION_ID
+                    }
+                )
             ) { backStackEntry ->
-                val sessionId = backStackEntry.arguments?.getString("sessionId") ?: ""
+                val sessionId = backStackEntry.arguments?.getString("sessionId") ?: STATIC_SESSION_ID
                 QuizGameScreen(
                     sessionId = sessionId,
-                    onQuizComplete = { session ->
+                    onQuizComplete = { completedSessionId ->
                         navHostController.navigate(
-                            NavigationRoutes.QuizResultsRoute.createRoute(session)
+                            NavigationRoutes.QuizResultsRoute.createRoute(completedSessionId)
                         ) {
                             popUpTo(NavigationRoutes.QuizInfoRoute.route) {
                                 inclusive = false
@@ -64,13 +76,18 @@ class QuizNavigationApiImpl @Inject constructor(
             }
 
             composable(
-                route = NavigationRoutes.QuizResultsRoute.route
+                route = NavigationRoutes.QuizResultsRoute.route,
+                arguments = listOf(
+                    navArgument("sessionId") {
+                        type = NavType.StringType
+                        defaultValue = STATIC_SESSION_ID
+                    }
+                )
             ) { backStackEntry ->
-                val sessionId = backStackEntry.arguments?.getString("sessionId") ?: ""
+                val sessionId = backStackEntry.arguments?.getString("sessionId") ?: STATIC_SESSION_ID
                 QuizResultsScreen(
                     sessionId = sessionId,
                     onViewLeaderboard = {
-
                     },
                     onRetakeQuiz = {
                         navHostController.navigate(NavigationRoutes.QuizInfoRoute.route) {
@@ -84,8 +101,6 @@ class QuizNavigationApiImpl @Inject constructor(
                     }
                 )
             }
-
-
         }
     }
 }
