@@ -24,7 +24,11 @@ class HomeNavigationApiImpl @Inject constructor(
             composable(
                 route = NavigationRoutes.HomeScreenRoute.route,
             ) {
-                HomeScreen()
+                HomeScreen(
+                    onNavigateToDailyCivicQuiz = {
+                        navHostController.navigate(NavigationRoutes.QuizInfoRoute.route)
+                    }
+                )
             }
         }
     }

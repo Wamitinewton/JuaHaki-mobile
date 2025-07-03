@@ -7,4 +7,5 @@ object Modules {
     val domain= ":domain"
     val database= ":database"
     val home= ":features:home"
+    val quiz= ":features:quiz"
 }

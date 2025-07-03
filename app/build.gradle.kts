@@ -54,6 +54,7 @@ dependencies {
     implementation(project(Modules.commonui))
     implementation(project(Modules.auth))
     implementation(project(Modules.home))
+    implementation(project(Modules.quiz))
     implementation(project(Modules.navigation))
     implementation(project(Modules.core))
     implementation(project(Modules.database))

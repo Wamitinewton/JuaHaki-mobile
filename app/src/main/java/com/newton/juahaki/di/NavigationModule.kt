@@ -3,6 +3,7 @@ package com.newton.juahaki.di
 import com.newton.auth.navigation.AuthNavigationApi
 import com.newton.home.navigation.HomeNavigationApi
 import com.newton.juahaki.navigation.NavigationSubGraphs
+import com.newton.quiz.navigation.QuizNavigationApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,11 +16,13 @@ object NavigationModule {
     @Provides
     fun provideNavigationSubGraphs(
         authNavigationApi: AuthNavigationApi,
-        homeNavigationApi: HomeNavigationApi
+        homeNavigationApi: HomeNavigationApi,
+        quizNavigationApi: QuizNavigationApi
     ) : NavigationSubGraphs {
         return NavigationSubGraphs(
             authNavigationApi = authNavigationApi,
-            homeNavigationApi = homeNavigationApi
+            homeNavigationApi = homeNavigationApi,
+            quizNavigationApi = quizNavigationApi
         )
     }
 }

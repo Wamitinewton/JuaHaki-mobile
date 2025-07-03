@@ -30,4 +30,17 @@ sealed class NavigationRoutes(
 
     data object HomeScreenRoute: NavigationRoutes("home_screen_route")
 
+    data object QuizInfoRoute: NavigationRoutes("quiz_info")
+
+    data object QuizGameRoute: NavigationRoutes("quiz_game/{sessionId}") {
+
+        fun createRoute(sessionId: String): String = "quiz_game/$sessionId"
+    }
+
+    data object QuizResultsRoute: NavigationRoutes("quiz_results") {
+        fun createRoute(sessionId: String): String = "quiz_results/$sessionId"
+    }
+
+    data object QuizLeaderboardRoute: NavigationRoutes("quiz_leaderboard")
+
 }

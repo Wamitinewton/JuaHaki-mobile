@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,19 +23,18 @@ import com.newton.commonui.components.ChatbotFABContainer
 import com.newton.commonui.theme.backgroundGradient
 import com.newton.home.presentation.userstats.view.CivilEducationStats
 import com.newton.home.presentation.userstats.view.components.ChatbotCategoriesGrid
+import com.newton.home.presentation.userstats.view.components.CivicFact
 import com.newton.home.presentation.userstats.view.components.CivicQuizData
 import com.newton.home.presentation.userstats.view.components.CivilEducationProgressCard
-import com.newton.home.presentation.userstats.view.components.DailyCivicQuizCard
 import com.newton.home.presentation.userstats.view.components.DailyCivicFactCard
-import com.newton.home.presentation.userstats.view.components.CivicFact
+import com.newton.home.presentation.userstats.view.components.DailyCivicQuizCard
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     chatbotIconRes: Int = com.newton.commonui.R.drawable.chatbot,
     onNavigateToChat: () -> Unit = {},
     onNavigateToQuizzes: () -> Unit = {},
-    onNavigateToDailyCivicQuiz: () -> Unit = {},
+    onNavigateToDailyCivicQuiz: () -> Unit,
     onNavigateToElectionGuide: () -> Unit = {},
     onNavigateToFinanceBillAnalysis: () -> Unit = {},
     civilEducationStats: CivilEducationStats =

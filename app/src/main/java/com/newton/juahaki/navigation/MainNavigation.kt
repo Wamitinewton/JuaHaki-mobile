@@ -12,7 +12,7 @@ fun JuaHakiNavigation(
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = NavigationSubgraphRoutes.AuthSubgraph.route
+        startDestination = NavigationSubgraphRoutes.HomeSubgraph.route
     ) {
         navigationSubGraphs.authNavigationApi.registerNavigationGraph(
             navHostController = navHostController,
@@ -20,6 +20,11 @@ fun JuaHakiNavigation(
         )
 
         navigationSubGraphs.homeNavigationApi.registerNavigationGraph(
+            navHostController = navHostController,
+            navGraphBuilder = this
+        )
+
+        navigationSubGraphs.quizNavigationApi.registerNavigationGraph(
             navHostController = navHostController,
             navGraphBuilder = this
         )
