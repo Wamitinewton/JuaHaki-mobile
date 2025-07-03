@@ -9,6 +9,7 @@ import com.newton.navigation.NavigationRoutes
 import com.newton.navigation.NavigationSubgraphRoutes
 import com.newton.quiz.presentation.view.quizgame.QuizGameScreen
 import com.newton.quiz.presentation.view.quizinfo.QuizInfoScreen
+import com.newton.quiz.presentation.view.results.QuizResultsScreen
 import javax.inject.Inject
 
 class QuizNavigationApiImpl @Inject constructor(
@@ -61,6 +62,29 @@ class QuizNavigationApiImpl @Inject constructor(
                     }
                 )
             }
+
+            composable(
+                route = NavigationRoutes.QuizResultsRoute.route
+            ) { backStackEntry ->
+                val sessionId = backStackEntry.arguments?.getString("sessionId") ?: ""
+                QuizResultsScreen(
+                    sessionId = sessionId,
+                    onViewLeaderboard = {
+
+                    },
+                    onRetakeQuiz = {
+                        navHostController.navigate(NavigationRoutes.QuizInfoRoute.route) {
+                            popUpTo(NavigationRoutes.QuizInfoRoute.route) {
+                                inclusive = true
+                            }
+                        }
+                    },
+                    onNavigateBack = {
+                        navHostController.popBackStack()
+                    }
+                )
+            }
+
 
         }
     }
