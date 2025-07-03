@@ -3,9 +3,14 @@ package com.newton.auth.presentation.login.view
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.newton.auth.manager.CustomTabsManager
 import com.newton.auth.presentation.login.event.LoginUiEffect
 import com.newton.auth.presentation.login.viewmodel.LoginViewModel
+import com.newton.auth.presentation.oauth.event.OAuthUiEffect
+import com.newton.auth.presentation.oauth.viewmodel.OAuthViewModel
 import com.newton.commonui.ui.HandleUiEffects
 import com.newton.commonui.ui.SnackbarData
 
@@ -16,46 +21,54 @@ fun LoginContainer(
     onNavigateToHome: () -> Unit,
     onNavigateToForgotPassword: () -> Unit,
     onNavigateToActivateAccount: (String) -> Unit,
-    onLoginWithGoogle: () -> Unit,
-    onPrivacyPolicyClick: () -> Unit,
-    onTermsOfServiceClick: () -> Unit,
     onShowSnackbar: (SnackbarData) -> Unit,
     onShowToast: ((String) -> Unit)? = null,
     modifier: Modifier = Modifier,
-    viewModel: LoginViewModel,
+    loginViewModel: LoginViewModel,
+    oAuthViewModel: OAuthViewModel = hiltViewModel(),
+    customTabsManager: CustomTabsManager = CustomTabsManager()
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val loginUiState by loginViewModel.uiState.collectAsStateWithLifecycle()
+    val oAuthUiState by oAuthViewModel.uiState.collectAsStateWithLifecycle()
 
     HandleUiEffects(
-        uiEffects = viewModel.uiEffect,
+        uiEffects = loginViewModel.uiEffect,
         onShowSnackbar = onShowSnackbar,
         onShowToast = onShowToast,
         onCustomEffect = { effect ->
             when (effect) {
-                is LoginUiEffect.NavigateToSignup -> {
-                    onNavigateToSignUp()
-                }
-                is LoginUiEffect.NavigateToHome -> {
-                    onNavigateToHome()
-                }
-                is LoginUiEffect.NavigateToForgotPassword -> {
-                    onNavigateToForgotPassword()
-                }
-
-                is LoginUiEffect.NavigateToVerification ->
-                    onNavigateToActivateAccount(effect.email)
+                is LoginUiEffect.NavigateToSignup -> onNavigateToSignUp()
+                is LoginUiEffect.NavigateToHome -> onNavigateToHome()
+                is LoginUiEffect.NavigateToForgotPassword -> onNavigateToForgotPassword()
+                is LoginUiEffect.NavigateToVerification -> onNavigateToActivateAccount(effect.email)
             }
         },
     )
 
+    HandleUiEffects(
+        uiEffects = oAuthViewModel.uiEffect,
+        onShowSnackbar = onShowSnackbar,
+        onShowToast = onShowToast,
+        onCustomEffect = { effect ->
+            when (effect) {
+                is OAuthUiEffect.LaunchOAuthFlow -> {
+                    customTabsManager.launchOAuthFlow(context, effect.authorizationUrl)
+                }
+                is OAuthUiEffect.NavigateToHome -> onNavigateToHome()
+                is OAuthUiEffect.ShowOAuthError -> {
+                }
+            }
+        }
+    )
+
     LoginScreen(
-        uiState = uiState,
-        onEvent = viewModel::onEvent,
+        loginUiState = loginUiState,
+        oAuthUiState = oAuthUiState,
+        onLoginEvent = loginViewModel::onEvent,
+        onOAuthEvent = oAuthViewModel::onEvent,
         onNavigateBack = onNavigateBack,
         onNavigateToSignUp = onNavigateToSignUp,
-        onLoginWithGoogle = onLoginWithGoogle,
-        onPrivacyPolicyClick = onPrivacyPolicyClick,
-        onTermsOfServiceClick = onTermsOfServiceClick,
         modifier = modifier,
     )
 }

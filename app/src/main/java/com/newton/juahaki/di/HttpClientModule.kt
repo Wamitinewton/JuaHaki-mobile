@@ -23,7 +23,7 @@ object HttpClientModule {
             level = HttpLoggingInterceptor.Level.BODY
         }
 
-    private const val BASE_URL = "https://kz017zc2-8075.inc1.devtunnels.ms"
+    private const val BASE_URL = "https://pp97b1lb-8075.uks1.devtunnels.ms"
 
     @Provides
     @Singleton

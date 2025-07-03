@@ -49,4 +49,7 @@ dependencies {
     implementation(project(Modules.data))
     implementation(project(Modules.domain))
     implementation(project(Modules.database))
+
+    implementation(Dependencies.customTabs)
+    implementation(Dependencies.timber)
 }

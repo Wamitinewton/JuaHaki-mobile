@@ -73,6 +73,9 @@ object Dependencies {
     // Accompanist
     const val systemUi = "com.google.accompanist:accompanist-systemuicontroller:0.24.10-beta"
 
+    const val customTabs = "androidx.browser:browser:1.7.0"
+    const val openId = "net.openid:appauth:0.11.1"
+
 
 
     // Testing

@@ -16,6 +16,7 @@ import com.newton.auth.presentation.login.viewmodel.LoginViewModel
 import com.newton.auth.presentation.onboarding.OnboardingScreen
 import com.newton.auth.presentation.accountverification.view.AccountVerificationContainer
 import com.newton.auth.presentation.accountverification.viewmodel.AccountVerificationViewModel
+import com.newton.auth.presentation.oauth.viewmodel.OAuthViewModel
 import com.newton.auth.presentation.signup.view.SignUpContainer
 import com.newton.auth.presentation.signup.viewmodel.SignupViewModel
 import com.newton.auth.presentation.splash.SplashScreen
@@ -132,6 +133,8 @@ class AuthNavigationApiImpl
                     popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300),
                 ) {
                     val loginViewModel = hiltViewModel<LoginViewModel>()
+                    val oAuthViewModel = hiltViewModel<OAuthViewModel>()
+
                     LoginContainer(
                         onNavigateBack = {
                             navHostController.popBackStack()
@@ -142,8 +145,10 @@ class AuthNavigationApiImpl
                             }
                         },
                         onNavigateToHome = {
-                            navHostController.navigate(NavigationRoutes.AccountVerification.route) {
-                                popUpTo(NavigationRoutes.AccountVerification.route)
+                            navHostController.navigate(NavigationRoutes.HomeScreenRoute.route) {
+                                popUpTo(NavigationRoutes.LoginRoute.route) {
+                                    inclusive = true
+                                }
                             }
                         },
                         onNavigateToForgotPassword = {
@@ -151,17 +156,15 @@ class AuthNavigationApiImpl
                                 popUpTo(NavigationRoutes.LoginRoute.route)
                             }
                         },
-                        onLoginWithGoogle = {},
-                        onPrivacyPolicyClick = {},
-                        onTermsOfServiceClick = {},
+                        onNavigateToActivateAccount = { email ->
+                            navHostController.navigate(NavigationRoutes.AccountVerification.createRoute(email))
+                        },
                         onShowSnackbar = { snackbarData ->
                             snackbarManager.showSnackbar(snackbarData)
                         },
                         onShowToast = {},
-                        viewModel = loginViewModel,
-                        onNavigateToActivateAccount = { email ->
-                            navHostController.navigate(NavigationRoutes.AccountVerification.createRoute(email))
-                        },
+                        loginViewModel = loginViewModel,
+                        oAuthViewModel = oAuthViewModel,
                     )
                 }
 
