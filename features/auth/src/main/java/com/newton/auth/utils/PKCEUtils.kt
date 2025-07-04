@@ -6,7 +6,6 @@ import java.security.MessageDigest
 import java.security.SecureRandom
 
 object PKCEUtils {
-
     private const val CODE_VERIFIER_LENGTH = 128
     private const val STATE_LENGTH = 32
 
@@ -21,7 +20,7 @@ object PKCEUtils {
         return PKCEData(
             codeVerifier = codeVerifier,
             codeChallenge = codeChallenge,
-            state = state
+            state = state,
         )
     }
 
@@ -55,7 +54,8 @@ object PKCEUtils {
     /**
      * Validates state parameter to prevent CSRF attacks
      */
-    fun validateState(receivedState: String, expectedState: String): Boolean {
-        return receivedState == expectedState
-    }
+    fun validateState(
+        receivedState: String,
+        expectedState: String,
+    ): Boolean = receivedState == expectedState
 }

@@ -7,12 +7,11 @@ import com.newton.database.entities.UserEntity
 
 @Database(
     entities = [
-        UserEntity::class
+        UserEntity::class,
     ],
     version = 1,
-    exportSchema = false
+    exportSchema = false,
 )
-
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract val userDao: UserDao
 }

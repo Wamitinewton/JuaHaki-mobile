@@ -7,5 +7,5 @@ data class QuizStatistics(
     val completionRate: Double,
     val mostDifficultQuestion: String,
     val easiestQuestion: String,
-    val popularCategory: String
+    val popularCategory: String,
 )

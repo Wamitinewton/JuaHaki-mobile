@@ -32,8 +32,6 @@ class JuaHakiApplication :
     override fun onCreate() {
         super.onCreate()
 
-
-
         // Initialize token refresh in background
         initializeTokenRefresh()
     }

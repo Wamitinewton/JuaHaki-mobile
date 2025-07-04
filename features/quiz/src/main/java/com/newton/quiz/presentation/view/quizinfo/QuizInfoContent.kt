@@ -39,55 +39,60 @@ import com.newton.domain.models.quiz.QuizInfo
 import com.newton.quiz.presentation.view.components.QuizStatsCard
 
 @Composable
- fun QuizInfoContent(
+fun QuizInfoContent(
     quizInfo: QuizInfo,
     onStartQuiz: (String) -> Unit,
     onViewLeaderboard: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
 
     Column(
-        modifier = modifier
-            .verticalScroll(scrollState)
-            .padding(16.dp)
+        modifier =
+            modifier
+                .verticalScroll(scrollState)
+                .padding(16.dp),
     ) {
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(20.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            ),
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+            colors =
+                CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         ) {
             Box {
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        .clip(RoundedCornerShape(20.dp))
-                        .background(
-                            brush = Brush.linearGradient(
-                                colors = listOf(
-                                    MaterialTheme.colorScheme.primaryContainer,
-                                    MaterialTheme.colorScheme.secondaryContainer
-                                )
-                            )
-                        )
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(200.dp)
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(
+                                brush =
+                                    Brush.linearGradient(
+                                        colors =
+                                            listOf(
+                                                MaterialTheme.colorScheme.primaryContainer,
+                                                MaterialTheme.colorScheme.secondaryContainer,
+                                            ),
+                                    ),
+                            ),
                 )
 
                 Column(
-                    modifier = Modifier.padding(24.dp)
+                    modifier = Modifier.padding(24.dp),
                 ) {
                     Surface(
                         shape = RoundedCornerShape(12.dp),
-                        color = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
+                        color = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
                     ) {
                         Text(
                             text = "Today's Quiz • ${quizInfo.quizDate}",
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                         )
                     }
 
@@ -95,10 +100,11 @@ import com.newton.quiz.presentation.view.components.QuizStatsCard
 
                     Text(
                         text = quizInfo.title,
-                        style = MaterialTheme.typography.headlineSmall.copy(
-                            fontWeight = FontWeight.Bold
-                        ),
-                        color = MaterialTheme.colorScheme.onSurface
+                        style =
+                            MaterialTheme.typography.headlineSmall.copy(
+                                fontWeight = FontWeight.Bold,
+                            ),
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -106,27 +112,28 @@ import com.newton.quiz.presentation.view.components.QuizStatsCard
                     Text(
                         text = quizInfo.description,
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
                     )
 
                     Spacer(modifier = Modifier.height(25.dp))
 
                     Row(
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
                             imageVector = Icons.Default.Timer,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(16.dp)
+                            modifier = Modifier.size(16.dp),
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "Time remaining: ${quizInfo.timeRemaining}",
-                            style = MaterialTheme.typography.bodySmall.copy(
-                                fontWeight = FontWeight.Medium
-                            ),
-                            color = MaterialTheme.colorScheme.primary
+                            style =
+                                MaterialTheme.typography.bodySmall.copy(
+                                    fontWeight = FontWeight.Medium,
+                                ),
+                            color = MaterialTheme.colorScheme.primary,
                         )
                     }
                 }
@@ -137,18 +144,19 @@ import com.newton.quiz.presentation.view.components.QuizStatsCard
 
         Text(
             text = "Quiz Information",
-            style = MaterialTheme.typography.titleMedium.copy(
-                fontWeight = FontWeight.Bold
-            ),
+            style =
+                MaterialTheme.typography.titleMedium.copy(
+                    fontWeight = FontWeight.Bold,
+                ),
             color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.padding(horizontal = 4.dp)
+            modifier = Modifier.padding(horizontal = 4.dp),
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             QuizStatsCard(
                 title = "Questions",
@@ -156,7 +164,7 @@ import com.newton.quiz.presentation.view.components.QuizStatsCard
                 subtitle = "Total",
                 icon = Icons.Default.Quiz,
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             )
 
             QuizStatsCard(
@@ -165,7 +173,7 @@ import com.newton.quiz.presentation.view.components.QuizStatsCard
                 subtitle = "Today",
                 icon = Icons.Default.Person,
                 color = MaterialTheme.colorScheme.secondary,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             )
 
             QuizStatsCard(
@@ -174,7 +182,7 @@ import com.newton.quiz.presentation.view.components.QuizStatsCard
                 subtitle = "Score",
                 icon = Icons.Default.EmojiEvents,
                 color = MaterialTheme.colorScheme.tertiary,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             )
         }
 
@@ -183,7 +191,7 @@ import com.newton.quiz.presentation.view.components.QuizStatsCard
         if (quizInfo.hasUserAttempted && quizInfo.userLastAttempt != null) {
             PreviousAttemptCard(
                 attempt = quizInfo.userLastAttempt!!,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -191,7 +199,7 @@ import com.newton.quiz.presentation.view.components.QuizStatsCard
 
         Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             if (!quizInfo.hasUserAttempted && quizInfo.isActive && !quizInfo.isExpired) {
                 PrimaryButton(
@@ -201,7 +209,7 @@ import com.newton.quiz.presentation.view.components.QuizStatsCard
                         onStartQuiz(sessionId)
                     },
                     leadingIcon = Icons.Default.Quiz,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
             } else if (quizInfo.hasUserAttempted) {
                 SecondaryButton(
@@ -210,23 +218,25 @@ import com.newton.quiz.presentation.view.components.QuizStatsCard
                         onStartQuiz(quizInfo.userLastAttempt?.sessionId ?: "")
                     },
                     leadingIcon = Icons.Default.EmojiEvents,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
             } else {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.5f)
-                    )
+                    colors =
+                        CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.5f),
+                        ),
                 ) {
                     Text(
                         text = if (quizInfo.isExpired) "Quiz has expired" else "Quiz is not active",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onErrorContainer,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
                     )
                 }
             }
@@ -235,7 +245,7 @@ import com.newton.quiz.presentation.view.components.QuizStatsCard
                 text = "View Leaderboard",
                 onClick = onViewLeaderboard,
                 leadingIcon = Icons.Default.EmojiEvents,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
 

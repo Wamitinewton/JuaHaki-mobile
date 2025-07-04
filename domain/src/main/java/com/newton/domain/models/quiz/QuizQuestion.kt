@@ -7,5 +7,5 @@ data class QuizQuestion(
     val category: String,
     val difficulty: String,
     val options: List<QuizOption>,
-    val sourceReference: String
+    val sourceReference: String,
 )

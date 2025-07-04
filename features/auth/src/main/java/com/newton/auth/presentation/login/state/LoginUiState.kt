@@ -12,6 +12,5 @@ data class LoginUiState(
     val loginError: String? = null,
     val jwtData: JwtData? = null,
 ) {
-    fun areAllFieldsFilled(): Boolean =
-        email.isNotBlank() && password.isNotBlank()
+    fun areAllFieldsFilled(): Boolean = email.isNotBlank() && password.isNotBlank()
 }

@@ -9,7 +9,7 @@ suspend fun <T : SnackbarUiEffect> Channel<T>.sendSuccessSnackbar(
     message: String,
     duration: SnackbarDuration = SnackbarDuration.Short,
     actionLabel: String? = null,
-    onActionClick: (() -> Unit)? = null
+    onActionClick: (() -> Unit)? = null,
 ) {
     @Suppress("UNCHECKED_CAST")
     send(
@@ -18,8 +18,8 @@ suspend fun <T : SnackbarUiEffect> Channel<T>.sendSuccessSnackbar(
             type = SnackbarType.SUCCESS,
             duration = duration,
             actionLabel = actionLabel,
-            onActionClick = onActionClick
-        ) as T
+            onActionClick = onActionClick,
+        ) as T,
     )
 }
 
@@ -27,7 +27,7 @@ suspend fun <T : SnackbarUiEffect> Channel<T>.sendErrorSnackbar(
     message: String,
     duration: SnackbarDuration = SnackbarDuration.Long,
     actionLabel: String? = null,
-    onActionClick: (() -> Unit)? = null
+    onActionClick: (() -> Unit)? = null,
 ) {
     @Suppress("UNCHECKED_CAST")
     send(
@@ -36,8 +36,8 @@ suspend fun <T : SnackbarUiEffect> Channel<T>.sendErrorSnackbar(
             type = SnackbarType.ERROR,
             duration = duration,
             actionLabel = actionLabel,
-            onActionClick = onActionClick
-        ) as T
+            onActionClick = onActionClick,
+        ) as T,
     )
 }
 
@@ -45,7 +45,7 @@ suspend fun <T : SnackbarUiEffect> Channel<T>.sendWarningSnackbar(
     message: String,
     duration: SnackbarDuration = SnackbarDuration.Short,
     actionLabel: String? = null,
-    onActionClick: (() -> Unit)? = null
+    onActionClick: (() -> Unit)? = null,
 ) {
     @Suppress("UNCHECKED_CAST")
     send(
@@ -54,8 +54,8 @@ suspend fun <T : SnackbarUiEffect> Channel<T>.sendWarningSnackbar(
             type = SnackbarType.WARNING,
             duration = duration,
             actionLabel = actionLabel,
-            onActionClick = onActionClick
-        ) as T
+            onActionClick = onActionClick,
+        ) as T,
     )
 }
 
@@ -63,7 +63,7 @@ suspend fun <T : SnackbarUiEffect> Channel<T>.sendInfoSnackbar(
     message: String,
     duration: SnackbarDuration = SnackbarDuration.Short,
     actionLabel: String? = null,
-    onActionClick: (() -> Unit)? = null
+    onActionClick: (() -> Unit)? = null,
 ) {
     @Suppress("UNCHECKED_CAST")
     send(
@@ -72,8 +72,8 @@ suspend fun <T : SnackbarUiEffect> Channel<T>.sendInfoSnackbar(
             type = SnackbarType.INFO,
             duration = duration,
             actionLabel = actionLabel,
-            onActionClick = onActionClick
-        ) as T
+            onActionClick = onActionClick,
+        ) as T,
     )
 }
 

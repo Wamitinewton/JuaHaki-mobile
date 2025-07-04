@@ -1,7 +1,9 @@
 package com.newton.auth.presentation.forgotpassword.event
 
 sealed class InitiatePasswordResetUiEvent {
-    data class OnEmailChanged(val email: String) : InitiatePasswordResetUiEvent()
+    data class OnEmailChanged(
+        val email: String,
+    ) : InitiatePasswordResetUiEvent()
 
     object OnInitiatePasswordResetClicked : InitiatePasswordResetUiEvent()
 

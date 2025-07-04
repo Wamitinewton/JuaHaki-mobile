@@ -6,11 +6,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
@@ -27,7 +25,7 @@ import dagger.hilt.android.EntryPointAccessors
 @Composable
 fun RootScreen(
     navigationSubGraphs: NavigationSubGraphs,
-    navHostController: NavHostController
+    navHostController: NavHostController,
 ) {
     val currentBackStackEntryAsState by navHostController.currentBackStackEntryAsState()
     val currentDestination = currentBackStackEntryAsState?.destination
@@ -38,9 +36,10 @@ fun RootScreen(
             else -> false
         }
     val context = LocalContext.current
-    val snackbarManager = EntryPointAccessors
-        .fromApplication(context, SnackbarManagerEntryPoint::class.java)
-        .snackBarManager()
+    val snackbarManager =
+        EntryPointAccessors
+            .fromApplication(context, SnackbarManagerEntryPoint::class.java)
+            .snackBarManager()
 
     if (currentDestination?.route == NavigationRoutes.HomeScreenRoute.route) {
         BackHandler {
@@ -60,19 +59,20 @@ fun RootScreen(
                     if (isShowBottomBar) {
                         BottomNavigationBar(
                             navHostController,
-                            currentDestination
+                            currentDestination,
                         )
                     }
-                }
+                },
             ) { paddingValues ->
                 Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues)
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .padding(paddingValues),
                 ) {
                     JuaHakiNavigation(
                         navigationSubGraphs = navigationSubGraphs,
-                        navHostController = navHostController
+                        navHostController = navHostController,
                     )
                 }
             }

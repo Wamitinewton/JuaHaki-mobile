@@ -54,14 +54,14 @@ fun HomeScreen(
             totalAttempts = 1247,
             averageScore = 78f,
             todaysQuestions = 5,
-            isCompleted = false
+            isCompleted = false,
         ),
     dailyCivicFact: CivicFact =
         CivicFact(
             fact = "Every Kenyan citizen has the right to clean and safe water in adequate quantities, and reasonable standards of sanitation.",
             source = "Article 43(1)(d), Constitution of Kenya 2010",
-            category = "Economic & Social Rights"
-        )
+            category = "Economic & Social Rights",
+        ),
 ) {
     var hidePrompts by remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
@@ -97,7 +97,7 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             DailyCivicFactCard(
-                fact = dailyCivicFact
+                fact = dailyCivicFact,
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -107,7 +107,7 @@ fun HomeScreen(
                 onCardClick = {
                     println("📚 Daily Civic Quiz clicked - Opening quiz")
                     onNavigateToDailyCivicQuiz()
-                }
+                },
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -120,7 +120,7 @@ fun HomeScreen(
                 onFinanceBillAnalysisClick = {
                     println("💰 Finance Bill Analysis clicked - Opening documents")
                     onNavigateToFinanceBillAnalysis()
-                }
+                },
             )
         }
 

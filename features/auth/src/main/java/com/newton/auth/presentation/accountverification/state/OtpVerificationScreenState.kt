@@ -13,4 +13,3 @@ data class OtpVerificationScreenState(
     val isResendButtonEnabled: Boolean
         get() = canResend && !isResendingCode && !isLoading && resendCooldownSeconds == 0
 }
-

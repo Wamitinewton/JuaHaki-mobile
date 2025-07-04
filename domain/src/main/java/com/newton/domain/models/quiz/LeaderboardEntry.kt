@@ -9,5 +9,5 @@ data class LeaderboardEntry(
     val completedAt: String,
     val durationSeconds: Long?,
     val durationFormatted: String,
-    val isCurrentUser: Boolean
+    val isCurrentUser: Boolean,
 )

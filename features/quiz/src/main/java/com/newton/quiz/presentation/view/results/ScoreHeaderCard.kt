@@ -34,55 +34,61 @@ fun ScoreHeaderCard(
     score: Int,
     performanceLevel: String,
     completionMessage: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val animatedScore by animateFloatAsState(
         targetValue = score.toFloat(),
         animationSpec = tween(durationMillis = 1200, easing = LinearEasing),
-        label = "score_animation"
+        label = "score_animation",
     )
 
-    val scoreColor = when {
-        score >= 80 -> Color(0xFF10B981)
-        score >= 60 -> Color(0xFFF59E0B)
-        else -> Color(0xFFEF4444)
-    }
+    val scoreColor =
+        when {
+            score >= 80 -> Color(0xFF10B981)
+            score >= 60 -> Color(0xFFF59E0B)
+            else -> Color(0xFFEF4444)
+        }
 
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+            ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Box(
-                modifier = Modifier
-                    .size(120.dp)
-                    .clip(CircleShape)
-                    .background(scoreColor.copy(alpha = 0.1f)),
-                contentAlignment = Alignment.Center
+                modifier =
+                    Modifier
+                        .size(120.dp)
+                        .clip(CircleShape)
+                        .background(scoreColor.copy(alpha = 0.1f)),
+                contentAlignment = Alignment.Center,
             ) {
                 Box(
-                    modifier = Modifier
-                        .size(100.dp)
-                        .clip(CircleShape)
-                        .background(scoreColor),
-                    contentAlignment = Alignment.Center
+                    modifier =
+                        Modifier
+                            .size(100.dp)
+                            .clip(CircleShape)
+                            .background(scoreColor),
+                    contentAlignment = Alignment.Center,
                 ) {
                     Text(
                         text = "${animatedScore.toInt()}%",
-                        style = MaterialTheme.typography.headlineLarge.copy(
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 32.sp
-                        ),
-                        color = Color.White
+                        style =
+                            MaterialTheme.typography.headlineLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 32.sp,
+                            ),
+                        color = Color.White,
                     )
                 }
             }
@@ -92,15 +98,16 @@ fun ScoreHeaderCard(
             Surface(
                 shape = RoundedCornerShape(20.dp),
                 color = scoreColor.copy(alpha = 0.15f),
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             ) {
                 Text(
                     text = performanceLevel,
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.SemiBold
-                    ),
+                    style =
+                        MaterialTheme.typography.titleMedium.copy(
+                            fontWeight = FontWeight.SemiBold,
+                        ),
                     color = scoreColor,
-                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp)
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
                 )
             }
 
@@ -108,12 +115,13 @@ fun ScoreHeaderCard(
 
             Text(
                 text = completionMessage,
-                style = MaterialTheme.typography.bodyLarge.copy(
-                    lineHeight = 24.sp
-                ),
+                style =
+                    MaterialTheme.typography.bodyLarge.copy(
+                        lineHeight = 24.sp,
+                    ),
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
         }
     }

@@ -14,7 +14,7 @@ fun ChatbotFABContainer(
     chatbotIconRes: Int,
     onFabClick: () -> Unit = {},
     showPrompts: Boolean = true,
-    autoHidePromptsDuration: Long = 4000L
+    autoHidePromptsDuration: Long = 4000L,
 ) {
     var showPromptChips by remember { mutableStateOf(showPrompts) }
     var userHasInteracted by remember { mutableStateOf(false) }
@@ -26,19 +26,20 @@ fun ChatbotFABContainer(
     }
 
     Column(
-        modifier = modifier
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onTap = {
-                        if (showPromptChips) {
-                            showPromptChips = false
-                            userHasInteracted = true
-                        }
-                    }
-                )
-            },
+        modifier =
+            modifier
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onTap = {
+                            if (showPromptChips) {
+                                showPromptChips = false
+                                userHasInteracted = true
+                            }
+                        },
+                    )
+                },
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         if (showPrompts) {
             PromptChips(
@@ -47,7 +48,7 @@ fun ChatbotFABContainer(
                     showPromptChips = false
                     userHasInteracted = true
                 },
-                autoHideDurationMs = autoHidePromptsDuration
+                autoHideDurationMs = autoHidePromptsDuration,
             )
         }
 
@@ -59,7 +60,7 @@ fun ChatbotFABContainer(
                     userHasInteracted = true
                 }
                 onFabClick()
-            }
+            },
         )
     }
 }

@@ -15,11 +15,11 @@ import com.newton.quiz.presentation.view.components.QuizStatsCard
 @Composable
 fun QuickStatsRow(
     quizSummary: UserQuizSummary,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         QuizStatsCard(
             title = "Correct",
@@ -27,7 +27,7 @@ fun QuickStatsRow(
             subtitle = "Answers",
             icon = Icons.Default.CheckCircle,
             color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
 
         QuizStatsCard(
@@ -36,7 +36,7 @@ fun QuickStatsRow(
             subtitle = "Total Time",
             icon = Icons.Default.Timer,
             color = MaterialTheme.colorScheme.secondary,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
 
         QuizStatsCard(
@@ -45,7 +45,7 @@ fun QuickStatsRow(
             subtitle = "Today",
             icon = Icons.Default.EmojiEvents,
             color = MaterialTheme.colorScheme.tertiary,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
     }
 }

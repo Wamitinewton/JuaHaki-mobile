@@ -15,13 +15,13 @@ interface SnackbarUiEffect {
         val type: SnackbarType = SnackbarType.INFO,
         val duration: SnackbarDuration = SnackbarDuration.Short,
         val actionLabel: String? = null,
-        val onActionClick: (() -> Unit)? = null
+        val onActionClick: (() -> Unit)? = null,
     ) : SnackbarUiEffect
 
     /**
      * Generic toast effect that can be used across all features
      */
     data class ShowToast(
-        val message: String
+        val message: String,
     ) : SnackbarUiEffect
 }

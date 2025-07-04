@@ -9,5 +9,5 @@ data class SnackbarData(
     val duration: SnackbarDuration = SnackbarDuration.Short,
     val actionLabel: String? = null,
     val onActionClick: (() -> Unit)? = null,
-    val onDismiss: (() -> Unit)? = null
+    val onDismiss: (() -> Unit)? = null,
 )

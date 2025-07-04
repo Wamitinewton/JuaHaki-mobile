@@ -60,9 +60,10 @@ fun LoginScreen(
                 title = {
                     Text(
                         text = "Sign In",
-                        style = MaterialTheme.typography.headlineSmall.copy(
-                            fontWeight = FontWeight.SemiBold,
-                        ),
+                        style =
+                            MaterialTheme.typography.headlineSmall.copy(
+                                fontWeight = FontWeight.SemiBold,
+                            ),
                     )
                 },
                 navigationIcon = {
@@ -73,25 +74,28 @@ fun LoginScreen(
                         )
                     }
                 },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color.Transparent,
-                ),
+                colors =
+                    TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = Color.Transparent,
+                    ),
             )
         },
         modifier = modifier.fillMaxSize(),
     ) { paddingValues ->
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(backgroundGradient())
-                .padding(paddingValues),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .background(backgroundGradient())
+                    .padding(paddingValues),
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 24.dp)
-                    .imePadding(),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                        .padding(horizontal = 24.dp)
+                        .imePadding(),
             ) {
                 WelcomeSection(
                     modifier = Modifier.padding(vertical = 16.dp),
@@ -104,17 +108,23 @@ fun LoginScreen(
                         onOAuthEvent(OAuthUiEvent.OnOAuthSignInClicked(OAuthProvider.GOOGLE))
                     },
                     enabled = !isLoading,
-                    text = if (oAuthUiState.isLoading) "Preparing Google Sign-In..."
-                    else if (oAuthUiState.isAuthenticating) "Completing Sign-In..."
-                    else "Sign in with Google",
+                    text =
+                        if (oAuthUiState.isLoading) {
+                            "Preparing Google Sign-In..."
+                        } else if (oAuthUiState.isAuthenticating) {
+                            "Completing Sign-In..."
+                        } else {
+                            "Sign in with Google"
+                        },
                     modifier = Modifier.fillMaxWidth(),
                 )
 
                 if (oAuthUiState.isLoading || oAuthUiState.isAuthenticating) {
                     Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp),
                         contentAlignment = Alignment.Center,
                     ) {
                         CircularProgressIndicator(
@@ -153,9 +163,10 @@ fun LoginScreen(
 
                 if (loginUiState.isLoading) {
                     Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp),
                         contentAlignment = Alignment.Center,
                     ) {
                         CircularProgressIndicator(
@@ -170,9 +181,10 @@ fun LoginScreen(
                     buttonText = "Sign Up",
                     onNavigate = onNavigateToSignUp,
                     enabled = !isLoading,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 16.dp),
                 )
 
                 Spacer(modifier = Modifier.height(32.dp))

@@ -25,29 +25,31 @@ fun PageIndicator(
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         repeat(pageCount) { index ->
             val isSelected = index == currentPage
             val width by animateDpAsState(
                 targetValue = if (isSelected) 24.dp else 8.dp,
                 animationSpec = tween(300),
-                label = "indicator_width"
+                label = "indicator_width",
             )
-            val color = if (isSelected) {
-                MaterialTheme.colorScheme.primary
-            } else {
-                MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f)
-            }
+            val color =
+                if (isSelected) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f)
+                }
 
             Box(
-                modifier = Modifier
-                    .width(width)
-                    .height(8.dp)
-                    .background(
-                        color = color,
-                        shape = CircleShape
-                    )
+                modifier =
+                    Modifier
+                        .width(width)
+                        .height(8.dp)
+                        .background(
+                            color = color,
+                            shape = CircleShape,
+                        ),
             )
         }
     }

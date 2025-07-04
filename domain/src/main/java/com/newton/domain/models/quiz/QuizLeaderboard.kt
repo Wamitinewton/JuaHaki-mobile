@@ -6,5 +6,5 @@ data class QuizLeaderboard(
     val totalParticipants: Int,
     val topPerformers: List<LeaderboardEntry>,
     val userRanking: LeaderboardEntry? = null,
-    val statistics: QuizStatistics
+    val statistics: QuizStatistics,
 )

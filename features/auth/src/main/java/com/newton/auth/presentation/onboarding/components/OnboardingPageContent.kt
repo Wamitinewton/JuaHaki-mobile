@@ -30,32 +30,36 @@ import com.newton.auth.presentation.onboarding.OnboardingPage
 @Composable
 fun OnboardingPageContent(
     modifier: Modifier = Modifier,
-    page: OnboardingPage
+    page: OnboardingPage,
 ) {
-
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 24.dp),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(horizontal = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Box(
-            modifier = Modifier
-                .size(280.dp)
-                .clip(RoundedCornerShape(20.dp)),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .size(280.dp)
+                    .clip(RoundedCornerShape(20.dp)),
+            contentAlignment = Alignment.Center,
         ) {
             AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(page.imageRes)
-                    .crossfade(true)
-                    .build(),
+                model =
+                    ImageRequest
+                        .Builder(LocalContext.current)
+                        .data(page.imageRes)
+                        .crossfade(true)
+                        .build(),
                 contentDescription = null,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clip(RoundedCornerShape(20.dp)),
-                contentScale = ContentScale.Crop
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(20.dp)),
+                contentScale = ContentScale.Crop,
             )
         }
 
@@ -63,28 +67,29 @@ fun OnboardingPageContent(
 
         Text(
             text = stringResource(id = page.titleRes),
-            style = MaterialTheme.typography.headlineMedium.copy(
-                fontWeight = FontWeight.Bold,
-                fontSize = 26.sp,
-                letterSpacing = 0.5.sp
-            ),
+            style =
+                MaterialTheme.typography.headlineMedium.copy(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 26.sp,
+                    letterSpacing = 0.5.sp,
+                ),
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier.padding(horizontal = 16.dp),
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
             text = stringResource(id = page.descriptionRes),
-            style = MaterialTheme.typography.bodyLarge.copy(
-                fontSize = 16.sp,
-                lineHeight = 24.sp
-            ),
+            style =
+                MaterialTheme.typography.bodyLarge.copy(
+                    fontSize = 16.sp,
+                    lineHeight = 24.sp,
+                ),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(horizontal = 8.dp)
+            modifier = Modifier.padding(horizontal = 8.dp),
         )
     }
-
 }

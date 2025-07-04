@@ -27,7 +27,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -49,7 +49,6 @@ dependencies {
     addHiltDependencies()
     addRetrofitDependencies()
     addWorkManagerDependencies()
-
 
     implementation(project(Modules.commonui))
     implementation(project(Modules.auth))

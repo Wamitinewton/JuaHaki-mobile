@@ -35,63 +35,67 @@ fun QuizInfoScreen(
     onStartQuiz: (String) -> Unit = {},
     onViewLeaderboard: () -> Unit = {},
     onNavigateBack: () -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val uiState by remember {
         mutableStateOf(
             QuizInfoUiState(
                 isLoading = false,
-                quizInfo = QuizInfo(
-                    quizId = 1L,
-                    quizDate = "2024-03-15",
-                    title = "Constitutional Rights & Freedoms",
-                    description = "Test your knowledge of fundamental rights and freedoms as outlined in the Kenyan Constitution",
-                    totalQuestions = 10,
-                    isActive = true,
-                    isExpired = false,
-                    expiresAt = "2024-03-16T00:00:00",
-                    hasUserAttempted = false,
-                    timeRemaining = "18h 45m"
-                )
-            )
+                quizInfo =
+                    QuizInfo(
+                        quizId = 1L,
+                        quizDate = "2024-03-15",
+                        title = "Constitutional Rights & Freedoms",
+                        description = "Test your knowledge of fundamental rights and freedoms as outlined in the Kenyan Constitution",
+                        totalQuestions = 10,
+                        isActive = true,
+                        isExpired = false,
+                        expiresAt = "2024-03-16T00:00:00",
+                        hasUserAttempted = false,
+                        timeRemaining = "18h 45m",
+                    ),
+            ),
         )
     }
 
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(brush = backgroundGradient())
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(brush = backgroundGradient()),
     ) {
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
             TopAppBar(
                 title = {
                     Text(
                         text = "Daily Civic Quiz",
-                        style = MaterialTheme.typography.titleLarge.copy(
-                            fontWeight = FontWeight.Bold
-                        )
+                        style =
+                            MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                            ),
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = "Back",
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
-                )
+                colors =
+                    TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
+                    ),
             )
 
             when {
                 uiState.isLoading -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
+                        contentAlignment = Alignment.Center,
                     ) {
                         CircularProgressIndicator()
                     }
@@ -100,22 +104,22 @@ fun QuizInfoScreen(
                 uiState.error != null -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
+                        contentAlignment = Alignment.Center,
                     ) {
                         Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
                             Text(
                                 text = "Error loading quiz",
                                 style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.error
+                                color = MaterialTheme.colorScheme.error,
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
                                 text = uiState.error!!,
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                                textAlign = TextAlign.Center
+                                textAlign = TextAlign.Center,
                             )
                         }
                     }
@@ -126,7 +130,7 @@ fun QuizInfoScreen(
                         quizInfo = uiState.quizInfo!!,
                         onStartQuiz = onStartQuiz,
                         onViewLeaderboard = onViewLeaderboard,
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
                     )
                 }
             }

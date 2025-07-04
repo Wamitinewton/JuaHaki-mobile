@@ -7,5 +7,5 @@ import com.newton.quiz.navigation.QuizNavigationApi
 data class NavigationSubGraphs(
     val authNavigationApi: AuthNavigationApi,
     val homeNavigationApi: HomeNavigationApi,
-    val quizNavigationApi: QuizNavigationApi
+    val quizNavigationApi: QuizNavigationApi,
 )

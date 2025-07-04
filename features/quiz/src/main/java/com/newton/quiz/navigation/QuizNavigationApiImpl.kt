@@ -14,93 +14,95 @@ import com.newton.quiz.presentation.view.quizinfo.QuizInfoScreen
 import com.newton.quiz.presentation.view.results.QuizResultsScreen
 import javax.inject.Inject
 
-class QuizNavigationApiImpl @Inject constructor(
-    private val snackbarManager: SnackbarManager
-): QuizNavigationApi {
+class QuizNavigationApiImpl
+    @Inject
+    constructor(
+        private val snackbarManager: SnackbarManager,
+    ) : QuizNavigationApi {
+        companion object {
+            const val STATIC_SESSION_ID = "session_12345"
+        }
 
-    companion object {
-        const val STATIC_SESSION_ID = "session_12345"
-    }
-
-    override fun registerNavigationGraph(
-        navGraphBuilder: NavGraphBuilder,
-        navHostController: NavHostController
-    ) {
-        navGraphBuilder.navigation(
-            route = NavigationSubgraphRoutes.QuizSubgraph.route,
-            startDestination = NavigationRoutes.QuizInfoRoute.route
+        override fun registerNavigationGraph(
+            navGraphBuilder: NavGraphBuilder,
+            navHostController: NavHostController,
         ) {
-
-            composable(
-                route = NavigationRoutes.QuizInfoRoute.route
+            navGraphBuilder.navigation(
+                route = NavigationSubgraphRoutes.QuizSubgraph.route,
+                startDestination = NavigationRoutes.QuizInfoRoute.route,
             ) {
-                QuizInfoScreen(
-                    onStartQuiz = { _ ->
-                        navHostController.navigate(
-                            NavigationRoutes.QuizGameRoute.createRoute(STATIC_SESSION_ID)
-                        )
-                    },
-                    onViewLeaderboard = {
-                    },
-                    onNavigateBack = {
-                        navHostController.popBackStack()
-                    }
-                )
-            }
+                composable(
+                    route = NavigationRoutes.QuizInfoRoute.route,
+                ) {
+                    QuizInfoScreen(
+                        onStartQuiz = { _ ->
+                            navHostController.navigate(
+                                NavigationRoutes.QuizGameRoute.createRoute(STATIC_SESSION_ID),
+                            )
+                        },
+                        onViewLeaderboard = {
+                        },
+                        onNavigateBack = {
+                            navHostController.popBackStack()
+                        },
+                    )
+                }
 
-            composable(
-                route = NavigationRoutes.QuizGameRoute.route,
-                arguments = listOf(
-                    navArgument("sessionId") {
-                        type = NavType.StringType
-                        defaultValue = STATIC_SESSION_ID
-                    }
-                )
-            ) { backStackEntry ->
-                val sessionId = backStackEntry.arguments?.getString("sessionId") ?: STATIC_SESSION_ID
-                QuizGameScreen(
-                    sessionId = sessionId,
-                    onQuizComplete = { completedSessionId ->
-                        navHostController.navigate(
-                            NavigationRoutes.QuizResultsRoute.createRoute(completedSessionId)
-                        ) {
-                            popUpTo(NavigationRoutes.QuizInfoRoute.route) {
-                                inclusive = false
+                composable(
+                    route = NavigationRoutes.QuizGameRoute.route,
+                    arguments =
+                        listOf(
+                            navArgument("sessionId") {
+                                type = NavType.StringType
+                                defaultValue = STATIC_SESSION_ID
+                            },
+                        ),
+                ) { backStackEntry ->
+                    val sessionId = backStackEntry.arguments?.getString("sessionId") ?: STATIC_SESSION_ID
+                    QuizGameScreen(
+                        sessionId = sessionId,
+                        onQuizComplete = { completedSessionId ->
+                            navHostController.navigate(
+                                NavigationRoutes.QuizResultsRoute.createRoute(completedSessionId),
+                            ) {
+                                popUpTo(NavigationRoutes.QuizInfoRoute.route) {
+                                    inclusive = false
+                                }
                             }
-                        }
-                    },
-                    onNavigateBack = {
-                        navHostController.popBackStack()
-                    }
-                )
-            }
+                        },
+                        onNavigateBack = {
+                            navHostController.popBackStack()
+                        },
+                    )
+                }
 
-            composable(
-                route = NavigationRoutes.QuizResultsRoute.route,
-                arguments = listOf(
-                    navArgument("sessionId") {
-                        type = NavType.StringType
-                        defaultValue = STATIC_SESSION_ID
-                    }
-                )
-            ) { backStackEntry ->
-                val sessionId = backStackEntry.arguments?.getString("sessionId") ?: STATIC_SESSION_ID
-                QuizResultsScreen(
-                    sessionId = sessionId,
-                    onViewLeaderboard = {
-                    },
-                    onRetakeQuiz = {
-                        navHostController.navigate(NavigationRoutes.QuizInfoRoute.route) {
-                            popUpTo(NavigationRoutes.QuizInfoRoute.route) {
-                                inclusive = true
+                composable(
+                    route = NavigationRoutes.QuizResultsRoute.route,
+                    arguments =
+                        listOf(
+                            navArgument("sessionId") {
+                                type = NavType.StringType
+                                defaultValue = STATIC_SESSION_ID
+                            },
+                        ),
+                ) { backStackEntry ->
+                    val sessionId = backStackEntry.arguments?.getString("sessionId") ?: STATIC_SESSION_ID
+                    QuizResultsScreen(
+                        sessionId = sessionId,
+                        onViewLeaderboard = {
+                        },
+                        onRetakeQuiz = {
+                            navHostController.navigate(NavigationRoutes.QuizInfoRoute.route) {
+                                popUpTo(NavigationRoutes.QuizInfoRoute.route) {
+                                    inclusive = true
+                                }
                             }
-                        }
-                    },
-                    onNavigateBack = {
-                        navHostController.popBackStack()
-                    }
-                )
+                        },
+                        onNavigateBack = {
+                            navHostController.popBackStack()
+                        },
+                    )
+                }
             }
         }
     }
-}

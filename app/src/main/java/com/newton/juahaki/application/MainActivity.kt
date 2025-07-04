@@ -12,7 +12,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
     @Inject
     lateinit var navigationSubGraphs: NavigationSubGraphs
 
@@ -34,7 +33,7 @@ class MainActivity : ComponentActivity() {
 
             RootScreen(
                 navigationSubGraphs = navigationSubGraphs,
-                navController
+                navController,
             )
         }
     }

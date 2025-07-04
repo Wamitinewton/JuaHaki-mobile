@@ -15,5 +15,5 @@ data class UserQuizSummary(
     val durationFormatted: String,
     val questionResults: List<QuestionResult>,
     val categoryPerformance: CategoryPerformance,
-    val completionMessage: String
+    val completionMessage: String,
 )

@@ -6,6 +6,6 @@ import androidx.navigation.NavHostController
 interface NavigationApi {
     fun registerNavigationGraph(
         navGraphBuilder: NavGraphBuilder,
-        navHostController: NavHostController
+        navHostController: NavHostController,
     )
 }

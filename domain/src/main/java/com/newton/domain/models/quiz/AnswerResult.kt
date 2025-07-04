@@ -11,5 +11,5 @@ data class AnswerResult(
     val totalQuestions: Int,
     val hasNextQuestion: Boolean,
     val nextQuestion: QuizQuestion? = null,
-    val finalResults: UserQuizSummary? = null
+    val finalResults: UserQuizSummary? = null,
 )

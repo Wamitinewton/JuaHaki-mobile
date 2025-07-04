@@ -6,5 +6,5 @@ data class CategoryStats(
     val correctAnswers: Int,
     val percentage: Double,
     val performance: String,
-    val feedback: String
+    val feedback: String,
 )

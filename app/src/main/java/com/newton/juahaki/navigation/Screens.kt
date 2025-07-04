@@ -18,40 +18,40 @@ sealed class Screens(
     val unselectedIcon: ImageVector,
     var title: String,
 ) {
-
-    data object Home: Screens(
+    data object Home : Screens(
         NavigationSubgraphRoutes.HomeSubgraph.route,
         Icons.Filled.Home,
         Icons.Outlined.Home,
-        "Home"
+        "Home",
     )
 
     // Civic-themed screens for demo purposes
-    data object Rights: Screens(
+    data object Rights : Screens(
         NavigationSubgraphRoutes.HomeSubgraph.route, // Using home route for now
         Icons.Filled.Gavel,
         Icons.Outlined.Gavel,
-        "Rights"
+        "Rights",
     )
 
-    data object Government: Screens(
+    data object Government : Screens(
         NavigationSubgraphRoutes.HomeSubgraph.route, // Using home route for now
         Icons.Filled.AccountBalance,
         Icons.Outlined.AccountBalance,
-        "Gov"
+        "Gov",
     )
 
-    data object Voting: Screens(
+    data object Voting : Screens(
         NavigationSubgraphRoutes.HomeSubgraph.route, // Using home route for now
         Icons.Filled.HowToVote,
         Icons.Outlined.HowToVote,
-        "Vote"
+        "Vote",
     )
 }
 
-var bottomNavigationDestination = listOf(
-    Screens.Home,
-    Screens.Rights,
-    Screens.Government,
-    Screens.Voting
-)
+var bottomNavigationDestination =
+    listOf(
+        Screens.Home,
+        Screens.Rights,
+        Screens.Government,
+        Screens.Voting,
+    )

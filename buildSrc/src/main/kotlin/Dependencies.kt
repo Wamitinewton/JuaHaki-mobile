@@ -76,8 +76,6 @@ object Dependencies {
     const val customTabs = "androidx.browser:browser:1.7.0"
     const val openId = "net.openid:appauth:0.11.1"
 
-
-
     // Testing
     const val junit = "junit:junit:${Versions.junit}"
     const val androidXJunit = "androidx.test.ext:junit:${Versions.androidXJunit}"

@@ -15,7 +15,6 @@ import timber.log.Timber
 
 @AndroidEntryPoint
 class OAuthCallbackActivity : ComponentActivity() {
-
     private val oAuthViewModel: OAuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +62,10 @@ class OAuthCallbackActivity : ComponentActivity() {
         }
     }
 
-    private fun processAuthorizationCode(code: String, state: String) {
+    private fun processAuthorizationCode(
+        code: String,
+        state: String,
+    ) {
         lifecycleScope.launch {
             try {
                 val pkceData = oAuthViewModel.getPKCEData()
@@ -80,16 +82,16 @@ class OAuthCallbackActivity : ComponentActivity() {
                     return@launch
                 }
 
-                val tokenRequest = OAuthTokenRequest(
-                    code = code,
-                    codeVerifier = pkceData.codeVerifier,
-                    state = state
-                )
+                val tokenRequest =
+                    OAuthTokenRequest(
+                        code = code,
+                        codeVerifier = pkceData.codeVerifier,
+                        state = state,
+                    )
 
                 oAuthViewModel.exchangeCodeForTokens(OAuthProvider.GOOGLE, tokenRequest) { success, message ->
                     navigateToMainActivity(success, message)
                 }
-
             } catch (e: Exception) {
                 Timber.e(e, "Error processing OAuth callback")
                 navigateToMainActivity(false, "Authentication failed")
@@ -97,16 +99,20 @@ class OAuthCallbackActivity : ComponentActivity() {
         }
     }
 
-    private fun navigateToMainActivity(success: Boolean, message: String? = null) {
-        val intent = Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-            putExtra("oauth_success", success)
-            putExtra("oauth_message", message)
+    private fun navigateToMainActivity(
+        success: Boolean,
+        message: String? = null,
+    ) {
+        val intent =
+            Intent(this, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                putExtra("oauth_success", success)
+                putExtra("oauth_message", message)
 
-            if (success) {
-                putExtra("navigate_to", NavigationRoutes.HomeScreenRoute.route)
+                if (success) {
+                    putExtra("navigate_to", NavigationRoutes.HomeScreenRoute.route)
+                }
             }
-        }
 
         startActivity(intent)
         finish()

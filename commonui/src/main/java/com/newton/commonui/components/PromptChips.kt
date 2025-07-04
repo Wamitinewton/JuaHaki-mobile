@@ -24,13 +24,14 @@ fun PromptChips(
     modifier: Modifier = Modifier,
     isVisible: Boolean = true,
     onUserInteraction: () -> Unit = {},
-    autoHideDurationMs: Long = 4000L
+    autoHideDurationMs: Long = 4000L,
 ) {
-    val prompts = listOf(
-        "What is Article 43?",
-        "How is budget passed in Kenya?",
-        "Rights during arrest"
-    )
+    val prompts =
+        listOf(
+            "What is Article 43?",
+            "How is budget passed in Kenya?",
+            "Rights during arrest",
+        )
 
     var showChips by remember { mutableStateOf(isVisible) }
 
@@ -50,23 +51,27 @@ fun PromptChips(
 
     AnimatedVisibility(
         visible = showChips && isVisible,
-        enter = fadeIn(
-            animationSpec = tween(600, delayMillis = 500)
-        ) + slideInVertically(
-            animationSpec = tween(600, delayMillis = 500),
-            initialOffsetY = { it / 2 }
-        ),
-        exit = fadeOut(
-            animationSpec = tween(400)
-        ) + slideOutVertically(
-            animationSpec = tween(400),
-            targetOffsetY = { it / 2 }
-        )
+        enter =
+            fadeIn(
+                animationSpec = tween(600, delayMillis = 500),
+            ) +
+                slideInVertically(
+                    animationSpec = tween(600, delayMillis = 500),
+                    initialOffsetY = { it / 2 },
+                ),
+        exit =
+            fadeOut(
+                animationSpec = tween(400),
+            ) +
+                slideOutVertically(
+                    animationSpec = tween(400),
+                    targetOffsetY = { it / 2 },
+                ),
     ) {
         Column(
             modifier = modifier,
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             prompts.forEachIndexed { index, prompt ->
                 AnimatedPromptChip(
@@ -75,7 +80,7 @@ fun PromptChips(
                     onClick = {
                         onUserInteraction()
                         showChips = false
-                    }
+                    },
                 )
             }
         }
@@ -86,7 +91,7 @@ fun PromptChips(
 private fun AnimatedPromptChip(
     text: String,
     delay: Int,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     var isVisible by remember { mutableStateOf(false) }
 
@@ -97,11 +102,12 @@ private fun AnimatedPromptChip(
 
     val alpha by animateFloatAsState(
         targetValue = if (isVisible) 1f else 0f,
-        animationSpec = tween(
-            durationMillis = 500,
-            easing = FastOutSlowInEasing
-        ),
-        label = "chip_alpha"
+        animationSpec =
+            tween(
+                durationMillis = 500,
+                easing = FastOutSlowInEasing,
+            ),
+        label = "chip_alpha",
     )
 
     AssistChip(
@@ -110,20 +116,23 @@ private fun AnimatedPromptChip(
             Text(
                 text = text,
                 fontSize = 12.sp,
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.Medium,
             )
         },
-        modifier = Modifier
-            .alpha(alpha)
-            .padding(horizontal = 4.dp),
-        colors = AssistChipDefaults.assistChipColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-            labelColor = MaterialTheme.colorScheme.onSecondaryContainer
-        ),
-        border = BorderStroke(
-            width = 1.dp,
-            color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
-        ),
-        shape = RoundedCornerShape(16.dp)
+        modifier =
+            Modifier
+                .alpha(alpha)
+                .padding(horizontal = 4.dp),
+        colors =
+            AssistChipDefaults.assistChipColors(
+                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                labelColor = MaterialTheme.colorScheme.onSecondaryContainer,
+            ),
+        border =
+            BorderStroke(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
+            ),
+        shape = RoundedCornerShape(16.dp),
     )
 }

@@ -20,22 +20,20 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AuthRepositoryModule {
-
     @Provides
     @Singleton
     fun provideAuthRepositoryModule(
         authApiService: AuthApiService,
         userApiService: UserApiService,
         sessionManager: SessionManager,
-        userDao: UserDao
-    ): AuthRepository {
-        return AuthRepositoryImpl(
+        userDao: UserDao,
+    ): AuthRepository =
+        AuthRepositoryImpl(
             authApiService = authApiService,
             sessionManager = sessionManager,
             userDao = userDao,
-            userApiService = userApiService
+            userApiService = userApiService,
         )
-    }
 
     @Provides
     @Singleton
@@ -43,13 +41,12 @@ object AuthRepositoryModule {
         oAuthApiService: OAuthApiService,
         sessionManager: SessionManager,
         userDao: UserDao,
-        @ApplicationContext context: Context
-    ): OAuthRepository {
-        return OAuthRepositoryImpl(
+        @ApplicationContext context: Context,
+    ): OAuthRepository =
+        OAuthRepositoryImpl(
             oAuthApiService = oAuthApiService,
             sessionManager = sessionManager,
             userDao = userDao,
-            context = context
+            context = context,
         )
-    }
 }

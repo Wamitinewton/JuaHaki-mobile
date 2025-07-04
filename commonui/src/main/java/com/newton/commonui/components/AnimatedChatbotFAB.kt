@@ -28,7 +28,7 @@ fun AnimatedChatbotFAB(
     modifier: Modifier = Modifier,
     chatbotIconRes: Int,
     onFabClick: () -> Unit = {},
-    isEnabled: Boolean = true
+    isEnabled: Boolean = true,
 ) {
     val haptic = LocalHapticFeedback.current
     var isPressed by remember { mutableStateOf(false) }
@@ -37,19 +37,21 @@ fun AnimatedChatbotFAB(
     val gradientRotation by infiniteTransition.animateFloat(
         initialValue = 0f,
         targetValue = 360f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(3000, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart,
-        ),
+        animationSpec =
+            infiniteRepeatable(
+                animation = tween(3000, easing = LinearEasing),
+                repeatMode = RepeatMode.Restart,
+            ),
         label = "gradient_rotation",
     )
 
     val scale by animateFloatAsState(
         targetValue = if (isPressed) 0.95f else 1f,
-        animationSpec = spring(
-            dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessLow,
-        ),
+        animationSpec =
+            spring(
+                dampingRatio = Spring.DampingRatioMediumBouncy,
+                stiffness = Spring.StiffnessLow,
+            ),
         label = "scale_animation",
     )
 
@@ -63,22 +65,23 @@ fun AnimatedChatbotFAB(
         contentAlignment = Alignment.Center,
     ) {
         Box(
-            modifier = Modifier
-                .size(72.dp)
-                .scale(scale)
-                .pointerInput(Unit) {
-                    if (isEnabled) {
-                        detectTapGestures(
-                            onPress = {
-                                isPressed = true
-                                haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                                tryAwaitRelease()
-                                isPressed = false
-                            },
-                            onTap = { onFabClick() }
-                        )
-                    }
-                },
+            modifier =
+                Modifier
+                    .size(72.dp)
+                    .scale(scale)
+                    .pointerInput(Unit) {
+                        if (isEnabled) {
+                            detectTapGestures(
+                                onPress = {
+                                    isPressed = true
+                                    haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                                    tryAwaitRelease()
+                                    isPressed = false
+                                },
+                                onTap = { onFabClick() },
+                            )
+                        }
+                    },
             contentAlignment = Alignment.Center,
         ) {
             Canvas(
@@ -88,7 +91,7 @@ fun AnimatedChatbotFAB(
                     gradientRotation = gradientRotation,
                     primaryColor = primaryColor,
                     secondaryColor = secondaryColor,
-                    tertiaryColor = tertiaryColor
+                    tertiaryColor = tertiaryColor,
                 )
             }
 
@@ -96,11 +99,11 @@ fun AnimatedChatbotFAB(
                 modifier = Modifier.size(64.dp),
                 colors = CardDefaults.cardColors(containerColor = surfaceColor),
                 elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
-                shape = CircleShape
+                shape = CircleShape,
             ) {
                 Box(
                     modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
+                    contentAlignment = Alignment.Center,
                 ) {
                     Icon(
                         painter = painterResource(id = chatbotIconRes),
@@ -118,36 +121,40 @@ private fun DrawScope.drawAnimatedGradientBorder(
     gradientRotation: Float,
     primaryColor: Color,
     secondaryColor: Color,
-    tertiaryColor: Color
+    tertiaryColor: Color,
 ) {
     val strokeWidth = 4.dp.toPx()
     val radius = (size.minDimension - strokeWidth) / 2
     val centerPoint = center
 
     val angleRadians = Math.toRadians(gradientRotation.toDouble())
-    val gradientStart = Offset(
-        x = centerPoint.x + cos(angleRadians).toFloat() * radius,
-        y = centerPoint.y + sin(angleRadians).toFloat() * radius,
-    )
-    val gradientEnd = Offset(
-        x = centerPoint.x - cos(angleRadians).toFloat() * radius,
-        y = centerPoint.y - sin(angleRadians).toFloat() * radius,
-    )
+    val gradientStart =
+        Offset(
+            x = centerPoint.x + cos(angleRadians).toFloat() * radius,
+            y = centerPoint.y + sin(angleRadians).toFloat() * radius,
+        )
+    val gradientEnd =
+        Offset(
+            x = centerPoint.x - cos(angleRadians).toFloat() * radius,
+            y = centerPoint.y - sin(angleRadians).toFloat() * radius,
+        )
 
-    val colors = listOf(
-        primaryColor,
-        secondaryColor,
-        tertiaryColor,
-        primaryColor.copy(alpha = 0.7f),
-        secondaryColor,
-        primaryColor,
-    )
+    val colors =
+        listOf(
+            primaryColor,
+            secondaryColor,
+            tertiaryColor,
+            primaryColor.copy(alpha = 0.7f),
+            secondaryColor,
+            primaryColor,
+        )
 
-    val brush = Brush.linearGradient(
-        colors = colors,
-        start = gradientStart,
-        end = gradientEnd,
-    )
+    val brush =
+        Brush.linearGradient(
+            colors = colors,
+            start = gradientStart,
+            end = gradientEnd,
+        )
 
     drawCircle(
         brush = brush,

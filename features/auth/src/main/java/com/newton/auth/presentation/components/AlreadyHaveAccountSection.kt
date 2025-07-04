@@ -40,15 +40,16 @@ fun AlreadyOrDontHaveAccountSection(
             onClick = onNavigate,
             enabled = enabled,
             text = buttonText,
-            textStyle = MaterialTheme.typography.bodyMedium.copy(
-                fontWeight = FontWeight.SemiBold,
-                color =
-                    if (enabled) {
-                        MaterialTheme.colorScheme.primary
-                    } else {
-                        MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
-                    },
-            ),
+            textStyle =
+                MaterialTheme.typography.bodyMedium.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    color =
+                        if (enabled) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
+                        },
+                ),
         )
     }
 }

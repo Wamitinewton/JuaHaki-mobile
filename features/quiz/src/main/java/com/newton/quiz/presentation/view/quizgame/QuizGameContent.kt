@@ -37,61 +37,66 @@ import com.newton.quiz.presentation.view.components.QuizQuestionCard
 import java.util.Locale
 
 @Composable
- fun QuizGameContent(
+fun QuizGameContent(
     uiState: QuizGameUiState,
     onAnswerSelected: (String) -> Unit,
     onSubmitAnswer: () -> Unit,
     onNextQuestion: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
 
     Column(
-        modifier = modifier
-            .verticalScroll(scrollState)
-            .padding(16.dp)
+        modifier =
+            modifier
+                .verticalScroll(scrollState)
+                .padding(16.dp),
     ) {
         QuizProgressBar(
             currentQuestion = uiState.currentQuestionNumber,
             totalQuestions = uiState.currentSession?.totalQuestions ?: 10,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Card(
                 shape = RoundedCornerShape(12.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.7f)
-                )
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.7f),
+                    ),
             ) {
                 Text(
                     text = "Score: ${uiState.score}",
-                    style = MaterialTheme.typography.labelMedium.copy(
-                        fontWeight = FontWeight.Bold
-                    ),
+                    style =
+                        MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Bold,
+                        ),
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                 )
             }
 
             Card(
                 shape = RoundedCornerShape(12.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.7f)
-                )
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.7f),
+                    ),
             ) {
                 Text(
                     text = formatTime(uiState.timeSpent),
-                    style = MaterialTheme.typography.labelMedium.copy(
-                        fontWeight = FontWeight.Bold
-                    ),
+                    style =
+                        MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Bold,
+                        ),
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                 )
             }
         }
@@ -102,9 +107,9 @@ import java.util.Locale
             targetState = uiState.currentQuestionNumber,
             transitionSpec = {
                 fadeIn(animationSpec = tween(300)) togetherWith
-                        fadeOut(animationSpec = tween(300))
+                    fadeOut(animationSpec = tween(300))
             },
-            label = "question_transition"
+            label = "question_transition",
         ) { questionNumber ->
             if (uiState.currentSession != null && questionNumber > 0) {
                 QuizQuestionCard(
@@ -113,7 +118,7 @@ import java.util.Locale
                     onAnswerSelected = onAnswerSelected,
                     showResult = uiState.showExplanation,
                     answerResult = uiState.answerResult,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
         }
@@ -124,39 +129,43 @@ import java.util.Locale
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = if (uiState.answerResult.correct) {
-                        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
-                    } else {
-                        MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)
-                    }
-                )
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor =
+                            if (uiState.answerResult.correct) {
+                                MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+                            } else {
+                                MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)
+                            },
+                    ),
             ) {
                 Column(
-                    modifier = Modifier.padding(20.dp)
+                    modifier = Modifier.padding(20.dp),
                 ) {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
                             imageVector = if (uiState.answerResult.correct) Icons.Default.CheckCircle else Icons.Default.Close,
                             contentDescription = null,
-                            tint = if (uiState.answerResult.correct) {
-                                MaterialTheme.colorScheme.primary
-                            } else {
-                                MaterialTheme.colorScheme.error
-                            },
-                            modifier = Modifier.size(24.dp)
+                            tint =
+                                if (uiState.answerResult.correct) {
+                                    MaterialTheme.colorScheme.primary
+                                } else {
+                                    MaterialTheme.colorScheme.error
+                                },
+                            modifier = Modifier.size(24.dp),
                         )
 
                         Spacer(modifier = Modifier.width(8.dp))
 
                         Text(
                             text = uiState.answerResult.message,
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                fontWeight = FontWeight.Bold
-                            ),
-                            color = MaterialTheme.colorScheme.onSurface
+                            style =
+                                MaterialTheme.typography.titleMedium.copy(
+                                    fontWeight = FontWeight.Bold,
+                                ),
+                            color = MaterialTheme.colorScheme.onSurface,
                         )
                     }
 
@@ -164,10 +173,11 @@ import java.util.Locale
 
                     Text(
                         text = "Correct Answer: ${uiState.answerResult.correctAnswer} - ${uiState.answerResult.correctOptionText}",
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            fontWeight = FontWeight.Medium
-                        ),
-                        color = MaterialTheme.colorScheme.primary
+                        style =
+                            MaterialTheme.typography.bodyMedium.copy(
+                                fontWeight = FontWeight.Medium,
+                            ),
+                        color = MaterialTheme.colorScheme.primary,
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -175,7 +185,7 @@ import java.util.Locale
                     Text(
                         text = uiState.answerResult.explanation,
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
                     )
                 }
             }
@@ -188,14 +198,14 @@ import java.util.Locale
             PrimaryButton(
                 text = if (uiState.answerResult?.hasNextQuestion == true) "Next Question" else "View Results",
                 onClick = onNextQuestion,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         } else {
             PrimaryButton(
                 text = "Submit Answer",
                 onClick = onSubmitAnswer,
                 enabled = uiState.currentAnswer.isNotEmpty(),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
 
@@ -206,5 +216,5 @@ import java.util.Locale
 private fun formatTime(seconds: Long): String {
     val minutes = seconds / 60
     val remainingSeconds = seconds % 60
-    return String.format(Locale.US ,"%02d:%02d", minutes, remainingSeconds)
+    return String.format(Locale.US, "%02d:%02d", minutes, remainingSeconds)
 }

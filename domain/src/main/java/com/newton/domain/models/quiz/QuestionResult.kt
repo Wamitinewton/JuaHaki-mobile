@@ -10,5 +10,5 @@ data class QuestionResult(
     val correctOptionText: String,
     val isCorrect: Boolean,
     val explanation: String,
-    val timeSpentSeconds: Long?
+    val timeSpentSeconds: Long?,
 )

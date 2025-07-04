@@ -21,18 +21,18 @@ fun QuizResultsContent(
     quizSummary: UserQuizSummary,
     onViewLeaderboard: () -> Unit,
     onRetakeQuiz: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         modifier = modifier,
         contentPadding = PaddingValues(20.dp),
-        verticalArrangement = Arrangement.spacedBy(24.dp)
+        verticalArrangement = Arrangement.spacedBy(24.dp),
     ) {
         item {
             ScoreHeaderCard(
                 score = quizSummary.score,
                 performanceLevel = quizSummary.performanceLevel,
-                completionMessage = quizSummary.completionMessage
+                completionMessage = quizSummary.completionMessage,
             )
         }
 
@@ -42,18 +42,19 @@ fun QuizResultsContent(
 
         item {
             CategoryPerformanceCard(
-                categoryPerformance = quizSummary.categoryPerformance
+                categoryPerformance = quizSummary.categoryPerformance,
             )
         }
 
         item {
             Text(
                 text = "Question Details",
-                style = MaterialTheme.typography.headlineSmall.copy(
-                    fontWeight = FontWeight.Bold
-                ),
+                style =
+                    MaterialTheme.typography.headlineSmall.copy(
+                        fontWeight = FontWeight.Bold,
+                    ),
                 color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(horizontal = 4.dp)
+                modifier = Modifier.padding(horizontal = 4.dp),
             )
         }
 
@@ -63,24 +64,24 @@ fun QuizResultsContent(
 
         item {
             Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
                 ) {
                     SecondaryButton(
                         text = "Leaderboard",
                         onClick = onViewLeaderboard,
                         leadingIcon = Icons.Default.EmojiEvents,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     )
 
                     SecondaryButton(
                         text = "Share",
                         onClick = { /* TODO: Implement sharing */ },
                         leadingIcon = Icons.Default.Share,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
                     )
                 }
 
@@ -88,7 +89,7 @@ fun QuizResultsContent(
                     text = "Take Another Quiz",
                     onClick = onRetakeQuiz,
                     leadingIcon = Icons.Default.Refresh,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
         }

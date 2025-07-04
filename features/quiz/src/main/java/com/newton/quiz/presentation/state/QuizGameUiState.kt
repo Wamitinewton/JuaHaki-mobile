@@ -12,5 +12,5 @@ data class QuizGameUiState(
     val timeSpent: Long = 0,
     val showExplanation: Boolean = false,
     val answerResult: AnswerResult? = null,
-    val error: String? = null
+    val error: String? = null,
 )

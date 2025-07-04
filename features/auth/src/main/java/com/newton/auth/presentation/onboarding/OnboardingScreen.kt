@@ -20,35 +20,38 @@ import kotlinx.coroutines.launch
 @Composable
 fun OnboardingScreen(
     onOnboardingComplete: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val pages = OnboardingData.pages
-    val pagerState = rememberPagerState(
-        initialPage = 0,
-        pageCount = { pages.size }
-    )
+    val pagerState =
+        rememberPagerState(
+            initialPage = 0,
+            pageCount = { pages.size },
+        )
     val scope = rememberCoroutineScope()
 
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(backgroundGradient())
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(backgroundGradient()),
     ) {
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
             Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
             ) {
                 HorizontalPager(
                     state = pagerState,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
                 ) { page ->
                     OnboardingPageContent(
                         page = pages[page],
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
                     )
                 }
             }
@@ -63,7 +66,7 @@ fun OnboardingScreen(
                     }
                 },
                 onGetStarted = onOnboardingComplete,
-                modifier = Modifier.padding(bottom = 55.dp)
+                modifier = Modifier.padding(bottom = 55.dp),
             )
         }
     }

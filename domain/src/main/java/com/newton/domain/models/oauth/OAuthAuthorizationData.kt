@@ -4,5 +4,5 @@ data class OAuthAuthorizationData(
     val authorizationUrl: String,
     val state: String,
     val codeChallenge: String,
-    val codeVerifier: String
+    val codeVerifier: String,
 )

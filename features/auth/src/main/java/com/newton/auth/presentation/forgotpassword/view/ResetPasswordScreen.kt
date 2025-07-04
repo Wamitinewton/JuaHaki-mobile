@@ -73,8 +73,8 @@ fun ResetPasswordScreen(
     val passwordsMatch by remember(uiState.newPassword, uiState.confirmPassword) {
         derivedStateOf {
             uiState.newPassword == uiState.confirmPassword &&
-                    uiState.newPassword.isNotBlank() &&
-                    uiState.confirmPassword.isNotBlank()
+                uiState.newPassword.isNotBlank() &&
+                uiState.confirmPassword.isNotBlank()
         }
     }
 
@@ -84,9 +84,10 @@ fun ResetPasswordScreen(
                 title = {
                     Text(
                         text = "Reset Password",
-                        style = MaterialTheme.typography.headlineSmall.copy(
-                            fontWeight = FontWeight.SemiBold,
-                        ),
+                        style =
+                            MaterialTheme.typography.headlineSmall.copy(
+                                fontWeight = FontWeight.SemiBold,
+                            ),
                     )
                 },
                 navigationIcon = {
@@ -97,25 +98,28 @@ fun ResetPasswordScreen(
                         )
                     }
                 },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color.Transparent,
-                ),
+                colors =
+                    TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = Color.Transparent,
+                    ),
             )
         },
         modifier = modifier.fillMaxSize(),
     ) { paddingValues ->
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(backgroundGradient())
-                .padding(paddingValues),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .background(backgroundGradient())
+                    .padding(paddingValues),
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 24.dp)
-                    .imePadding(),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                        .padding(horizontal = 24.dp)
+                        .imePadding(),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Spacer(modifier = Modifier.height(24.dp))
@@ -126,10 +130,11 @@ fun ResetPasswordScreen(
                 ) {
                     Text(
                         text = "Verify and Reset",
-                        style = MaterialTheme.typography.headlineMedium.copy(
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurface,
-                        ),
+                        style =
+                            MaterialTheme.typography.headlineMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onSurface,
+                            ),
                         textAlign = TextAlign.Center,
                     )
 
@@ -137,10 +142,11 @@ fun ResetPasswordScreen(
 
                     Text(
                         text = "Enter the verification code sent to your email and create a new secure password.",
-                        style = MaterialTheme.typography.bodyLarge.copy(
-                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                            lineHeight = MaterialTheme.typography.bodyLarge.lineHeight * 1.2,
-                        ),
+                        style =
+                            MaterialTheme.typography.bodyLarge.copy(
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                                lineHeight = MaterialTheme.typography.bodyLarge.lineHeight * 1.2,
+                            ),
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(horizontal = 8.dp),
                     )
@@ -149,10 +155,11 @@ fun ResetPasswordScreen(
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
                             text = "For: ${uiState.email}",
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                color = MaterialTheme.colorScheme.primary,
-                                fontWeight = FontWeight.Medium,
-                            ),
+                            style =
+                                MaterialTheme.typography.bodyMedium.copy(
+                                    color = MaterialTheme.colorScheme.primary,
+                                    fontWeight = FontWeight.Medium,
+                                ),
                             textAlign = TextAlign.Center,
                         )
                     }
@@ -162,9 +169,10 @@ fun ResetPasswordScreen(
 
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.7f),
-                    ),
+                    colors =
+                        CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.7f),
+                        ),
                     elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
                 ) {
                     Column(
@@ -176,17 +184,19 @@ fun ResetPasswordScreen(
                         ) {
                             Text(
                                 text = "Verification Code",
-                                style = MaterialTheme.typography.titleMedium.copy(
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = MaterialTheme.colorScheme.onSurface,
-                                ),
+                                style =
+                                    MaterialTheme.typography.titleMedium.copy(
+                                        fontWeight = FontWeight.SemiBold,
+                                        color = MaterialTheme.colorScheme.onSurface,
+                                    ),
                             )
 
                             Text(
                                 text = "Enter the 6-digit code sent to your email",
-                                style = MaterialTheme.typography.bodySmall.copy(
-                                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                                ),
+                                style =
+                                    MaterialTheme.typography.bodySmall.copy(
+                                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                                    ),
                             )
 
                             Spacer(modifier = Modifier.height(8.dp))
@@ -219,10 +229,11 @@ fun ResetPasswordScreen(
                         ) {
                             Text(
                                 text = "New Password",
-                                style = MaterialTheme.typography.titleMedium.copy(
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = MaterialTheme.colorScheme.onSurface,
-                                ),
+                                style =
+                                    MaterialTheme.typography.titleMedium.copy(
+                                        fontWeight = FontWeight.SemiBold,
+                                        color = MaterialTheme.colorScheme.onSurface,
+                                    ),
                             )
 
                             PasswordTextField(
@@ -243,7 +254,7 @@ fun ResetPasswordScreen(
                                 isPasswordVisible = uiState.isNewPasswordVisible,
                                 onTogglePasswordVisibility = {
                                     onEvent(ResetPasswordUiEvent.OnToggleNewPasswordVisibility)
-                                }
+                                },
                             )
 
                             if (uiState.newPassword.isNotBlank()) {
@@ -252,10 +263,11 @@ fun ResetPasswordScreen(
                                 ) {
                                     Text(
                                         text = "Password Requirements:",
-                                        style = MaterialTheme.typography.bodySmall.copy(
-                                            fontWeight = FontWeight.Medium,
-                                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
-                                        ),
+                                        style =
+                                            MaterialTheme.typography.bodySmall.copy(
+                                                fontWeight = FontWeight.Medium,
+                                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+                                            ),
                                     )
 
                                     PasswordValidationIndicator(
@@ -301,7 +313,7 @@ fun ResetPasswordScreen(
                                 isPasswordVisible = uiState.isConfirmPasswordVisible,
                                 onTogglePasswordVisibility = {
                                     onEvent(ResetPasswordUiEvent.OnToggleConfirmPasswordVisibility)
-                                }
+                                },
                             )
 
                             if (uiState.confirmPassword.isNotBlank()) {
@@ -356,9 +368,10 @@ fun ResetPasswordScreen(
                         onEvent(ResetPasswordUiEvent.OnNavigateBack)
                     },
                     enabled = !uiState.isLoading,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 16.dp),
                 )
 
                 Spacer(modifier = Modifier.height(32.dp))
@@ -381,23 +394,26 @@ private fun PasswordValidationIndicator(
         Icon(
             imageVector = Icons.Default.CheckCircle,
             contentDescription = null,
-            tint = if (isValid) {
-                MaterialTheme.colorScheme.primary
-            } else {
-                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
-            },
+            tint =
+                if (isValid) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                },
             modifier = Modifier.size(16.dp),
         )
 
         Text(
             text = text,
-            style = MaterialTheme.typography.bodySmall.copy(
-                color = if (isValid) {
-                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
-                } else {
-                    MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-                },
-            ),
+            style =
+                MaterialTheme.typography.bodySmall.copy(
+                    color =
+                        if (isValid) {
+                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
+                        } else {
+                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                        },
+                ),
         )
     }
 }

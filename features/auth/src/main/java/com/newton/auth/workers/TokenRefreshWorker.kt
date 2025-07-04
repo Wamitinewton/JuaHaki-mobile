@@ -14,8 +14,8 @@ import kotlinx.coroutines.flow.first
 class TokenRefreshWorker
     @AssistedInject
     constructor(
-       context: Context,
-       workerParameters: WorkerParameters,
+        context: Context,
+        workerParameters: WorkerParameters,
         private val authRepository: AuthRepository,
     ) : CoroutineWorker(context, workerParameters) {
         companion object {

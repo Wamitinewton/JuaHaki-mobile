@@ -17,7 +17,6 @@ private fun isPasswordValid(formData: ResetPasswordFormData): Boolean {
     return hasValidLength && hasUppercase && hasLowercase && hasDigit && hasSpecialChar && passwordsMatch
 }
 
-
 /**
  * State class for the Reset Password screen
  */
@@ -27,7 +26,6 @@ data class ResetPasswordScreenState(
     val isLoading: Boolean = false,
     val isFormValid: Boolean = false,
 ) {
-
     fun validateForm(): ResetPasswordScreenState {
         val errors = ResetPasswordFormErrors()
         val isValid = isPasswordValid(formData)
@@ -38,15 +36,11 @@ data class ResetPasswordScreenState(
         )
     }
 
+    fun clearErrors(): ResetPasswordScreenState = copy(formErrors = ResetPasswordFormErrors())
 
-    fun clearErrors(): ResetPasswordScreenState {
-        return copy(formErrors = ResetPasswordFormErrors())
-    }
-
-    fun updateFormData(newFormData: ResetPasswordFormData): ResetPasswordScreenState {
-        return copy(
+    fun updateFormData(newFormData: ResetPasswordFormData): ResetPasswordScreenState =
+        copy(
             formData = newFormData,
             isFormValid = isPasswordValid(newFormData),
         ).clearErrors()
-    }
 }

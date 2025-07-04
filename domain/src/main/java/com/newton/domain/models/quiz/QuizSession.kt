@@ -5,5 +5,5 @@ data class QuizSession(
     val quizId: Long,
     val title: String,
     val totalQuestions: Int,
-    val currentQuestion: QuizQuestion
+    val currentQuestion: QuizQuestion,
 )

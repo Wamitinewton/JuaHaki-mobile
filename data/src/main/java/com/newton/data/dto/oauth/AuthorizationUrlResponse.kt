@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class AuthorizationUrlResponse(
     val authorizationUrl: String,
     val state: String,
-    val codeChallenge: String
+    val codeChallenge: String,
 )

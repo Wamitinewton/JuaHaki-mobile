@@ -18,95 +18,101 @@ import com.newton.domain.models.quiz.QuestionResult
 @Composable
 fun QuestionResultCard(
     questionResult: QuestionResult,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val cardColor = if (questionResult.isCorrect) {
-        Color(0xFF10B981).copy(alpha = 0.08f)
-    } else {
-        Color(0xFFEF4444).copy(alpha = 0.08f)
-    }
+    val cardColor =
+        if (questionResult.isCorrect) {
+            Color(0xFF10B981).copy(alpha = 0.08f)
+        } else {
+            Color(0xFFEF4444).copy(alpha = 0.08f)
+        }
 
-    val iconColor = if (questionResult.isCorrect) {
-        Color(0xFF10B981)
-    } else {
-        Color(0xFFEF4444)
-    }
+    val iconColor =
+        if (questionResult.isCorrect) {
+            Color(0xFF10B981)
+        } else {
+            Color(0xFFEF4444)
+        }
 
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = cardColor),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
         Column(
             modifier = Modifier.padding(20.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     Icon(
                         imageVector = if (questionResult.isCorrect) Icons.Default.CheckCircle else Icons.Default.Close,
                         contentDescription = null,
                         tint = iconColor,
-                        modifier = Modifier.size(24.dp)
+                        modifier = Modifier.size(24.dp),
                     )
 
                     Text(
                         text = "Question ${questionResult.questionNumber}",
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            fontWeight = FontWeight.Bold
-                        ),
-                        color = MaterialTheme.colorScheme.onSurface
+                        style =
+                            MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                            ),
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                 }
 
                 Surface(
                     shape = RoundedCornerShape(12.dp),
-                    color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.8f)
+                    color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.8f),
                 ) {
                     Text(
                         text = questionResult.category,
-                        style = MaterialTheme.typography.labelMedium.copy(
-                            fontWeight = FontWeight.Medium
-                        ),
+                        style =
+                            MaterialTheme.typography.labelMedium.copy(
+                                fontWeight = FontWeight.Medium,
+                            ),
                         color = MaterialTheme.colorScheme.onSecondaryContainer,
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                     )
                 }
             }
 
             Text(
                 text = questionResult.questionText,
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    lineHeight = 20.sp
-                ),
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.85f)
+                style =
+                    MaterialTheme.typography.bodyMedium.copy(
+                        lineHeight = 20.sp,
+                    ),
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.85f),
             )
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = "Your Answer",
                         style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = "${questionResult.selectedAnswer}: ${questionResult.selectedOptionText}",
-                        style = MaterialTheme.typography.bodyMedium.copy(
-                            fontWeight = FontWeight.SemiBold
-                        ),
-                        color = iconColor
+                        style =
+                            MaterialTheme.typography.bodyMedium.copy(
+                                fontWeight = FontWeight.SemiBold,
+                            ),
+                        color = iconColor,
                     )
                 }
 
@@ -115,15 +121,16 @@ fun QuestionResultCard(
                         Text(
                             text = "Correct Answer",
                             style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = "${questionResult.correctAnswer}: ${questionResult.correctOptionText}",
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                fontWeight = FontWeight.SemiBold
-                            ),
-                            color = Color(0xFF10B981)
+                            style =
+                                MaterialTheme.typography.bodyMedium.copy(
+                                    fontWeight = FontWeight.SemiBold,
+                                ),
+                            color = Color(0xFF10B981),
                         )
                     }
                 }
@@ -131,4 +138,3 @@ fun QuestionResultCard(
         }
     }
 }
-

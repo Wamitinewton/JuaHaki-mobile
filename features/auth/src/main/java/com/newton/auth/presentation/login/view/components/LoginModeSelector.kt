@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.newton.core.enums.LoginMode
 
 @Composable
- fun LoginModeSelector(
+fun LoginModeSelector(
     selectedMode: LoginMode,
     onModeChange: (LoginMode) -> Unit,
     enabled: Boolean,

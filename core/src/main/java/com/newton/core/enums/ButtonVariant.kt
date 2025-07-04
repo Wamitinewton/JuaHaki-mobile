@@ -4,5 +4,5 @@ enum class ButtonVariant {
     Filled,
     FilledTonal,
     Elevated,
-    Text
+    Text,
 }

@@ -30,10 +30,11 @@ fun ForgotPasswordForm(
     ) {
         Text(
             text = "Enter Your Email Address",
-            style = MaterialTheme.typography.titleMedium.copy(
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSurface,
-            ),
+            style =
+                MaterialTheme.typography.titleMedium.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                ),
             modifier = Modifier.padding(bottom = 8.dp),
         )
 
@@ -52,10 +53,11 @@ fun ForgotPasswordForm(
 
         Text(
             text = "We'll send a password reset link to this email address if it's associated with an account.",
-            style = MaterialTheme.typography.bodySmall.copy(
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                lineHeight = MaterialTheme.typography.bodySmall.lineHeight * 1.3,
-            ),
+            style =
+                MaterialTheme.typography.bodySmall.copy(
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                    lineHeight = MaterialTheme.typography.bodySmall.lineHeight * 1.3,
+                ),
             modifier = Modifier.padding(top = 4.dp),
         )
     }

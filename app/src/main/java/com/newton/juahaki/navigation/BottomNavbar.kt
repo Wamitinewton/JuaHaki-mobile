@@ -98,32 +98,39 @@ fun BottomNavItem(
     onClick: () -> Unit,
 ) {
     val iconColor =
-        if (isSelected) MaterialTheme.colorScheme.primary
-        else MaterialTheme.colorScheme.onSurfaceVariant
+        if (isSelected) {
+            MaterialTheme.colorScheme.primary
+        } else {
+            MaterialTheme.colorScheme.onSurfaceVariant
+        }
 
     val textColor = iconColor
 
     val backgroundColor =
-        if (isSelected) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
-        else Color.Transparent
+        if (isSelected) {
+            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+        } else {
+            Color.Transparent
+        }
 
     Box(
-        modifier = Modifier
-            .clip(RoundedCornerShape(16.dp))
-            .background(backgroundColor)
-            .clickable(onClick = onClick)
-            .padding(horizontal = 12.dp, vertical = 8.dp),
-        contentAlignment = Alignment.Center
+        modifier =
+            Modifier
+                .clip(RoundedCornerShape(16.dp))
+                .background(backgroundColor)
+                .clickable(onClick = onClick)
+                .padding(horizontal = 12.dp, vertical = 8.dp),
+        contentAlignment = Alignment.Center,
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
         ) {
             Icon(
                 imageVector = if (isSelected) destination.selectedIcon else destination.unselectedIcon,
                 contentDescription = destination.title,
                 tint = iconColor,
-                modifier = Modifier.size(28.dp)
+                modifier = Modifier.size(28.dp),
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -135,9 +142,8 @@ fun BottomNavItem(
                 fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Medium,
                 textAlign = TextAlign.Center,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
             )
         }
     }
 }
-

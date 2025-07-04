@@ -8,5 +8,5 @@ enum class TransitionType {
     SLIDE_VERTICAL,
     FADE,
     ZOOM,
-    NONE
+    NONE,
 }

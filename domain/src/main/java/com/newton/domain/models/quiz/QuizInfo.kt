@@ -1,6 +1,5 @@
 package com.newton.domain.models.quiz
 
-
 data class QuizInfo(
     val quizId: Long,
     val quizDate: String,
@@ -12,5 +11,5 @@ data class QuizInfo(
     val expiresAt: String,
     val hasUserAttempted: Boolean,
     val userLastAttempt: UserQuizSummary? = null,
-    val timeRemaining: String
+    val timeRemaining: String,
 )

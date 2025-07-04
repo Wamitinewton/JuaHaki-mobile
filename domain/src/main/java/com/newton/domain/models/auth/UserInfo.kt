@@ -1,6 +1,5 @@
 package com.newton.domain.models.auth
 
-
 data class UserInfo(
     val id: Long,
     val firstName: String,

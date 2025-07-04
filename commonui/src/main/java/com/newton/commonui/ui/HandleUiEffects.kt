@@ -10,7 +10,7 @@ fun <T : SnackbarUiEffect> HandleUiEffects(
     uiEffects: Flow<T>,
     onShowSnackbar: (SnackbarData) -> Unit,
     onShowToast: ((String) -> Unit)? = null,
-    onCustomEffect: ((T) -> Unit)? = null
+    onCustomEffect: ((T) -> Unit)? = null,
 ) {
     LaunchedEffect(Unit) {
         uiEffects.collect { effect ->

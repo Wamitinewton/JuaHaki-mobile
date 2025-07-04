@@ -3,19 +3,33 @@ package com.newton.core.utils
 /**
  * Sealed class representing different types of input validation errors
  */
-sealed class ValidationError(val message: String) {
+sealed class ValidationError(
+    val message: String,
+) {
     object EmptyField : ValidationError("This field is required")
+
     object InvalidEmail : ValidationError("Please enter a valid email address")
+
     object InvalidPhoneNumber : ValidationError("Phone number must be 10 digits starting with 07 or 01")
+
     object InvalidName : ValidationError("Name must contain only letters and be at least 2 characters")
+
     object InvalidUsername : ValidationError("Username must be 3-20 characters, alphanumeric and underscores only")
+
     object WeakPassword : ValidationError("Password must be at least 8 characters with uppercase, lowercase, number and special character")
+
     object PasswordTooShort : ValidationError("Password must be at least 8 characters")
+
     object PasswordNoUppercase : ValidationError("Password must contain at least one uppercase letter")
+
     object PasswordNoLowercase : ValidationError("Password must contain at least one lowercase letter")
+
     object PasswordNoNumber : ValidationError("Password must contain at least one number")
+
     object PasswordNoSpecialChar : ValidationError("Password must contain at least one special character")
+
     object InvalidOtp : ValidationError("Please enter a valid 6-character verification code")
+
     object PasswordMismatch : ValidationError("Passwords do not match")
 }
 
@@ -24,22 +38,22 @@ sealed class ValidationError(val message: String) {
  */
 sealed class ValidationResult {
     object Valid : ValidationResult()
-    data class Invalid(val error: ValidationError) : ValidationResult()
+
+    data class Invalid(
+        val error: ValidationError,
+    ) : ValidationResult()
 }
 
-
 object InputValidator {
-
     /**
      * Validates email format
      */
-    fun validateEmail(email: String): ValidationResult {
-        return when {
+    fun validateEmail(email: String): ValidationResult =
+        when {
             email.trim().isEmpty() -> ValidationResult.Invalid(ValidationError.EmptyField)
             !isValidEmailFormat(email.trim()) -> ValidationResult.Invalid(ValidationError.InvalidEmail)
             else -> ValidationResult.Valid
         }
-    }
 
     /**
      * Validates phone number (Kenyan format: 07xxxxxxxx or 01xxxxxxxx)
@@ -80,8 +94,8 @@ object InputValidator {
     /**
      * Validates password with detailed feedback
      */
-    fun validatePassword(password: String): ValidationResult {
-        return when {
+    fun validatePassword(password: String): ValidationResult =
+        when {
             password.isEmpty() -> ValidationResult.Invalid(ValidationError.EmptyField)
             password.length < 8 -> ValidationResult.Invalid(ValidationError.PasswordTooShort)
             !password.any { it.isUpperCase() } -> ValidationResult.Invalid(ValidationError.PasswordNoUppercase)
@@ -90,7 +104,6 @@ object InputValidator {
             !password.any { it in "!@#$%^&*()_+-=[]{}|;:,.<>?" } -> ValidationResult.Invalid(ValidationError.PasswordNoSpecialChar)
             else -> ValidationResult.Valid
         }
-    }
 
     /**
      * Validates all signup fields at once
@@ -101,19 +114,16 @@ object InputValidator {
         username: String,
         phoneNumber: String,
         email: String,
-        password: String
-    ): Map<String, ValidationError?> {
-        return mapOf(
+        password: String,
+    ): Map<String, ValidationError?> =
+        mapOf(
             "firstName" to (validateName(firstName) as? ValidationResult.Invalid)?.error,
             "lastName" to (validateName(lastName) as? ValidationResult.Invalid)?.error,
             "username" to (validateUsername(username) as? ValidationResult.Invalid)?.error,
             "phoneNumber" to (validatePhoneNumber(phoneNumber) as? ValidationResult.Invalid)?.error,
             "email" to (validateEmail(email) as? ValidationResult.Invalid)?.error,
-            "password" to (validatePassword(password) as? ValidationResult.Invalid)?.error
+            "password" to (validatePassword(password) as? ValidationResult.Invalid)?.error,
         )
-    }
-
-
 
     private fun isValidEmailFormat(email: String): Boolean {
         val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
@@ -137,20 +147,21 @@ object InputValidator {
         return username.matches(usernameRegex.toRegex())
     }
 
-    fun validateOtp(otp: String): ValidationResult {
-        return when {
+    fun validateOtp(otp: String): ValidationResult =
+        when {
             otp.isBlank() -> ValidationResult.Invalid(ValidationError.EmptyField)
             otp.length != 6 -> ValidationResult.Invalid(ValidationError.InvalidOtp)
             !otp.all { it.isLetterOrDigit() } -> ValidationResult.Invalid(ValidationError.InvalidOtp)
             else -> ValidationResult.Valid
         }
-    }
 
-    fun validatePasswordMatch(password: String, confirmPassword: String): ValidationResult {
-        return when {
+    fun validatePasswordMatch(
+        password: String,
+        confirmPassword: String,
+    ): ValidationResult =
+        when {
             confirmPassword.isBlank() -> ValidationResult.Invalid(ValidationError.EmptyField)
             password != confirmPassword -> ValidationResult.Invalid(ValidationError.PasswordMismatch)
             else -> ValidationResult.Valid
         }
-    }
 }

@@ -17,7 +17,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object HttpClientModule {
-
     private val loggingInterceptor =
         HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -28,9 +27,10 @@ object HttpClientModule {
     @Provides
     @Singleton
     fun provideHttpClient(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): OkHttpClient =
-        OkHttpClient.Builder()
+        OkHttpClient
+            .Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(AuthInterceptor(context))
             .callTimeout(60, TimeUnit.SECONDS)
@@ -39,20 +39,19 @@ object HttpClientModule {
             .readTimeout(30, TimeUnit.SECONDS)
             .build()
 
-
     @Provides
     @Singleton
-    fun provideJuaHakiApi(okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
+    fun provideJuaHakiApi(okHttpClient: OkHttpClient): Retrofit =
+        Retrofit
+            .Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-    }
 
     @Provides
     @Singleton
     fun provideContext(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): Context = context
 }

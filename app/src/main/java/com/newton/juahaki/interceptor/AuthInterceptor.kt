@@ -12,7 +12,9 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import timber.log.Timber
 
-class AuthInterceptor(context: Context): Interceptor {
+class AuthInterceptor(
+    context: Context,
+) : Interceptor {
     private val sessionManager = SessionManager(context)
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -30,7 +32,7 @@ class AuthInterceptor(context: Context): Interceptor {
 
         getTokensFromResHeaders(response)
 
-        return response;
+        return response
     }
 
     private fun getTokensFromResHeaders(response: Response) {

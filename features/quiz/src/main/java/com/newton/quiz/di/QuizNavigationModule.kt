@@ -11,7 +11,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class QuizNavigationModule {
-
     @Binds
     @Singleton
     abstract fun bindQuizNavigationApi(quizNavigationApiImpl: QuizNavigationApiImpl): QuizNavigationApi

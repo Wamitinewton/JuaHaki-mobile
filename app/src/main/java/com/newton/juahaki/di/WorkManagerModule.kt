@@ -14,17 +14,13 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object WorkManagerModule {
-
     @Provides
     @Singleton
     fun provideWorkManager(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): WorkManager = WorkManager.getInstance(context)
-
 
     @Provides
     @Singleton
-    fun provideWorkerFactory(
-        customWorkerFactory: CustomWorkerFactory
-    ): WorkerFactory = customWorkerFactory
+    fun provideWorkerFactory(customWorkerFactory: CustomWorkerFactory): WorkerFactory = customWorkerFactory
 }

@@ -8,26 +8,25 @@ import com.newton.navigation.NavigationSubgraphRoutes
 @Composable
 fun JuaHakiNavigation(
     navigationSubGraphs: NavigationSubGraphs,
-    navHostController: NavHostController
+    navHostController: NavHostController,
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = NavigationSubgraphRoutes.AuthSubgraph.route
+        startDestination = NavigationSubgraphRoutes.AuthSubgraph.route,
     ) {
         navigationSubGraphs.authNavigationApi.registerNavigationGraph(
             navHostController = navHostController,
-            navGraphBuilder = this
+            navGraphBuilder = this,
         )
 
         navigationSubGraphs.homeNavigationApi.registerNavigationGraph(
             navHostController = navHostController,
-            navGraphBuilder = this
+            navGraphBuilder = this,
         )
 
         navigationSubGraphs.quizNavigationApi.registerNavigationGraph(
             navHostController = navHostController,
-            navGraphBuilder = this
+            navGraphBuilder = this,
         )
     }
-    
 }

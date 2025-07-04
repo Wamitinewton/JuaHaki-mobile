@@ -29,7 +29,7 @@ fun AccountVerificationContainer(
                 is OtpUiEffect.NavigateBack -> onNavigateBack()
                 is OtpUiEffect.NavigateToLogin -> onNavigateToLogin()
             }
-        }
+        },
     )
 
     LaunchedEffect(Unit) {

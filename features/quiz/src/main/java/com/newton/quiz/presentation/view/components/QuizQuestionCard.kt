@@ -18,27 +18,28 @@ fun QuizQuestionCard(
     onAnswerSelected: (String) -> Unit,
     showResult: Boolean = false,
     answerResult: AnswerResult? = null,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+            ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
     ) {
         Column(
-            modifier = Modifier.padding(20.dp)
+            modifier = Modifier.padding(20.dp),
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Top
+                verticalAlignment = Alignment.Top,
             ) {
                 QuizCategoryChip(
                     category = question.category,
-                    modifier = Modifier.weight(1f, false)
+                    modifier = Modifier.weight(1f, false),
                 )
 
                 Spacer(modifier = Modifier.width(8.dp))
@@ -50,10 +51,11 @@ fun QuizQuestionCard(
 
             Text(
                 text = question.questionText,
-                style = MaterialTheme.typography.titleMedium.copy(
-                    lineHeight = 24.sp
-                ),
-                color = MaterialTheme.colorScheme.onSurface
+                style =
+                    MaterialTheme.typography.titleMedium.copy(
+                        lineHeight = 24.sp,
+                    ),
+                color = MaterialTheme.colorScheme.onSurface,
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -66,7 +68,7 @@ fun QuizQuestionCard(
                     isCorrect = answerResult?.correctAnswer == option.optionLetter,
                     isUserAnswer = selectedAnswer == option.optionLetter,
                     onOptionSelected = { onAnswerSelected(option.optionLetter) },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
@@ -79,7 +81,7 @@ fun QuizQuestionCard(
                     text = "Source: ${question.sourceReference}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
         }

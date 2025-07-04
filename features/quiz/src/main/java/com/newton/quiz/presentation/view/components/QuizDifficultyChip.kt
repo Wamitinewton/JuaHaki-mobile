@@ -14,27 +14,29 @@ import com.newton.core.enums.QuizDifficulty
 @Composable
 fun QuizDifficultyChip(
     difficulty: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val difficultyEnum = when (difficulty.lowercase()) {
-        "easy" -> QuizDifficulty.EASY
-        "medium" -> QuizDifficulty.MEDIUM
-        "hard" -> QuizDifficulty.HARD
-        else -> QuizDifficulty.MEDIUM
-    }
+    val difficultyEnum =
+        when (difficulty.lowercase()) {
+            "easy" -> QuizDifficulty.EASY
+            "medium" -> QuizDifficulty.MEDIUM
+            "hard" -> QuizDifficulty.HARD
+            else -> QuizDifficulty.MEDIUM
+        }
 
     Surface(
         modifier = modifier,
         shape = RoundedCornerShape(16.dp),
-        color = difficultyEnum.color.copy(alpha = 0.15f)
+        color = difficultyEnum.color.copy(alpha = 0.15f),
     ) {
         Text(
             text = difficultyEnum.displayName,
-            style = MaterialTheme.typography.labelSmall.copy(
-                fontWeight = FontWeight.Medium
-            ),
+            style =
+                MaterialTheme.typography.labelSmall.copy(
+                    fontWeight = FontWeight.Medium,
+                ),
             color = difficultyEnum.color,
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
         )
     }
 }

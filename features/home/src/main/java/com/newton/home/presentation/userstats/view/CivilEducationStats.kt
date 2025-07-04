@@ -7,5 +7,5 @@ data class CivilEducationStats(
     val currentStreak: Int = 0,
     val totalPoints: Int = 0,
     val level: String = "Beginner",
-    val progressToNextLevel: Float = 0f
+    val progressToNextLevel: Float = 0f,
 )

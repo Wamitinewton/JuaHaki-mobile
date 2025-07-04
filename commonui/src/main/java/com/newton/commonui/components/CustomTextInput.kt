@@ -336,7 +336,6 @@ fun PasswordTextField(
     )
 }
 
-
 /**
  * Phone TextField with proper formatting
  */

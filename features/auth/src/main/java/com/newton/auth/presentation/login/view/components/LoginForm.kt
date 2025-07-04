@@ -54,10 +54,11 @@ fun LoginForm(
     ) {
         Text(
             text = "Sign In to Your Account",
-            style = MaterialTheme.typography.titleMedium.copy(
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSurface,
-            ),
+            style =
+                MaterialTheme.typography.titleMedium.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                ),
             modifier = Modifier.padding(bottom = 8.dp),
         )
 
@@ -126,16 +127,17 @@ fun LoginForm(
             onClick = onForgotPasswordClick,
             enabled = enabled,
             text = "Forgot Password?",
-            textStyle = MaterialTheme.typography.bodySmall.copy(
-                fontWeight = FontWeight.Medium,
-                color = if (enabled) {
-                    MaterialTheme.colorScheme.primary
-                } else {
-                    MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
-                },
-            ),
+            textStyle =
+                MaterialTheme.typography.bodySmall.copy(
+                    fontWeight = FontWeight.Medium,
+                    color =
+                        if (enabled) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
+                        },
+                ),
             modifier = Modifier.align(Alignment.End),
         )
     }
 }
-

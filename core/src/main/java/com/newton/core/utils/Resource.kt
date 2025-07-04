@@ -15,15 +15,21 @@ sealed class Resource<T>(
     val data: T? = null,
     val message: String? = null,
     val errorType: ErrorType? = null,
-    val httpCode: Int? = null
+    val httpCode: Int? = null,
 ) {
-    class Loading<T>(val isLoading: Boolean = true) : Resource<T>(null)
-    class Success<T>(data: T?) : Resource<T>(data)
+    class Loading<T>(
+        val isLoading: Boolean = true,
+    ) : Resource<T>(null)
+
+    class Success<T>(
+        data: T?,
+    ) : Resource<T>(data)
+
     class Error<T>(
         message: String,
         errorType: ErrorType = ErrorType.UNKNOWN,
         data: T? = null,
-        httpCode: Int? = null
+        httpCode: Int? = null,
     ) : Resource<T>(data, message, errorType, httpCode)
 
     /**
@@ -32,7 +38,7 @@ sealed class Resource<T>(
     inline fun handle(
         onLoading: (Boolean) -> Unit = {},
         onSuccess: (T?) -> Unit = {},
-        onError: (String?, ErrorType?, Int?) -> Unit = { _, _, _ -> }
+        onError: (String?, ErrorType?, Int?) -> Unit = { _, _, _ -> },
     ) {
         when (this) {
             is Loading -> onLoading(isLoading)

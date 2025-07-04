@@ -26,7 +26,7 @@ fun LoginContainer(
     modifier: Modifier = Modifier,
     loginViewModel: LoginViewModel,
     oAuthViewModel: OAuthViewModel = hiltViewModel(),
-    customTabsManager: CustomTabsManager = CustomTabsManager()
+    customTabsManager: CustomTabsManager = CustomTabsManager(),
 ) {
     val context = LocalContext.current
     val loginUiState by loginViewModel.uiState.collectAsStateWithLifecycle()
@@ -59,7 +59,7 @@ fun LoginContainer(
                 is OAuthUiEffect.ShowOAuthError -> {
                 }
             }
-        }
+        },
     )
 
     LoginScreen(

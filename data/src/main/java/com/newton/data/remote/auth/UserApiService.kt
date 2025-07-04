@@ -6,16 +6,15 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface UserApiService {
-
     @POST(ApiConstants.INITIATE_RESET_PASSWORD)
     suspend fun initiatePasswordReset(
-        @Query("email") email: String
+        @Query("email") email: String,
     ): ApiResponse<Unit>
 
     @POST(ApiConstants.RESET_PASSWORD)
     suspend fun resetPassword(
         @Query("email") email: String,
         @Query("otp") otp: String,
-        @Query("newPassword") newPassword: String
+        @Query("newPassword") newPassword: String,
     ): ApiResponse<Unit>
 }

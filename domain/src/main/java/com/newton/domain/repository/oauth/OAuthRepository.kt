@@ -20,7 +20,7 @@ interface OAuthRepository {
     suspend fun getAuthorizationUrl(
         provider: OAuthProvider,
         codeVerifier: String,
-        state: String
+        state: String,
     ): Flow<Resource<OAuthAuthorizationData>>
 
     /**
@@ -28,7 +28,7 @@ interface OAuthRepository {
      */
     suspend fun exchangeCodeForTokens(
         provider: OAuthProvider,
-        tokenRequest: OAuthTokenRequest
+        tokenRequest: OAuthTokenRequest,
     ): Flow<Resource<JwtData>>
 
     /**

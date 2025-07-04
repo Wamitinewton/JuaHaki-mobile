@@ -20,23 +20,23 @@ object CoilModule {
     @Provides
     @Singleton
     fun provideImageLoader(
-        @ApplicationContext context: Context
-    ) : ImageLoader {
-        return ImageLoader.Builder(context)
+        @ApplicationContext context: Context,
+    ): ImageLoader =
+        ImageLoader
+            .Builder(context)
             .memoryCache {
-                MemoryCache.Builder()
+                MemoryCache
+                    .Builder()
                     .maxSizePercent(context, 0.5)
                     .build()
-            }
-            .diskCache {
-                DiskCache.Builder()
+            }.diskCache {
+                DiskCache
+                    .Builder()
                     .directory(context.cacheDir.resolve("image_cache"))
                     .maxSizePercent(0.04)
                     .build()
-            }
-            .crossfade(true)
+            }.crossfade(true)
             .crossfade(300)
             .allowRgb565(true)
             .build()
-    }
 }

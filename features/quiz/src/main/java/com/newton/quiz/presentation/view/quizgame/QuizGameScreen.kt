@@ -43,36 +43,39 @@ fun QuizGameScreen(
     sessionId: String,
     onQuizComplete: (String) -> Unit = {},
     onNavigateBack: () -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var uiState by remember {
         mutableStateOf(
             QuizGameUiState(
                 isLoading = false,
-                currentSession = QuizSession(
-                    sessionId = sessionId,
-                    quizId = 1L,
-                    title = "Constitutional Rights & Freedoms",
-                    totalQuestions = 10,
-                    currentQuestion = QuizQuestion(
-                        questionId = 1L,
-                        questionNumber = 1,
-                        questionText = "According to Article 27 of the Constitution of Kenya 2010, which of the following is NOT a ground for discrimination?",
-                        category = "Bill of Rights",
-                        difficulty = "Medium",
-                        options = listOf(
-                            QuizOption("A", "Race, color, or ethnic origin"),
-                            QuizOption("B", "Political opinion or belief"),
-                            QuizOption("C", "Physical ability or disability"),
-                            QuizOption("D", "Economic status or employment")
-                        ),
-                        sourceReference = "Article 27, Constitution of Kenya 2010"
-                    )
-                ),
+                currentSession =
+                    QuizSession(
+                        sessionId = sessionId,
+                        quizId = 1L,
+                        title = "Constitutional Rights & Freedoms",
+                        totalQuestions = 10,
+                        currentQuestion =
+                            QuizQuestion(
+                                questionId = 1L,
+                                questionNumber = 1,
+                                questionText = "According to Article 27 of the Constitution of Kenya 2010, which of the following is NOT a ground for discrimination?",
+                                category = "Bill of Rights",
+                                difficulty = "Medium",
+                                options =
+                                    listOf(
+                                        QuizOption("A", "Race, color, or ethnic origin"),
+                                        QuizOption("B", "Political opinion or belief"),
+                                        QuizOption("C", "Physical ability or disability"),
+                                        QuizOption("D", "Economic status or employment"),
+                                    ),
+                                sourceReference = "Article 27, Constitution of Kenya 2010",
+                            ),
+                    ),
                 currentQuestionNumber = 1,
                 score = 0,
-                timeSpent = 0
-            )
+                timeSpent = 0,
+            ),
         )
     }
 
@@ -89,40 +92,43 @@ fun QuizGameScreen(
     }
 
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(brush = backgroundGradient())
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(brush = backgroundGradient()),
     ) {
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
             TopAppBar(
                 title = {
                     Text(
                         text = uiState.currentSession?.title ?: "Quiz",
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            fontWeight = FontWeight.Bold
-                        )
+                        style =
+                            MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                            ),
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = { showExitDialog = true }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Exit Quiz"
+                            contentDescription = "Exit Quiz",
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f)
-                )
+                colors =
+                    TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
+                    ),
             )
 
             when {
                 uiState.isLoading -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
+                        contentAlignment = Alignment.Center,
                     ) {
                         CircularProgressIndicator()
                     }
@@ -131,22 +137,22 @@ fun QuizGameScreen(
                 uiState.error != null -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
+                        contentAlignment = Alignment.Center,
                     ) {
                         Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
                             Text(
                                 text = "Error",
                                 style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.error
+                                color = MaterialTheme.colorScheme.error,
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
                                 text = uiState.error!!,
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                                textAlign = TextAlign.Center
+                                textAlign = TextAlign.Center,
                             )
                         }
                     }
@@ -160,38 +166,41 @@ fun QuizGameScreen(
                         },
                         onSubmitAnswer = {
                             val isCorrect = uiState.currentAnswer == "D"
-                            val result = AnswerResult(
-                                correct = isCorrect,
-                                message = if (isCorrect) "Correct!" else "Incorrect",
-                                correctAnswer = "D",
-                                correctOptionText = "Economic status or employment",
-                                explanation = "Article 27 of the Constitution prohibits discrimination on various grounds including race, gender, pregnancy, marital status, health status, ethnic or social origin, color, age, disability, religion, conscience, belief, culture, dress, language or birth. However, economic status or employment is not explicitly listed as a protected ground.",
-                                currentScore = if (isCorrect) uiState.score + 10 else uiState.score,
-                                questionsAnswered = uiState.currentQuestionNumber,
-                                totalQuestions = uiState.currentSession?.totalQuestions ?: 10,
-                                hasNextQuestion = uiState.currentQuestionNumber < (uiState.currentSession?.totalQuestions ?: 10)
-                            )
+                            val result =
+                                AnswerResult(
+                                    correct = isCorrect,
+                                    message = if (isCorrect) "Correct!" else "Incorrect",
+                                    correctAnswer = "D",
+                                    correctOptionText = "Economic status or employment",
+                                    explanation = "Article 27 of the Constitution prohibits discrimination on various grounds including race, gender, pregnancy, marital status, health status, ethnic or social origin, color, age, disability, religion, conscience, belief, culture, dress, language or birth. However, economic status or employment is not explicitly listed as a protected ground.",
+                                    currentScore = if (isCorrect) uiState.score + 10 else uiState.score,
+                                    questionsAnswered = uiState.currentQuestionNumber,
+                                    totalQuestions = uiState.currentSession?.totalQuestions ?: 10,
+                                    hasNextQuestion = uiState.currentQuestionNumber < (uiState.currentSession?.totalQuestions ?: 10),
+                                )
 
-                            uiState = uiState.copy(
-                                showExplanation = true,
-                                answerResult = result,
-                                score = result.currentScore
-                            )
+                            uiState =
+                                uiState.copy(
+                                    showExplanation = true,
+                                    answerResult = result,
+                                    score = result.currentScore,
+                                )
                         },
                         onNextQuestion = {
                             if (uiState.currentQuestionNumber < (uiState.currentSession?.totalQuestions ?: 10)) {
-                                uiState = uiState.copy(
-                                    currentQuestionNumber = uiState.currentQuestionNumber + 1,
-                                    currentAnswer = "",
-                                    showExplanation = false,
-                                    answerResult = null,
-                                    timeSpent = 0
-                                )
+                                uiState =
+                                    uiState.copy(
+                                        currentQuestionNumber = uiState.currentQuestionNumber + 1,
+                                        currentAnswer = "",
+                                        showExplanation = false,
+                                        answerResult = null,
+                                        timeSpent = 0,
+                                    )
                             } else {
                                 onQuizComplete(sessionId)
                             }
                         },
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
                     )
                 }
             }
@@ -203,9 +212,10 @@ fun QuizGameScreen(
                 title = {
                     Text(
                         text = "Exit Quiz?",
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            fontWeight = FontWeight.Bold
-                        )
+                        style =
+                            MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                            ),
                     )
                 },
                 text = {
@@ -216,18 +226,18 @@ fun QuizGameScreen(
                         onClick = {
                             showExitDialog = false
                             onNavigateBack()
-                        }
+                        },
                     ) {
                         Text("Exit")
                     }
                 },
                 dismissButton = {
                     TextButton(
-                        onClick = { showExitDialog = false }
+                        onClick = { showExitDialog = false },
                     ) {
                         Text("Continue Quiz")
                     }
-                }
+                },
             )
         }
     }

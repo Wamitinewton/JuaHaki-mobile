@@ -35,64 +35,70 @@ fun QuizOptionItem(
     isCorrect: Boolean = false,
     isUserAnswer: Boolean = false,
     onOptionSelected: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val backgroundColor = when {
-        showResult && isCorrect -> MaterialTheme.colorScheme.primaryContainer
-        showResult && isUserAnswer && !isCorrect -> MaterialTheme.colorScheme.errorContainer
-        isSelected && !showResult -> MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f)
-        else -> MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
-    }
+    val backgroundColor =
+        when {
+            showResult && isCorrect -> MaterialTheme.colorScheme.primaryContainer
+            showResult && isUserAnswer && !isCorrect -> MaterialTheme.colorScheme.errorContainer
+            isSelected && !showResult -> MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f)
+            else -> MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+        }
 
-    val borderColor = when {
-        showResult && isCorrect -> MaterialTheme.colorScheme.primary
-        showResult && isUserAnswer && !isCorrect -> MaterialTheme.colorScheme.error
-        isSelected && !showResult -> MaterialTheme.colorScheme.primary
-        else -> Color.Transparent
-    }
+    val borderColor =
+        when {
+            showResult && isCorrect -> MaterialTheme.colorScheme.primary
+            showResult && isUserAnswer && !isCorrect -> MaterialTheme.colorScheme.error
+            isSelected && !showResult -> MaterialTheme.colorScheme.primary
+            else -> Color.Transparent
+        }
 
-    val textColor = when {
-        showResult && isCorrect -> MaterialTheme.colorScheme.onPrimaryContainer
-        showResult && isUserAnswer && !isCorrect -> MaterialTheme.colorScheme.onErrorContainer
-        else -> MaterialTheme.colorScheme.onSurface
-    }
+    val textColor =
+        when {
+            showResult && isCorrect -> MaterialTheme.colorScheme.onPrimaryContainer
+            showResult && isUserAnswer && !isCorrect -> MaterialTheme.colorScheme.onErrorContainer
+            else -> MaterialTheme.colorScheme.onSurface
+        }
 
     Row(
-        modifier = modifier
-            .clip(RoundedCornerShape(12.dp))
-            .background(backgroundColor)
-            .border(
-                width = if (borderColor != Color.Transparent) 2.dp else 0.dp,
-                color = borderColor,
-                shape = RoundedCornerShape(12.dp)
-            )
-            .clickable(enabled = !showResult) { onOptionSelected() }
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            modifier
+                .clip(RoundedCornerShape(12.dp))
+                .background(backgroundColor)
+                .border(
+                    width = if (borderColor != Color.Transparent) 2.dp else 0.dp,
+                    color = borderColor,
+                    shape = RoundedCornerShape(12.dp),
+                ).clickable(enabled = !showResult) { onOptionSelected() }
+                .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
-            modifier = Modifier
-                .size(32.dp)
-                .clip(CircleShape)
-                .background(
-                    if (isSelected || (showResult && (isCorrect || isUserAnswer))) {
-                        MaterialTheme.colorScheme.primary
-                    } else {
-                        MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
-                    }
-                ),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .size(32.dp)
+                    .clip(CircleShape)
+                    .background(
+                        if (isSelected || (showResult && (isCorrect || isUserAnswer))) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
+                        },
+                    ),
+            contentAlignment = Alignment.Center,
         ) {
             Text(
                 text = option.optionLetter,
-                style = MaterialTheme.typography.labelMedium.copy(
-                    fontWeight = FontWeight.Bold
-                ),
-                color = if (isSelected || (showResult && (isCorrect || isUserAnswer))) {
-                    MaterialTheme.colorScheme.onPrimary
-                } else {
-                    MaterialTheme.colorScheme.onSurface
-                }
+                style =
+                    MaterialTheme.typography.labelMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                    ),
+                color =
+                    if (isSelected || (showResult && (isCorrect || isUserAnswer))) {
+                        MaterialTheme.colorScheme.onPrimary
+                    } else {
+                        MaterialTheme.colorScheme.onSurface
+                    },
             )
         }
 
@@ -102,21 +108,29 @@ fun QuizOptionItem(
             text = option.optionText,
             style = MaterialTheme.typography.bodyMedium,
             color = textColor,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
 
         if (showResult) {
             Spacer(modifier = Modifier.width(8.dp))
 
             Icon(
-                imageVector = if (isCorrect) Icons.Default.CheckCircle else if (isUserAnswer) Icons.Default.Close else Icons.Default.QuestionMark,
+                imageVector =
+                    if (isCorrect) {
+                        Icons.Default.CheckCircle
+                    } else if (isUserAnswer) {
+                        Icons.Default.Close
+                    } else {
+                        Icons.Default.QuestionMark
+                    },
                 contentDescription = null,
-                tint = when {
-                    isCorrect -> MaterialTheme.colorScheme.primary
-                    isUserAnswer -> MaterialTheme.colorScheme.error
-                    else -> Color.Transparent
-                },
-                modifier = Modifier.size(20.dp)
+                tint =
+                    when {
+                        isCorrect -> MaterialTheme.colorScheme.primary
+                        isUserAnswer -> MaterialTheme.colorScheme.error
+                        else -> Color.Transparent
+                    },
+                modifier = Modifier.size(20.dp),
             )
         }
     }

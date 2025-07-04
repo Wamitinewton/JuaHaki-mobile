@@ -7,16 +7,16 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.newton.auth.presentation.accountverification.view.AccountVerificationContainer
+import com.newton.auth.presentation.accountverification.viewmodel.AccountVerificationViewModel
 import com.newton.auth.presentation.forgotpassword.view.ForgotPasswordContainer
 import com.newton.auth.presentation.forgotpassword.view.ResetPasswordContainer
 import com.newton.auth.presentation.forgotpassword.viewmodel.InitiatePasswordResetViewModel
 import com.newton.auth.presentation.forgotpassword.viewmodel.ResetPasswordViewModel
 import com.newton.auth.presentation.login.view.LoginContainer
 import com.newton.auth.presentation.login.viewmodel.LoginViewModel
-import com.newton.auth.presentation.onboarding.OnboardingScreen
-import com.newton.auth.presentation.accountverification.view.AccountVerificationContainer
-import com.newton.auth.presentation.accountverification.viewmodel.AccountVerificationViewModel
 import com.newton.auth.presentation.oauth.viewmodel.OAuthViewModel
+import com.newton.auth.presentation.onboarding.OnboardingScreen
 import com.newton.auth.presentation.signup.view.SignUpContainer
 import com.newton.auth.presentation.signup.viewmodel.SignupViewModel
 import com.newton.auth.presentation.splash.SplashScreen
@@ -66,9 +66,8 @@ class AuthNavigationApiImpl
                                     }
                                 }
                             }
-
                         },
-                        viewModel = splashViewModel
+                        viewModel = splashViewModel,
                     )
                 }
 

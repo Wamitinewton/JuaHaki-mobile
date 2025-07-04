@@ -13,19 +13,18 @@ import com.newton.domain.models.auth.SignupData
 import com.newton.domain.models.auth.UserInfo
 import com.newton.domain.models.auth.VerifyOtpData
 
-fun SignupData.toRequestDto(): SignupRequest {
-    return SignupRequest(
+fun SignupData.toRequestDto(): SignupRequest =
+    SignupRequest(
         firstName = firstName,
         lastName = lastName,
         username = username,
         phoneNumber = phoneNumber,
         email = email,
-        password = password
+        password = password,
     )
-}
 
-fun UserDto.toUserDomain(): UserInfo {
-    return UserInfo(
+fun UserDto.toUserDomain(): UserInfo =
+    UserInfo(
         firstName = firstName,
         lastName = lastName,
         username = username,
@@ -33,32 +32,27 @@ fun UserDto.toUserDomain(): UserInfo {
         email = email,
         id = id,
     )
-}
 
-fun JwtResponse.toJwtData(): JwtData {
-    return JwtData(
+fun JwtResponse.toJwtData(): JwtData =
+    JwtData(
         accessToken = accessToken,
         refreshToken = refreshToken,
-        userInfo = user.toUserDomain()
+        userInfo = user.toUserDomain(),
     )
-}
 
-fun LoginData.toLoginRequest(): LoginRequest {
-    return LoginRequest(
+fun LoginData.toLoginRequest(): LoginRequest =
+    LoginRequest(
         usernameOrEmail = usernameOrEmail,
-        password = password
+        password = password,
     )
-}
 
-fun RefreshTokenData.toRefreshTokenRequest(): RefreshTokenRequest {
-    return RefreshTokenRequest(
-        refreshToken = refreshToken
+fun RefreshTokenData.toRefreshTokenRequest(): RefreshTokenRequest =
+    RefreshTokenRequest(
+        refreshToken = refreshToken,
     )
-}
 
-fun VerifyOtpData.toVerifyOtpRequest(): VerifyOtpRequest {
-    return VerifyOtpRequest(
+fun VerifyOtpData.toVerifyOtpRequest(): VerifyOtpRequest =
+    VerifyOtpRequest(
         email = email,
-        otp = otp
+        otp = otp,
     )
-}

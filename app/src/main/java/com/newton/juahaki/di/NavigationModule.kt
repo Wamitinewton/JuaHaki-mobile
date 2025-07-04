@@ -12,17 +12,15 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object NavigationModule {
-
     @Provides
     fun provideNavigationSubGraphs(
         authNavigationApi: AuthNavigationApi,
         homeNavigationApi: HomeNavigationApi,
-        quizNavigationApi: QuizNavigationApi
-    ) : NavigationSubGraphs {
-        return NavigationSubGraphs(
+        quizNavigationApi: QuizNavigationApi,
+    ): NavigationSubGraphs =
+        NavigationSubGraphs(
             authNavigationApi = authNavigationApi,
             homeNavigationApi = homeNavigationApi,
-            quizNavigationApi = quizNavigationApi
+            quizNavigationApi = quizNavigationApi,
         )
-    }
 }

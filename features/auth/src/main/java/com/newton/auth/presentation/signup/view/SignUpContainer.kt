@@ -24,7 +24,6 @@ fun SignUpContainer(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-
     HandleUiEffects(
         uiEffects = viewModel.uiEffect,
         onShowSnackbar = onShowSnackbar,
@@ -38,7 +37,7 @@ fun SignUpContainer(
                     onNavigateToEmailVerification(effect.email)
                 }
             }
-        }
+        },
     )
 
     SignUpScreen(

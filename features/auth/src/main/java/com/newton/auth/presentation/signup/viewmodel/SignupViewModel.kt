@@ -274,8 +274,9 @@ class SignupViewModel
                                 _uiEffect.send(SignupUiEffect.NavigateToEmailVerification(currentState.email.trim()))
                                 _uiEffect.sendSuccessSnackbar(
                                     message = "Account created successfully! Please verify your email.",
-                                    actionLabel = "OK"
-                                )                            },
+                                    actionLabel = "OK",
+                                )
+                            },
                             onError = { message, errorType, httpCode ->
 
                                 _uiState.value =
@@ -288,8 +289,9 @@ class SignupViewModel
                                 _uiEffect.sendErrorSnackbar(
                                     message = message ?: "Unknown error occurred",
                                     actionLabel = "Retry",
-                                    onActionClick = { performSignup() }
-                                )                            },
+                                    onActionClick = { performSignup() },
+                                )
+                            },
                         )
                     }
                 } catch (e: Exception) {
@@ -304,8 +306,9 @@ class SignupViewModel
                         _uiEffect.sendErrorSnackbar(
                             message = "An unexpected error occurred",
                             actionLabel = "Try Again",
-                            onActionClick = { performSignup() }
-                        )                    }
+                            onActionClick = { performSignup() },
+                        )
+                    }
                 }
             }
         }

@@ -66,10 +66,11 @@ fun SignUpForm(
     ) {
         Text(
             text = "Required Information",
-            style = MaterialTheme.typography.titleMedium.copy(
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSurface,
-            ),
+            style =
+                MaterialTheme.typography.titleMedium.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                ),
             modifier = Modifier.padding(bottom = 8.dp),
         )
 
@@ -85,13 +86,14 @@ fun SignUpForm(
             errorMessage = errors.email,
             enabled = enabled,
             size = TextFieldSize.Medium,
-            modifier = Modifier
-                .fillMaxWidth()
-                .onFocusChanged { focusState ->
-                    if (!focusState.isFocused && formData.email.isNotBlank()) {
-                        onFieldValidation("email")
-                    }
-                },
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .onFocusChanged { focusState ->
+                        if (!focusState.isFocused && formData.email.isNotBlank()) {
+                            onFieldValidation("email")
+                        }
+                    },
         )
 
         PhoneTextField(
@@ -106,13 +108,14 @@ fun SignUpForm(
             errorMessage = errors.phone,
             enabled = enabled,
             size = TextFieldSize.Medium,
-            modifier = Modifier
-                .fillMaxWidth()
-                .onFocusChanged { focusState ->
-                    if (!focusState.isFocused && formData.phone.isNotBlank()) {
-                        onFieldValidation("phone")
-                    }
-                },
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .onFocusChanged { focusState ->
+                        if (!focusState.isFocused && formData.phone.isNotBlank()) {
+                            onFieldValidation("phone")
+                        }
+                    },
         )
 
         PasswordTextField(
@@ -131,31 +134,34 @@ fun SignUpForm(
             onTogglePasswordVisibility = onTogglePasswordVisibility,
             visibilityIcon = Icons.Default.Visibility,
             visibilityOffIcon = Icons.Default.VisibilityOff,
-            modifier = Modifier
-                .fillMaxWidth()
-                .onFocusChanged { focusState ->
-                    if (!focusState.isFocused && formData.password.isNotBlank()) {
-                        onFieldValidation("password")
-                    }
-                },
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .onFocusChanged { focusState ->
+                        if (!focusState.isFocused && formData.password.isNotBlank()) {
+                            onFieldValidation("password")
+                        }
+                    },
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
             text = "Personal Information",
-            style = MaterialTheme.typography.titleMedium.copy(
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSurface,
-            ),
+            style =
+                MaterialTheme.typography.titleMedium.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                ),
             modifier = Modifier.padding(bottom = 8.dp),
         )
 
         Text(
             text = "Please provide your personal details to complete registration",
-            style = MaterialTheme.typography.bodySmall.copy(
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-            ),
+            style =
+                MaterialTheme.typography.bodySmall.copy(
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                ),
             textAlign = TextAlign.Start,
             modifier = Modifier.padding(bottom = 16.dp),
         )
@@ -176,13 +182,14 @@ fun SignUpForm(
                 errorMessage = errors.firstName,
                 enabled = enabled,
                 size = TextFieldSize.Medium,
-                modifier = Modifier
-                    .weight(1f)
-                    .onFocusChanged { focusState ->
-                        if (!focusState.isFocused && formData.firstName.isNotBlank()) {
-                            onFieldValidation("firstName")
-                        }
-                    },
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .onFocusChanged { focusState ->
+                            if (!focusState.isFocused && formData.firstName.isNotBlank()) {
+                                onFieldValidation("firstName")
+                            }
+                        },
             )
 
             CustomTextField(
@@ -196,13 +203,14 @@ fun SignUpForm(
                 errorMessage = errors.lastName,
                 enabled = enabled,
                 size = TextFieldSize.Medium,
-                modifier = Modifier
-                    .weight(1f)
-                    .onFocusChanged { focusState ->
-                        if (!focusState.isFocused && formData.lastName.isNotBlank()) {
-                            onFieldValidation("lastName")
-                        }
-                    },
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .onFocusChanged { focusState ->
+                            if (!focusState.isFocused && formData.lastName.isNotBlank()) {
+                                onFieldValidation("lastName")
+                            }
+                        },
             )
         }
 
@@ -218,13 +226,14 @@ fun SignUpForm(
             errorMessage = errors.username,
             enabled = enabled,
             size = TextFieldSize.Medium,
-            modifier = Modifier
-                .fillMaxWidth()
-                .onFocusChanged { focusState ->
-                    if (!focusState.isFocused && formData.username.isNotBlank()) {
-                        onFieldValidation("username")
-                    }
-                },
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .onFocusChanged { focusState ->
+                        if (!focusState.isFocused && formData.username.isNotBlank()) {
+                            onFieldValidation("username")
+                        }
+                    },
         )
     }
 }
