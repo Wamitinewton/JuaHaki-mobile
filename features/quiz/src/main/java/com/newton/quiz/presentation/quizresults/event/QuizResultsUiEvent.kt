@@ -16,5 +16,4 @@ sealed class QuizResultsUiEvent {
     data object OnNavigateToHome : QuizResultsUiEvent()
 
     data object OnNavigateToNewQuiz : QuizResultsUiEvent()
-
 }

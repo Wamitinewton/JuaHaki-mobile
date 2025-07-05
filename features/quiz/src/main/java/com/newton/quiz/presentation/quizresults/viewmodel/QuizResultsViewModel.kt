@@ -176,7 +176,6 @@ class QuizResultsViewModel
             }
         }
 
-
         fun resetState() {
             _uiState.value = QuizResultsUiState()
         }

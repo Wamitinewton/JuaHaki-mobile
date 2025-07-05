@@ -7,9 +7,5 @@ sealed class QuizResultsUiEffect : SnackbarUiEffect {
 
     data object NavigateToNewQuiz : QuizResultsUiEffect()
 
-    data class ShareResults(
-        val shareText: String,
-    ) : QuizResultsUiEffect()
-
     data object ShowLeaderboard : QuizResultsUiEffect()
 }

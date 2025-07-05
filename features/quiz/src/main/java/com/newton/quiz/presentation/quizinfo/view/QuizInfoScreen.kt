@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
@@ -17,47 +18,26 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.newton.commonui.components.PrimaryButton
 import com.newton.commonui.theme.backgroundGradient
-import com.newton.domain.models.quiz.QuizInfo
+import com.newton.quiz.presentation.quizinfo.event.QuizInfoUiEvent
 import com.newton.quiz.presentation.quizinfo.state.QuizInfoUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QuizInfoScreen(
-    onStartQuiz: (String) -> Unit = {},
-    onViewLeaderboard: () -> Unit = {},
-    onNavigateBack: () -> Unit = {},
+    uiState: QuizInfoUiState,
+    onQuizInfoEvent: (QuizInfoUiEvent) -> Unit,
+    onStartQuiz: (String) -> Unit,
+    onViewLeaderboard: () -> Unit,
+    onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val uiState by remember {
-        mutableStateOf(
-            QuizInfoUiState(
-                isLoading = false,
-                quizInfo =
-                    QuizInfo(
-                        quizId = 1L,
-                        quizDate = "2024-03-15",
-                        title = "Constitutional Rights & Freedoms",
-                        description = "Test your knowledge of fundamental rights and freedoms as outlined in the Kenyan Constitution",
-                        totalQuestions = 10,
-                        isActive = true,
-                        isExpired = false,
-                        expiresAt = "2024-03-16T00:00:00",
-                        hasUserAttempted = false,
-                        timeRemaining = "18h 45m",
-                    ),
-            ),
-        )
-    }
-
     Box(
         modifier =
             modifier
@@ -97,7 +77,17 @@ fun QuizInfoScreen(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center,
                     ) {
-                        CircularProgressIndicator()
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                        ) {
+                            CircularProgressIndicator()
+                            Spacer(modifier = Modifier.height(16.dp))
+                            Text(
+                                text = "Loading today's quiz...",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                            )
+                        }
                     }
                 }
 
@@ -116,18 +106,24 @@ fun QuizInfoScreen(
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
-                                text = uiState.error!!,
+                                text = uiState.error,
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                                 textAlign = TextAlign.Center,
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                            )
+                            Spacer(modifier = Modifier.height(16.dp))
+                            PrimaryButton(
+                                text = "Retry",
+                                onClick = { onQuizInfoEvent(QuizInfoUiEvent.OnRetryLoading) },
                             )
                         }
                     }
                 }
 
-                else -> {
+                uiState.quizInfo != null -> {
                     QuizInfoContent(
-                        quizInfo = uiState.quizInfo!!,
+                        quizInfo = uiState.quizInfo,
                         onStartQuiz = onStartQuiz,
                         onViewLeaderboard = onViewLeaderboard,
                         modifier = Modifier.fillMaxSize(),

@@ -45,6 +45,7 @@ fun QuizGameContent(
     modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
+    val currentQuestion = uiState.currentSession?.currentQuestion
 
     Column(
         modifier =
@@ -52,11 +53,13 @@ fun QuizGameContent(
                 .verticalScroll(scrollState)
                 .padding(16.dp),
     ) {
-        QuizProgressBar(
-            currentQuestion = uiState.currentQuestionNumber,
-            totalQuestions = uiState.currentSession?.totalQuestions ?: 10,
-            modifier = Modifier.fillMaxWidth(),
-        )
+        if (uiState.currentQuestionNumber != null && uiState.currentSession != null) {
+            QuizProgressBar(
+                currentQuestion = uiState.currentQuestionNumber,
+                totalQuestions = uiState.currentSession.totalQuestions,
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -104,16 +107,16 @@ fun QuizGameContent(
         Spacer(modifier = Modifier.height(24.dp))
 
         AnimatedContent(
-            targetState = uiState.currentQuestionNumber,
+            targetState = uiState.currentQuestionNumber ?: 0,
             transitionSpec = {
                 fadeIn(animationSpec = tween(300)) togetherWith
                     fadeOut(animationSpec = tween(300))
             },
             label = "question_transition",
         ) { questionNumber ->
-            if (uiState.currentSession != null && questionNumber > 0) {
+            if (currentQuestion != null && questionNumber > 0) {
                 QuizQuestionCard(
-                    question = uiState.currentSession.currentQuestion,
+                    question = currentQuestion,
                     selectedAnswer = uiState.currentAnswer,
                     onAnswerSelected = onAnswerSelected,
                     showResult = uiState.showExplanation,
@@ -193,7 +196,6 @@ fun QuizGameContent(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Action Button
         if (uiState.showExplanation) {
             PrimaryButton(
                 text = if (uiState.answerResult?.hasNextQuestion == true) "Next Question" else "View Results",
@@ -204,7 +206,7 @@ fun QuizGameContent(
             PrimaryButton(
                 text = "Submit Answer",
                 onClick = onSubmitAnswer,
-                enabled = uiState.currentAnswer.isNotEmpty(),
+                enabled = uiState.currentAnswer.isNotEmpty() && !uiState.isLoading,
                 modifier = Modifier.fillMaxWidth(),
             )
         }

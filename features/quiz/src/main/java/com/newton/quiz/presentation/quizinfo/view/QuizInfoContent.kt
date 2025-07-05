@@ -16,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.EmojiEvents
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Quiz
 import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material3.Card
@@ -36,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import com.newton.commonui.components.PrimaryButton
 import com.newton.commonui.components.SecondaryButton
 import com.newton.domain.models.quiz.QuizInfo
-import com.newton.quiz.presentation.components.QuizStatsCard
 
 @Composable
 fun QuizInfoContent(
@@ -138,52 +136,6 @@ fun QuizInfoContent(
                     }
                 }
             }
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Text(
-            text = "Quiz Information",
-            style =
-                MaterialTheme.typography.titleMedium.copy(
-                    fontWeight = FontWeight.Bold,
-                ),
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.padding(horizontal = 4.dp),
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            QuizStatsCard(
-                title = "Questions",
-                value = quizInfo.totalQuestions.toString(),
-                subtitle = "Total",
-                icon = Icons.Default.Quiz,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.weight(1f),
-            )
-
-            QuizStatsCard(
-                title = "Participants",
-                value = "1,247",
-                subtitle = "Today",
-                icon = Icons.Default.Person,
-                color = MaterialTheme.colorScheme.secondary,
-                modifier = Modifier.weight(1f),
-            )
-
-            QuizStatsCard(
-                title = "Average",
-                value = "78%",
-                subtitle = "Score",
-                icon = Icons.Default.EmojiEvents,
-                color = MaterialTheme.colorScheme.tertiary,
-                modifier = Modifier.weight(1f),
-            )
         }
 
         Spacer(modifier = Modifier.height(24.dp))
