@@ -31,9 +31,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.newton.commonui.components.PrimaryButton
-import com.newton.quiz.presentation.quizgame.state.QuizGameUiState
 import com.newton.quiz.presentation.components.QuizProgressBar
 import com.newton.quiz.presentation.components.QuizQuestionCard
+import com.newton.quiz.presentation.quizgame.state.QuizGameUiState
 import java.util.Locale
 
 @Composable

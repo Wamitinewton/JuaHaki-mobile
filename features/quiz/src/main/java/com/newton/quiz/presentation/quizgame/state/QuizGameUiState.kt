@@ -6,7 +6,7 @@ import com.newton.domain.models.quiz.QuizSession
 data class QuizGameUiState(
     val isLoading: Boolean = false,
     val currentSession: QuizSession? = null,
-    val currentQuestionNumber: Int = 1,
+    val currentQuestionNumber: Int? = null,
     val currentAnswer: String = "",
     val score: Int = 0,
     val timeSpent: Long = 0,
