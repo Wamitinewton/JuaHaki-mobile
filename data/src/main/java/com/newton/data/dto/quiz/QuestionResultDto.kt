@@ -11,7 +11,7 @@ data class QuestionResultDto(
     val correctAnswer: String,
     val selectedOptionText: String,
     val correctOptionText: String,
-    val isCorrect: Boolean,
+    val correct: Boolean,
     val explanation: String,
     val timeSpentSeconds: Long?,
 )

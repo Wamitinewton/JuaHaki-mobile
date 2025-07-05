@@ -35,11 +35,12 @@ import androidx.compose.ui.unit.dp
 import com.newton.commonui.components.PrimaryButton
 import com.newton.commonui.components.SecondaryButton
 import com.newton.domain.models.quiz.QuizInfo
+import com.newton.quiz.presentation.quizinfo.event.QuizInfoUiEvent
 
 @Composable
 fun QuizInfoContent(
     quizInfo: QuizInfo,
-    onStartQuiz: (String) -> Unit,
+    onQuizInfoEvent: (QuizInfoUiEvent) -> Unit,
     onViewLeaderboard: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -157,8 +158,7 @@ fun QuizInfoContent(
                 PrimaryButton(
                     text = "Start Quiz",
                     onClick = {
-                        val sessionId = "session_${System.currentTimeMillis()}"
-                        onStartQuiz(sessionId)
+                        onQuizInfoEvent(QuizInfoUiEvent.OnStartQuiz)
                     },
                     leadingIcon = Icons.Default.Quiz,
                     modifier = Modifier.fillMaxWidth(),
@@ -167,7 +167,7 @@ fun QuizInfoContent(
                 SecondaryButton(
                     text = "View Results",
                     onClick = {
-                        onStartQuiz(quizInfo.userLastAttempt?.sessionId ?: "")
+                        onQuizInfoEvent(QuizInfoUiEvent.OnStartQuiz)
                     },
                     leadingIcon = Icons.Default.EmojiEvents,
                     modifier = Modifier.fillMaxWidth(),

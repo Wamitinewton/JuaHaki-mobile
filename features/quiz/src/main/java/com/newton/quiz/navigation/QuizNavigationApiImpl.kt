@@ -17,111 +17,120 @@ import com.newton.quiz.presentation.quizresults.view.QuizResultsContainer
 import javax.inject.Inject
 
 class QuizNavigationApiImpl
-    @Inject
-    constructor(
-        private val snackbarManager: SnackbarManager,
-    ) : QuizNavigationApi {
-        companion object {
-            const val STATIC_SESSION_ID = "session_12345"
-        }
+@Inject
+constructor(
+    private val snackbarManager: SnackbarManager,
+) : QuizNavigationApi {
 
-        override fun registerNavigationGraph(
-            navGraphBuilder: NavGraphBuilder,
-            navHostController: NavHostController,
+    override fun registerNavigationGraph(
+        navGraphBuilder: NavGraphBuilder,
+        navHostController: NavHostController,
+    ) {
+        navGraphBuilder.navigation(
+            route = NavigationSubgraphRoutes.QuizSubgraph.route,
+            startDestination = NavigationRoutes.QuizInfoRoute.route,
         ) {
-            navGraphBuilder.navigation(
-                route = NavigationSubgraphRoutes.QuizSubgraph.route,
-                startDestination = NavigationRoutes.QuizInfoRoute.route,
+            composable(
+                route = NavigationRoutes.QuizInfoRoute.route,
             ) {
-                composable(
-                    route = NavigationRoutes.QuizInfoRoute.route,
-                ) {
-                    val viewModel = hiltViewModel<QuizInfoViewModel>()
-                    QuizInfoContainer(
-                        onStartQuiz = { sessionId ->
+                val viewModel = hiltViewModel<QuizInfoViewModel>()
+                QuizInfoContainer(
+                    onStartQuiz = { sessionId ->
+                        if (sessionId.isNotEmpty()) {
                             navHostController.navigate(
-                                NavigationRoutes.QuizGameRoute.createRoute(sessionId.ifEmpty { STATIC_SESSION_ID }),
+                                NavigationRoutes.QuizGameRoute.createRoute(sessionId)
                             )
+                        }
+                    },
+                    onViewLeaderboard = {
+                    },
+                    onNavigateBack = {
+                        navHostController.popBackStack()
+                    },
+                    onShowSnackbar = { snackbarData ->
+                        snackbarManager.showSnackbar(snackbarData)
+                    },
+                    onShowToast = {
+                    },
+                    viewModel = viewModel,
+                )
+            }
+
+            composable(
+                route = NavigationRoutes.QuizGameRoute.route,
+                arguments =
+                    listOf(
+                        navArgument("sessionId") {
+                            type = NavType.StringType
                         },
-                        onViewLeaderboard = {
-                        },
-                        onNavigateBack = {
-                            navHostController.popBackStack()
-                        },
-                        onShowSnackbar = { snackbarData ->
-                            snackbarManager.showSnackbar(snackbarData)
-                        },
-                        onShowToast = {
-                        },
-                        viewModel = viewModel,
-                    )
+                    ),
+            ) { backStackEntry ->
+                val sessionId = backStackEntry.arguments?.getString("sessionId")
+
+                if (sessionId.isNullOrEmpty()) {
+                    navHostController.popBackStack()
+                    return@composable
                 }
 
-                composable(
-                    route = NavigationRoutes.QuizGameRoute.route,
-                    arguments =
-                        listOf(
-                            navArgument("sessionId") {
-                                type = NavType.StringType
-                                defaultValue = STATIC_SESSION_ID
-                            },
-                        ),
-                ) { backStackEntry ->
-                    val sessionId = backStackEntry.arguments?.getString("sessionId") ?: STATIC_SESSION_ID
-                    QuizGameContainer(
-                        sessionId = sessionId,
-                        onQuizComplete = { completedSessionId ->
-                            navHostController.navigate(
-                                NavigationRoutes.QuizResultsRoute.createRoute(completedSessionId),
-                            ) {
-                                popUpTo(NavigationRoutes.QuizInfoRoute.route) {
-                                    inclusive = false
-                                }
+                QuizGameContainer(
+                    sessionId = sessionId,
+                    onQuizComplete = { completedSessionId ->
+                        navHostController.navigate(
+                            NavigationRoutes.QuizResultsRoute.createRoute(completedSessionId),
+                        ) {
+                            popUpTo(NavigationRoutes.QuizInfoRoute.route) {
+                                inclusive = false
                             }
+                        }
+                    },
+                    onNavigateBack = {
+                        navHostController.popBackStack()
+                    },
+                    onShowSnackbar = { snackbarData ->
+                        snackbarManager.showSnackbar(snackbarData)
+                    },
+                    onShowToast = {
+                    },
+                )
+            }
+
+            composable(
+                route = NavigationRoutes.QuizResultsRoute.route,
+                arguments =
+                    listOf(
+                        navArgument("sessionId") {
+                            type = NavType.StringType
                         },
-                        onNavigateBack = {
-                            navHostController.popBackStack()
-                        },
-                        onShowSnackbar = { snackbarData ->
-                            snackbarManager.showSnackbar(snackbarData)
-                        },
-                        onShowToast = {
-                        },
-                    )
+                    ),
+            ) { backStackEntry ->
+                val sessionId = backStackEntry.arguments?.getString("sessionId")
+
+                if (sessionId.isNullOrEmpty()) {
+                    navHostController.popBackStack()
+                    return@composable
                 }
 
-                composable(
-                    route = NavigationRoutes.QuizResultsRoute.route,
-                    arguments =
-                        listOf(
-                            navArgument("sessionId") {
-                                type = NavType.StringType
-                                defaultValue = STATIC_SESSION_ID
-                            },
-                        ),
-                ) { backStackEntry ->
-                    val sessionId = backStackEntry.arguments?.getString("sessionId") ?: STATIC_SESSION_ID
-                    QuizResultsContainer(
-                        sessionId = sessionId,
-                        onViewLeaderboard = {
-                        },
-                        onRetakeQuiz = {
-                            navHostController.navigate(NavigationRoutes.QuizInfoRoute.route) {
-                                popUpTo(NavigationRoutes.QuizInfoRoute.route) {
-                                    inclusive = true
-                                }
+                QuizResultsContainer(
+                    sessionId = sessionId,
+                    onViewLeaderboard = {
+                    },
+                    onRetakeQuiz = {
+                        navHostController.navigate(NavigationRoutes.QuizInfoRoute.route) {
+                            popUpTo(NavigationRoutes.QuizInfoRoute.route) {
+                                inclusive = true
                             }
-                        },
-                        onNavigateBack = {
-                            navHostController.popBackStack()
-                        },
-                        onShowSnackbar = { snackbarData ->
-                            snackbarManager.showSnackbar(snackbarData)
-                        },
-                        onShowToast = {
-                        },
-                    )
-                }
+                        }
+                    },
+                    onNavigateBack = {
+                        navHostController.popBackStack()
+                    },
+                    onShowSnackbar = { snackbarData ->
+                        snackbarManager.showSnackbar(snackbarData)
+                    },
+                    onShowToast = {
+                    },
+                )
             }
         }
     }
+}
