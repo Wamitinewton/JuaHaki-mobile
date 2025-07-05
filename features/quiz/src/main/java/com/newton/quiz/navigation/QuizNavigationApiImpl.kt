@@ -9,9 +9,9 @@ import androidx.navigation.navigation
 import com.newton.commonui.ui.SnackbarManager
 import com.newton.navigation.NavigationRoutes
 import com.newton.navigation.NavigationSubgraphRoutes
-import com.newton.quiz.presentation.view.quizgame.QuizGameScreen
-import com.newton.quiz.presentation.view.quizinfo.QuizInfoScreen
-import com.newton.quiz.presentation.view.results.QuizResultsScreen
+import com.newton.quiz.presentation.quizgame.view.QuizGameScreen
+import com.newton.quiz.presentation.quizinfo.view.QuizInfoScreen
+import com.newton.quiz.presentation.quizresults.view.QuizResultsScreen
 import javax.inject.Inject
 
 class QuizNavigationApiImpl
