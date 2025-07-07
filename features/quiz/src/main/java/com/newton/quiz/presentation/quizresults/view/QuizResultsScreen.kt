@@ -69,7 +69,7 @@ fun QuizResultsScreen(
                 uiState.isLoading -> {
                     CivicLoadingScreen(
                         message = "Loading your civic quiz results...",
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
                     )
                 }
 
@@ -78,7 +78,7 @@ fun QuizResultsScreen(
                         errorMessage = uiState.error,
                         onRetry = { onQuizResultsEvent(QuizResultsUiEvent.OnRetryResults) },
                         retryText = "Reload Results",
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
                     )
                 }
 
@@ -96,7 +96,7 @@ fun QuizResultsScreen(
                         errorMessage = "No quiz results found for this session",
                         onRetry = { onQuizResultsEvent(QuizResultsUiEvent.OnRetryResults) },
                         retryText = "Try Again",
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
                     )
                 }
             }

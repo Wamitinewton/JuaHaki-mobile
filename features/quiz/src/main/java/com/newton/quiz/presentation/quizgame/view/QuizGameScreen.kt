@@ -67,8 +67,8 @@ fun QuizGameScreen(
             when {
                 uiState.isLoading -> {
                     CivicLoadingScreen(
-                        message = "Starting your civic quiz...",
-                        modifier = Modifier.fillMaxSize()
+                        message = "Loading ....",
+                        modifier = Modifier.fillMaxSize(),
                     )
                 }
 
@@ -77,7 +77,7 @@ fun QuizGameScreen(
                         errorMessage = uiState.error,
                         onRetry = { onQuizGameEvent(QuizGameUiEvent.OnClearError) },
                         retryText = "Continue Quiz",
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
                     )
                 }
 
@@ -101,7 +101,7 @@ fun QuizGameScreen(
                     CivicErrorScreen(
                         errorMessage = "No quiz session found",
                         onRetry = null,
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
                     )
                 }
             }

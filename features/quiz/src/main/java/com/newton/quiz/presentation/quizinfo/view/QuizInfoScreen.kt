@@ -69,7 +69,7 @@ fun QuizInfoScreen(
                 uiState.isLoading -> {
                     CivicLoadingScreen(
                         message = "Loading today's civic quiz...",
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
                     )
                 }
 
@@ -79,7 +79,7 @@ fun QuizInfoScreen(
                         errorType = uiState.errorType,
                         onRetry = { onQuizInfoEvent(QuizInfoUiEvent.OnRetryLoading) },
                         retryText = "Reload Quiz",
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
                     )
                 }
 

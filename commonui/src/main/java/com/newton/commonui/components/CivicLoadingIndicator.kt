@@ -40,11 +40,12 @@ fun CivicLoadingIndicator(
     val rotation by infiniteTransition.animateFloat(
         initialValue = 0f,
         targetValue = 360f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 2000, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart
-        ),
-        label = "rotation"
+        animationSpec =
+            infiniteRepeatable(
+                animation = tween(durationMillis = 2000, easing = LinearEasing),
+                repeatMode = RepeatMode.Restart,
+            ),
+        label = "rotation",
     )
 
     val primaryColor = MaterialTheme.colorScheme.primary
@@ -54,30 +55,30 @@ fun CivicLoadingIndicator(
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Box(
             modifier = Modifier.size(size),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
         ) {
             Canvas(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
             ) {
                 drawCivicLoadingRings(
                     rotation = rotation,
                     primaryColor = primaryColor,
                     secondaryColor = secondaryColor,
-                    tertiaryColor = tertiaryColor
+                    tertiaryColor = tertiaryColor,
                 )
             }
 
             Box(
                 modifier = Modifier.size(size * 0.3f),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 Text(
                     text = "🇰🇪",
-                    style = MaterialTheme.typography.headlineSmall
+                    style = MaterialTheme.typography.headlineSmall,
                 )
             }
         }
@@ -86,11 +87,12 @@ fun CivicLoadingIndicator(
 
         Text(
             text = message,
-            style = MaterialTheme.typography.bodyLarge.copy(
-                fontWeight = FontWeight.Medium
-            ),
+            style =
+                MaterialTheme.typography.bodyLarge.copy(
+                    fontWeight = FontWeight.Medium,
+                ),
             color = MaterialTheme.colorScheme.onSurface,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
     }
 }
@@ -99,7 +101,7 @@ private fun DrawScope.drawCivicLoadingRings(
     rotation: Float,
     primaryColor: Color,
     secondaryColor: Color,
-    tertiaryColor: Color
+    tertiaryColor: Color,
 ) {
     val strokeWidth = 4.dp.toPx()
     val center = Offset(size.width / 2, size.height / 2)
@@ -109,7 +111,7 @@ private fun DrawScope.drawCivicLoadingRings(
         color = primaryColor.copy(alpha = 0.3f),
         radius = outerRadius,
         center = center,
-        style = Stroke(width = strokeWidth, cap = StrokeCap.Round)
+        style = Stroke(width = strokeWidth, cap = StrokeCap.Round),
     )
 
     val arcStartAngle = rotation
@@ -119,12 +121,15 @@ private fun DrawScope.drawCivicLoadingRings(
         startAngle = arcStartAngle,
         sweepAngle = arcSweepAngle,
         useCenter = false,
-        topLeft = Offset(
-            center.x - outerRadius,
-            center.y - outerRadius
-        ),
-        size = androidx.compose.ui.geometry.Size(outerRadius * 2, outerRadius * 2),
-        style = Stroke(width = strokeWidth, cap = StrokeCap.Round)
+        topLeft =
+            Offset(
+                center.x - outerRadius,
+                center.y - outerRadius,
+            ),
+        size =
+            androidx.compose.ui.geometry
+                .Size(outerRadius * 2, outerRadius * 2),
+        style = Stroke(width = strokeWidth, cap = StrokeCap.Round),
     )
 
     val innerRadius = size.minDimension * 0.25f
@@ -137,27 +142,30 @@ private fun DrawScope.drawCivicLoadingRings(
         startAngle = innerStartAngle,
         sweepAngle = innerSweepAngle,
         useCenter = false,
-        topLeft = Offset(
-            center.x - innerRadius,
-            center.y - innerRadius
-        ),
-        size = androidx.compose.ui.geometry.Size(innerRadius * 2, innerRadius * 2),
-        style = Stroke(width = strokeWidth * 0.8f, cap = StrokeCap.Round)
+        topLeft =
+            Offset(
+                center.x - innerRadius,
+                center.y - innerRadius,
+            ),
+        size =
+            androidx.compose.ui.geometry
+                .Size(innerRadius * 2, innerRadius * 2),
+        style = Stroke(width = strokeWidth * 0.8f, cap = StrokeCap.Round),
     )
 }
 
 @Composable
 fun CivicLoadingScreen(
     message: String = "Loading your civic education content...",
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         CivicLoadingIndicator(
             message = message,
-            size = 120.dp
+            size = 120.dp,
         )
     }
 }
