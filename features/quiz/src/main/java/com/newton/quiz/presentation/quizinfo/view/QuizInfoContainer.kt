@@ -45,7 +45,6 @@ fun QuizInfoContainer(
     QuizInfoScreen(
         uiState = uiState,
         onQuizInfoEvent = viewModel::onEvent,
-        onStartQuiz = onStartQuiz,
         onViewLeaderboard = onViewLeaderboard,
         onNavigateBack = onNavigateBack,
         modifier = modifier,

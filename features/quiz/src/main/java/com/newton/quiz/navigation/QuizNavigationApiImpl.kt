@@ -8,8 +8,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.newton.commonui.ui.SnackbarManager
+import com.newton.core.enums.TransitionType
 import com.newton.navigation.NavigationRoutes
 import com.newton.navigation.NavigationSubgraphRoutes
+import com.newton.navigation.NavigationTransitions
 import com.newton.quiz.presentation.quizgame.view.QuizGameContainer
 import com.newton.quiz.presentation.quizinfo.view.QuizInfoContainer
 import com.newton.quiz.presentation.quizinfo.viewmodel.QuizInfoViewModel
@@ -21,7 +23,10 @@ class QuizNavigationApiImpl
     constructor(
         private val snackbarManager: SnackbarManager,
     ) : QuizNavigationApi {
-        override fun registerNavigationGraph(
+
+    private val navigationTransitions = NavigationTransitions()
+
+    override fun registerNavigationGraph(
             navGraphBuilder: NavGraphBuilder,
             navHostController: NavHostController,
         ) {
@@ -31,6 +36,10 @@ class QuizNavigationApiImpl
             ) {
                 composable(
                     route = NavigationRoutes.QuizInfoRoute.route,
+                    enterTransition = navigationTransitions.getEnterTransition(TransitionType.ZOOM, 300),
+                    exitTransition = navigationTransitions.getExitTransition(TransitionType.ZOOM, 300),
+                    popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.ZOOM, 300),
+                    popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300),
                 ) {
                     val viewModel = hiltViewModel<QuizInfoViewModel>()
                     QuizInfoContainer(
@@ -57,6 +66,10 @@ class QuizNavigationApiImpl
 
                 composable(
                     route = NavigationRoutes.QuizGameRoute.route,
+                    enterTransition = navigationTransitions.getEnterTransition(TransitionType.ZOOM, 300),
+                    exitTransition = navigationTransitions.getExitTransition(TransitionType.ZOOM, 300),
+                    popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.ZOOM, 300),
+                    popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300),
                     arguments =
                         listOf(
                             navArgument("sessionId") {
@@ -95,6 +108,10 @@ class QuizNavigationApiImpl
 
                 composable(
                     route = NavigationRoutes.QuizResultsRoute.route,
+                    enterTransition = navigationTransitions.getEnterTransition(TransitionType.ZOOM, 300),
+                    exitTransition = navigationTransitions.getExitTransition(TransitionType.ZOOM, 300),
+                    popEnterTransition = navigationTransitions.getPopEnterTransition(TransitionType.ZOOM, 300),
+                    popExitTransition = navigationTransitions.getPopExitTransition(TransitionType.ZOOM, 300),
                     arguments =
                         listOf(
                             navArgument("sessionId") {
