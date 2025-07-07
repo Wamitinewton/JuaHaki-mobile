@@ -3,9 +3,9 @@ package com.newton.auth.di
 import android.content.Context
 import com.newton.auth.data.repository.AuthRepositoryImpl
 import com.newton.auth.data.repository.OAuthRepositoryImpl
-import com.newton.data.remote.auth.AuthApiService
-import com.newton.data.remote.auth.OAuthApiService
-import com.newton.data.remote.auth.UserApiService
+import com.newton.data.remote.AuthApiService
+import com.newton.data.remote.OAuthApiService
+import com.newton.data.remote.UserApiService
 import com.newton.database.dao.UserDao
 import com.newton.database.sessionmanager.SessionManager
 import com.newton.domain.repository.auth.AuthRepository

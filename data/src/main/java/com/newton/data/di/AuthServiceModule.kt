@@ -1,8 +1,8 @@
 package com.newton.data.di
 
-import com.newton.data.remote.auth.AuthApiService
-import com.newton.data.remote.auth.OAuthApiService
-import com.newton.data.remote.auth.UserApiService
+import com.newton.data.remote.AuthApiService
+import com.newton.data.remote.OAuthApiService
+import com.newton.data.remote.UserApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

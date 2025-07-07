@@ -1,4 +1,4 @@
-package com.newton.home.presentation
+package com.newton.home.presentation.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -15,28 +15,28 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
-import com.newton.commonui.components.ChatbotFABContainer
 import com.newton.commonui.theme.backgroundGradient
-import com.newton.home.presentation.userstats.view.CivilEducationStats
-import com.newton.home.presentation.userstats.view.components.ChatbotCategoriesGrid
-import com.newton.home.presentation.userstats.view.components.CivicFact
-import com.newton.home.presentation.userstats.view.components.CivicQuizData
-import com.newton.home.presentation.userstats.view.components.CivilEducationProgressCard
-import com.newton.home.presentation.userstats.view.components.DailyCivicFactCard
-import com.newton.home.presentation.userstats.view.components.DailyCivicQuizCard
+import com.newton.home.presentation.view.components.ChatbotCategoriesGrid
+import com.newton.home.presentation.view.components.CivicFact
+import com.newton.home.presentation.view.components.CivilEducationProgressCard
+import com.newton.home.presentation.view.components.CivilEducationStats
+import com.newton.home.presentation.view.components.DailyCivicFactCard
+import com.newton.home.presentation.view.components.DailyCivicQuizCard
+import com.newton.quiz.presentation.quizinfo.state.QuizInfoUiState
 
 @Composable
 fun HomeScreen(
+    quizInfoUiState: QuizInfoUiState,
     chatbotIconRes: Int = com.newton.commonui.R.drawable.chatbot,
     onNavigateToChat: () -> Unit = {},
     onNavigateToQuizzes: () -> Unit = {},
     onNavigateToDailyCivicQuiz: () -> Unit,
     onNavigateToElectionGuide: () -> Unit = {},
     onNavigateToFinanceBillAnalysis: () -> Unit = {},
+    onRetryQuizLoading: () -> Unit = {},
     civilEducationStats: CivilEducationStats =
         CivilEducationStats(
             dailyQuizzesCompleted = 3,
@@ -46,15 +46,6 @@ fun HomeScreen(
             totalPoints = 1250,
             level = "Intermediate",
             progressToNextLevel = 0.65f,
-        ),
-    dailyCivicQuizData: CivicQuizData =
-        CivicQuizData(
-            title = "Daily Civic Quiz",
-            subtitle = "Learn your constitutional rights",
-            totalAttempts = 1247,
-            averageScore = 78f,
-            todaysQuestions = 5,
-            isCompleted = false,
         ),
     dailyCivicFact: CivicFact =
         CivicFact(
@@ -103,11 +94,13 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             DailyCivicQuizCard(
-                quizData = dailyCivicQuizData,
+                uiState = quizInfoUiState,
                 onCardClick = {
-                    println("📚 Daily Civic Quiz clicked - Opening quiz")
                     onNavigateToDailyCivicQuiz()
                 },
+                onRetry = {
+                    onRetryQuizLoading()
+                }
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -124,18 +117,18 @@ fun HomeScreen(
             )
         }
 
-        ChatbotFABContainer(
-            modifier =
-                Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(20.dp),
-            chatbotIconRes = chatbotIconRes,
-            onFabClick = {
-                println("🤖 Chatbot FAB clicked - Opening main chat")
-                onNavigateToChat()
-            },
-            showPrompts = !hidePrompts,
-            autoHidePromptsDuration = 4000L,
-        )
+//        ChatbotFABContainer(
+//            modifier =
+//                Modifier
+//                    .align(Alignment.BottomEnd)
+//                    .padding(20.dp),
+//            chatbotIconRes = chatbotIconRes,
+//            onFabClick = {
+//                println("🤖 Chatbot FAB clicked - Opening main chat")
+//                onNavigateToChat()
+//            },
+//            showPrompts = !hidePrompts,
+//            autoHidePromptsDuration = 4000L,
+//        )
     }
 }

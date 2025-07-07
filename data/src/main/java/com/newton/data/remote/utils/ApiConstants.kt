@@ -1,4 +1,4 @@
-package com.newton.data.remote
+package com.newton.data.remote.utils
 
 object ApiConstants {
     const val SIGN_UP = "/api/v1/auth/signup"

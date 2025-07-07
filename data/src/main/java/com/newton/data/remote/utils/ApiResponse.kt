@@ -1,4 +1,4 @@
-package com.newton.data.remote
+package com.newton.data.remote.utils
 
 data class ApiResponse<T>(
     val message: String,

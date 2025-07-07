@@ -1,7 +1,7 @@
-package com.newton.data.remote.auth
+package com.newton.data.remote
 
-import com.newton.data.remote.ApiConstants
-import com.newton.data.remote.ApiResponse
+import com.newton.data.remote.utils.ApiConstants
+import com.newton.data.remote.utils.ApiResponse
 import retrofit2.http.POST
 import retrofit2.http.Query
 

@@ -7,8 +7,8 @@ import com.newton.auth.utils.PKCEUtils
 import com.newton.core.enums.OAuthProvider
 import com.newton.core.utils.Resource
 import com.newton.data.mappers.toJwtData
-import com.newton.data.remote.auth.OAuthApiService
-import com.newton.data.remote.safeApiCall
+import com.newton.data.remote.OAuthApiService
+import com.newton.data.remote.utils.safeApiCall
 import com.newton.database.dao.UserDao
 import com.newton.database.mappers.toUserEntity
 import com.newton.database.sessionmanager.SessionManager

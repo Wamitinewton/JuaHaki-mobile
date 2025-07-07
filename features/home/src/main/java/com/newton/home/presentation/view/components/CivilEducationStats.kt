@@ -1,4 +1,4 @@
-package com.newton.home.presentation.userstats.view
+package com.newton.home.presentation.view.components
 
 data class CivilEducationStats(
     val dailyQuizzesCompleted: Int = 0,

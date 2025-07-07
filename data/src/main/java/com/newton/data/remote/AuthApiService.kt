@@ -1,4 +1,4 @@
-package com.newton.data.remote.auth
+package com.newton.data.remote
 
 import com.newton.data.dto.auth.JwtResponse
 import com.newton.data.dto.auth.LoginRequest
@@ -6,8 +6,8 @@ import com.newton.data.dto.auth.RefreshTokenRequest
 import com.newton.data.dto.auth.SignupRequest
 import com.newton.data.dto.auth.UserDto
 import com.newton.data.dto.auth.VerifyOtpRequest
-import com.newton.data.remote.ApiConstants
-import com.newton.data.remote.ApiResponse
+import com.newton.data.remote.utils.ApiConstants
+import com.newton.data.remote.utils.ApiResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Query

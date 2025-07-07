@@ -1,6 +1,6 @@
 package com.newton.data.di
 
-import com.newton.data.remote.quiz.QuizApiService
+import com.newton.data.remote.QuizApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

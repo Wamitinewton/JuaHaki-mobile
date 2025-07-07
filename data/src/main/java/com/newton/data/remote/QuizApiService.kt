@@ -1,8 +1,8 @@
-package com.newton.data.remote.quiz
+package com.newton.data.remote
 
 import com.newton.data.dto.quiz.*
-import com.newton.data.remote.ApiConstants
-import com.newton.data.remote.ApiResponse
+import com.newton.data.remote.utils.ApiConstants
+import com.newton.data.remote.utils.ApiResponse
 import retrofit2.http.*
 
 interface QuizApiService {

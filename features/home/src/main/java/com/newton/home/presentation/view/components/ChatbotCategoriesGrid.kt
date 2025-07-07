@@ -1,4 +1,4 @@
-package com.newton.home.presentation.userstats.view.components
+package com.newton.home.presentation.view.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

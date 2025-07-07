@@ -8,9 +8,9 @@ import com.newton.data.mappers.toRefreshTokenRequest
 import com.newton.data.mappers.toRequestDto
 import com.newton.data.mappers.toUserDomain
 import com.newton.data.mappers.toVerifyOtpRequest
-import com.newton.data.remote.auth.AuthApiService
-import com.newton.data.remote.auth.UserApiService
-import com.newton.data.remote.safeApiCall
+import com.newton.data.remote.AuthApiService
+import com.newton.data.remote.UserApiService
+import com.newton.data.remote.utils.safeApiCall
 import com.newton.database.dao.UserDao
 import com.newton.database.mappers.toUserEntity
 import com.newton.database.sessionmanager.SessionManager

@@ -11,8 +11,8 @@ import com.newton.data.mappers.toQuizSession
 import com.newton.data.mappers.toQuizStatistics
 import com.newton.data.mappers.toSubmitRequest
 import com.newton.data.mappers.toUserQuizSummary
-import com.newton.data.remote.quiz.QuizApiService
-import com.newton.data.remote.safeApiCall
+import com.newton.data.remote.QuizApiService
+import com.newton.data.remote.utils.safeApiCall
 import com.newton.domain.models.quiz.AnswerResult
 import com.newton.domain.models.quiz.AnswerSubmission
 import com.newton.domain.models.quiz.QuizInfo

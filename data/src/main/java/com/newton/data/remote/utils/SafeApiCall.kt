@@ -1,4 +1,4 @@
-package com.newton.data.remote
+package com.newton.data.remote.utils
 
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
