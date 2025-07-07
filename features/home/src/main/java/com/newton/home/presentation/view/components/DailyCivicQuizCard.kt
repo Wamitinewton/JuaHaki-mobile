@@ -1,20 +1,18 @@
 package com.newton.home.presentation.view.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Quiz
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.newton.commonui.components.CustomCard
@@ -37,7 +35,6 @@ fun DailyCivicQuizCard(
         }
         uiState.error != null -> {
             QuizCardError(
-                error = uiState.error,
                 onRetry = onRetry,
                 modifier = modifier
             )
@@ -58,140 +55,191 @@ private fun QuizCardContent(
     onCardClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-   if (quizInfo != null) {
-       CustomCard(
-           modifier = modifier.fillMaxWidth()
-               .padding(horizontal = 16.dp),
-           variant = CardVariant.Surface,
-           onClick = if (quizInfo.isActive && !quizInfo.isExpired) onCardClick else null,
-           contentPadding = PaddingValues(16.dp),
-           gradient = if (quizInfo.isActive && !quizInfo.isExpired) {
-               Brush.horizontalGradient(
-                   colors = listOf(
-                       MaterialTheme.colorScheme.primary.copy(alpha = 0.08f),
-                       MaterialTheme.colorScheme.secondary.copy(alpha = 0.08f),
-                   )
-               )
-           } else null
-       ) {
-           Row(
-               modifier = Modifier.fillMaxWidth(),
-               horizontalArrangement = Arrangement.SpaceBetween,
-               verticalAlignment = Alignment.CenterVertically
-           ) {
-               Row(
-                   modifier = Modifier.weight(1f),
-                   verticalAlignment = Alignment.CenterVertically,
-                   horizontalArrangement = Arrangement.spacedBy(12.dp)
-               ) {
-                   Box(
-                       modifier = Modifier
-                           .size(40.dp)
-                           .clip(RoundedCornerShape(10.dp))
-                           .background(
-                               when {
-                                   quizInfo.hasUserAttempted -> MaterialTheme.colorScheme.primaryContainer
-                                   quizInfo.isExpired -> MaterialTheme.colorScheme.errorContainer
-                                   !quizInfo.isActive -> MaterialTheme.colorScheme.surfaceVariant
-                                   else -> MaterialTheme.colorScheme.primary
-                               }
-                           ),
-                       contentAlignment = Alignment.Center
-                   ) {
-                       Icon(
-                           imageVector = if (quizInfo.hasUserAttempted) Icons.Default.CheckCircle else Icons.Default.Quiz,
-                           contentDescription = null,
-                           modifier = Modifier.size(20.dp),
-                           tint = when {
-                               quizInfo.hasUserAttempted -> MaterialTheme.colorScheme.onPrimaryContainer
-                               quizInfo.isExpired -> MaterialTheme.colorScheme.onErrorContainer
-                               !quizInfo.isActive -> MaterialTheme.colorScheme.onSurfaceVariant
-                               else -> MaterialTheme.colorScheme.onPrimary
-                           }
-                       )
-                   }
+    if (quizInfo != null) {
+        CustomCard(
+            modifier = modifier
+                .fillMaxWidth()
+                .heightIn(min = 160.dp)
+                .padding(horizontal = 16.dp),
+            variant = CardVariant.Surface,
+            onClick = if (quizInfo.isActive && !quizInfo.isExpired) onCardClick else null,
+            contentPadding = PaddingValues(20.dp),
+            gradient = if (quizInfo.isActive && !quizInfo.isExpired) {
+                Brush.horizontalGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.primary.copy(alpha = 0.08f),
+                        MaterialTheme.colorScheme.secondary.copy(alpha = 0.08f),
+                    )
+                )
+            } else null
+        ) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.Top
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = "Daily Civic Quiz",
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp
+                            ),
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                        Text(
+                            text = "Test your civic knowledge",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                        )
+                    }
 
-                   Column(
-                       verticalArrangement = Arrangement.spacedBy(2.dp)
-                   ) {
-                       Text(
-                           text = "Daily Civic Quiz",
-                           style = MaterialTheme.typography.titleSmall.copy(
-                               fontWeight = FontWeight.SemiBold
-                           ),
-                           color = MaterialTheme.colorScheme.onSurface,
-                           maxLines = 1,
-                           overflow = TextOverflow.Ellipsis
-                       )
+                    StatusBadge(quizInfo = quizInfo)
+                }
 
-                       Row(
-                           verticalAlignment = Alignment.CenterVertically,
-                           horizontalArrangement = Arrangement.spacedBy(4.dp)
-                       ) {
-                           if (!quizInfo.isExpired && quizInfo.isActive) {
-                               Icon(
-                                   imageVector = Icons.Default.AccessTime,
-                                   contentDescription = null,
-                                   modifier = Modifier.size(12.dp),
-                                   tint = MaterialTheme.colorScheme.primary
-                               )
-                               Text(
-                                   text = quizInfo.timeRemaining,
-                                   style = MaterialTheme.typography.bodySmall.copy(
-                                       fontSize = 11.sp,
-                                       fontWeight = FontWeight.Medium
-                                   ),
-                                   color = MaterialTheme.colorScheme.primary
-                               )
-                           } else {
-                               Text(
-                                   text = when {
-                                       quizInfo.hasUserAttempted -> "Completed today"
-                                       quizInfo.isExpired -> "Expired"
-                                       else -> "Inactive"
-                                   },
-                                   style = MaterialTheme.typography.bodySmall.copy(
-                                       fontSize = 11.sp
-                                   ),
-                                   color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                               )
-                           }
-                       }
-                   }
-               }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    QuizInfoItem(
+                        icon = Icons.Default.Quiz,
+                        label = "${quizInfo.totalQuestions} Questions",
+                        modifier = Modifier.weight(1f)
+                    )
 
-               Surface(
-                   shape = RoundedCornerShape(12.dp),
-                   color = when {
-                       quizInfo.hasUserAttempted -> MaterialTheme.colorScheme.primaryContainer
-                       quizInfo.isExpired -> MaterialTheme.colorScheme.errorContainer
-                       !quizInfo.isActive -> MaterialTheme.colorScheme.surfaceVariant
-                       else -> MaterialTheme.colorScheme.secondaryContainer
-                   }
-               ) {
-                   Text(
-                       text = when {
-                           quizInfo.hasUserAttempted -> "${quizInfo.userLastAttempt?.score ?: 0}%"
-                           quizInfo.isExpired -> "Expired"
-                           !quizInfo.isActive -> "Inactive"
-                           else -> "${quizInfo.totalQuestions}Q"
-                       },
-                       style = MaterialTheme.typography.labelSmall.copy(
-                           fontWeight = FontWeight.SemiBold,
-                           fontSize = 10.sp
-                       ),
-                       color = when {
-                           quizInfo.hasUserAttempted -> MaterialTheme.colorScheme.onPrimaryContainer
-                           quizInfo.isExpired -> MaterialTheme.colorScheme.onErrorContainer
-                           !quizInfo.isActive -> MaterialTheme.colorScheme.onSurfaceVariant
-                           else -> MaterialTheme.colorScheme.onSecondaryContainer
-                       },
-                       modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                   )
-               }
-           }
-       }
-   }
+                    QuizInfoItem(
+                        icon = Icons.Default.AccessTime,
+                        label = if (quizInfo.hasUserAttempted) "Completed" else quizInfo.timeRemaining,
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    if (quizInfo.hasUserAttempted && quizInfo.userLastAttempt != null) {
+                        QuizInfoItem(
+                            icon = Icons.Default.CheckCircle,
+                            label = "${quizInfo.userLastAttempt?.score ?: 0}% Score",
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+                }
+
+                ActionButton(
+                    quizInfo = quizInfo,
+                    onCardClick = onCardClick
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun StatusBadge(
+    quizInfo: QuizInfo,
+    modifier: Modifier = Modifier
+) {
+    val (text, containerColor, contentColor) = when {
+        quizInfo.hasUserAttempted -> Triple(
+            "Completed",
+            MaterialTheme.colorScheme.primaryContainer,
+            MaterialTheme.colorScheme.onPrimaryContainer
+        )
+        quizInfo.isExpired -> Triple(
+            "Expired",
+            MaterialTheme.colorScheme.errorContainer,
+            MaterialTheme.colorScheme.onErrorContainer
+        )
+        !quizInfo.isActive -> Triple(
+            "Inactive",
+            MaterialTheme.colorScheme.surfaceVariant,
+            MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        else -> Triple(
+            "Available",
+            MaterialTheme.colorScheme.secondaryContainer,
+            MaterialTheme.colorScheme.onSecondaryContainer
+        )
+    }
+
+    Surface(
+        modifier = modifier,
+        shape = RoundedCornerShape(12.dp),
+        color = containerColor
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelMedium.copy(
+                fontWeight = FontWeight.SemiBold
+            ),
+            color = contentColor,
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+        )
+    }
+}
+
+@Composable
+private fun QuizInfoItem(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    label: String,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            modifier = Modifier.size(16.dp),
+            tint = MaterialTheme.colorScheme.primary
+        )
+        Spacer(modifier = Modifier.width(6.dp))
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodySmall.copy(
+                fontWeight = FontWeight.Medium
+            ),
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
+        )
+    }
+}
+
+@Composable
+private fun ActionButton(
+    quizInfo: QuizInfo,
+    onCardClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val (buttonText, isEnabled) = when {
+        quizInfo.hasUserAttempted -> "View Results" to true
+        !quizInfo.isActive || quizInfo.isExpired -> "Unavailable" to false
+        else -> "Start Quiz" to true
+    }
+
+    Button(
+        onClick = onCardClick,
+        modifier = modifier.fillMaxWidth(),
+        enabled = isEnabled,
+        colors = if (isEnabled) {
+            ButtonDefaults.buttonColors()
+        } else {
+            ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        },
+        shape = RoundedCornerShape(12.dp)
+    ) {
+        Text(
+            text = buttonText,
+            style = MaterialTheme.typography.labelLarge.copy(
+                fontWeight = FontWeight.SemiBold
+            )
+        )
+    }
 }
 
 @Composable
@@ -199,65 +247,48 @@ private fun QuizCardShimmer(
     modifier: Modifier = Modifier,
 ) {
     CustomCard(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(min = 160.dp)
             .padding(horizontal = 16.dp),
         variant = CardVariant.Surface,
-        contentPadding = PaddingValues(16.dp)
+        contentPadding = PaddingValues(20.dp)
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Row(
-                modifier = Modifier.weight(1f),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Top
             ) {
-                ShimmerBox(
-                    modifier = Modifier.size(40.dp),
-                    cornerRadius = 10.dp,
-                    colors = listOf(
-                        MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.8f),
-                        MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
-                        MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.8f)
-                    )
-                )
-
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    ShimmerText(
-                        width = 120.dp,
-                        height = 16.dp,
-                        colors = listOf(
-                            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.8f),
-                            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
-                            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.8f)
-                        )
-                    )
-                    ShimmerText(
-                        width = 80.dp,
-                        height = 12.dp,
-                        colors = listOf(
-                            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f),
-                            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f),
-                            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f)
-                        )
-                    )
+                    ShimmerText(width = 140.dp, height = 20.dp)
+                    ShimmerText(width = 120.dp, height = 14.dp)
+                }
+                ShimmerBox(
+                    modifier = Modifier.size(width = 80.dp, height = 28.dp),
+                    cornerRadius = 12.dp
+                )
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                repeat(3) {
+                    ShimmerText(width = 80.dp, height = 14.dp)
                 }
             }
 
             ShimmerBox(
                 modifier = Modifier
-                    .width(48.dp)
-                    .height(24.dp),
-                cornerRadius = 12.dp,
-                colors = listOf(
-                    MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f),
-                    MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f),
-                    MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f)
-                )
+                    .fillMaxWidth()
+                    .height(40.dp),
+                cornerRadius = 12.dp
             )
         }
     }
@@ -265,75 +296,50 @@ private fun QuizCardShimmer(
 
 @Composable
 private fun QuizCardError(
-    error: String? = null,
     onRetry: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     CustomCard(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(min = 160.dp)
             .padding(horizontal = 16.dp),
         variant = CardVariant.Outlined,
         onClick = onRetry,
-        contentPadding = PaddingValues(16.dp)
+        contentPadding = PaddingValues(20.dp)
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Row(
-                modifier = Modifier.weight(1f),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(40.dp)
-                        .clip(RoundedCornerShape(10.dp))
-                        .background(MaterialTheme.colorScheme.errorContainer),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Quiz,
-                        contentDescription = null,
-                        modifier = Modifier.size(20.dp),
-                        tint = MaterialTheme.colorScheme.onErrorContainer
-                    )
-                }
+            Text(
+                text = "Daily Civic Quiz",
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.Bold
+                ),
+                color = MaterialTheme.colorScheme.onSurface
+            )
 
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(2.dp)
-                ) {
-                    Text(
-                        text = "Daily Civic Quiz",
-                        style = MaterialTheme.typography.titleSmall.copy(
-                            fontWeight = FontWeight.SemiBold
-                        ),
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                    Text(
-                        text = "Tap to retry",
-                        style = MaterialTheme.typography.bodySmall.copy(
-                            fontSize = 11.sp
-                        ),
-                        color = MaterialTheme.colorScheme.error
-                    )
-                }
-            }
+            Text(
+                text = "Failed to load quiz",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.error
+            )
 
-            Surface(
-                shape = RoundedCornerShape(12.dp),
-                color = MaterialTheme.colorScheme.errorContainer
-            ) {
-                Text(
-                    text = error ?: "An unknow error occurred",
-                    style = MaterialTheme.typography.labelSmall.copy(
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 10.sp
-                    ),
-                    color = MaterialTheme.colorScheme.onErrorContainer,
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+            Button(
+                onClick = onRetry,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
                 )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Refresh,
+                    contentDescription = null,
+                    modifier = Modifier.size(18.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Try Again")
             }
         }
     }
