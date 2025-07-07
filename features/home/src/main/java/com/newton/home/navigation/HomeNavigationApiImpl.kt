@@ -34,7 +34,8 @@ class HomeNavigationApiImpl
                         onNavigateToDailyCivicQuiz = {
                             navHostController.navigate(NavigationRoutes.QuizInfoRoute.route)
                         },
-                        viewModel = quizInfoViewModel
+                        viewModel = quizInfoViewModel,
+                        dataBus = dataBus
                     )
                 }
             }

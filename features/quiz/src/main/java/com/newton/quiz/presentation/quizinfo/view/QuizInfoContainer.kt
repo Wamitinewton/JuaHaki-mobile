@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.newton.commonui.ui.HandleUiEffects
 import com.newton.commonui.ui.SnackbarData
@@ -19,12 +20,14 @@ fun QuizInfoContainer(
     onShowSnackbar: (SnackbarData) -> Unit,
     onShowToast: ((String) -> Unit)? = null,
     modifier: Modifier = Modifier,
-    viewModel: QuizInfoViewModel,
+    viewModel: QuizInfoViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        viewModel.onEvent(QuizInfoUiEvent.OnLoadTodaysQuiz)
+        if (uiState.quizInfo == null && !uiState.isLoading) {
+            viewModel.onEvent(QuizInfoUiEvent.OnLoadTodaysQuiz)
+        }
     }
 
     HandleUiEffects(

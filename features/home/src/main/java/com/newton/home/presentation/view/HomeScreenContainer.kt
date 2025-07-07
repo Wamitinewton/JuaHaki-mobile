@@ -3,7 +3,6 @@ package com.newton.home.presentation.view
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.newton.home.presentation.view.components.CivicFact
 import com.newton.home.presentation.view.components.CivilEducationStats
 import com.newton.quiz.presentation.quizinfo.event.QuizInfoUiEvent
