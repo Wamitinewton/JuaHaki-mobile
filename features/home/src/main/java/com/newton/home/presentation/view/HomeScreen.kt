@@ -76,7 +76,7 @@ fun HomeScreen(
                 Modifier
                     .fillMaxSize()
                     .verticalScroll(scrollState)
-                    .padding(top = 16.dp, bottom = 100.dp),
+                    .padding(top = 16.dp, bottom = 100.dp,),
         ) {
             CivilEducationProgressCard(
                 stats = civilEducationStats,

@@ -35,7 +35,6 @@ class HomeNavigationApiImpl
                             navHostController.navigate(NavigationRoutes.QuizInfoRoute.route)
                         },
                         viewModel = quizInfoViewModel,
-                        dataBus = dataBus
                     )
                 }
             }

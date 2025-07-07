@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.newton.commonui.components.FeatureCard
 
 data class CivicFact(
     val fact: String,
@@ -23,7 +24,6 @@ data class CivicFact(
     val category: String,
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DailyCivicFactCard(
     fact: CivicFact =
@@ -34,17 +34,11 @@ fun DailyCivicFactCard(
         ),
     modifier: Modifier = Modifier,
 ) {
-    Card(
+    FeatureCard(
         modifier =
             modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-        shape = RoundedCornerShape(20.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface,
-            ),
     ) {
         Box(
             modifier =
