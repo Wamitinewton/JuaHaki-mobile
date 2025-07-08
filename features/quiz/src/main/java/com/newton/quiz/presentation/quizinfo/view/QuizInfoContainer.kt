@@ -1,5 +1,6 @@
 package com.newton.quiz.presentation.quizinfo.view
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -12,6 +13,7 @@ import com.newton.quiz.presentation.quizinfo.event.QuizInfoUiEffect
 import com.newton.quiz.presentation.quizinfo.event.QuizInfoUiEvent
 import com.newton.quiz.presentation.quizinfo.viewmodel.QuizInfoViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QuizInfoContainer(
     onStartQuiz: (String) -> Unit,
@@ -25,7 +27,7 @@ fun QuizInfoContainer(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        if (uiState.quizInfo == null && !uiState.isLoading) {
+        if (uiState.quizInfo == null && !uiState.isLoading && uiState.error == null) {
             viewModel.onEvent(QuizInfoUiEvent.OnLoadTodaysQuiz)
         }
     }
@@ -36,7 +38,13 @@ fun QuizInfoContainer(
         onShowToast = onShowToast,
         onCustomEffect = { effect ->
             when (effect) {
-                is QuizInfoUiEffect.NavigateToQuizGame -> onStartQuiz(effect.sessionId ?: "")
+                is QuizInfoUiEffect.NavigateToQuizGame -> {
+                    effect.sessionId?.let { sessionId ->
+                        if (sessionId.isNotEmpty()) {
+                            onStartQuiz(sessionId)
+                        }
+                    }
+                }
                 is QuizInfoUiEffect.NavigateBack -> onNavigateBack()
             }
         },

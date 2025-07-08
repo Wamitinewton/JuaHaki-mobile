@@ -1,16 +1,22 @@
 package com.newton.quiz.presentation.quizinfo.view.components
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessTime
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.EmojiEvents
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Schedule
@@ -23,231 +29,346 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import com.newton.commonui.components.FeatureCard
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
+import com.newton.commonui.theme.AppDimensions
 import com.newton.core.utils.DateUtils.toQuizDate
 import com.newton.domain.models.quiz.QuizInfo
 
 @Composable
 fun QuizStatusSection(
     quizInfo: QuizInfo,
+    isVisible: Boolean,
     modifier: Modifier = Modifier
 ) {
-    when {
-        quizInfo.hasUserAttempted && quizInfo.userLastAttempt != null -> {
-            CompletedQuizCard(
-                score = quizInfo.userLastAttempt?.score,
-                performanceLevel = quizInfo.userLastAttempt?.performanceLevel,
-                completedAt = quizInfo.userLastAttempt?.completedAt?.toQuizDate() ?: "",
-                duration = quizInfo.userLastAttempt?.durationFormatted,
-                completionMessage = quizInfo.userLastAttempt?.completionMessage,
-                modifier = modifier
-            )
-        }
+    AnimatedVisibility(
+        visible = isVisible,
+        enter = fadeIn(
+            animationSpec = tween(600, delayMillis = 100, easing = FastOutSlowInEasing)
+        ) + slideInVertically(
+            animationSpec = tween(600, delayMillis = 100, easing = FastOutSlowInEasing),
+            initialOffsetY = { it / 3 }
+        )
+    ) {
+        when {
+            quizInfo.hasUserAttempted && quizInfo.userLastAttempt != null -> {
+                CompletedQuizStatusCard(
+                    score = quizInfo.userLastAttempt?.score ?: 0,
+                    performanceLevel = quizInfo.userLastAttempt?.performanceLevel ?: "",
+                    completedAt = quizInfo.userLastAttempt?.completedAt?.toQuizDate() ?: "",
+                    duration = quizInfo.userLastAttempt?.durationFormatted ?: "",
+                    completionMessage = quizInfo.userLastAttempt?.completionMessage ?: "",
+                    modifier = modifier
+                )
+            }
 
-        quizInfo.isActive && !quizInfo.isExpired -> {
-            ActiveQuizCard(
-                timeRemaining = quizInfo.timeRemaining,
-                modifier = modifier
-            )
-        }
+            quizInfo.isActive && !quizInfo.isExpired -> {
+                ActiveQuizStatusCard(
+                    timeRemaining = quizInfo.timeRemaining,
+                    totalQuestions = quizInfo.totalQuestions,
+                    modifier = modifier
+                )
+            }
 
-        else -> {
-            InactiveQuizCard(
-                isExpired = quizInfo.isExpired,
-                modifier = modifier
-            )
+            else -> {
+                InactiveQuizStatusCard(
+                    isExpired = quizInfo.isExpired,
+                    expiresAt = quizInfo.expiresAt,
+                    modifier = modifier
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun CompletedQuizCard(
-    score: Int?,
-    performanceLevel: String?,
-    completedAt: String?,
-    duration: String?,
-    completionMessage: String?,
+private fun CompletedQuizStatusCard(
+    score: Int,
+    performanceLevel: String,
+    completedAt: String,
+    duration: String,
+    completionMessage: String,
     modifier: Modifier = Modifier
 ) {
+    val scoreColor = when {
+        score >= 80 -> Color(0xFF10B981)
+        score >= 60 -> Color(0xFFF59E0B)
+        else -> Color(0xFFEF4444)
+    }
 
-
-    FeatureCard(
-        modifier = modifier.fillMaxWidth(),
+    Card(
+        modifier = modifier,
+        shape = RoundedCornerShape(AppDimensions.CornerRadius.large),
+        colors = CardDefaults.cardColors(
+            containerColor = scoreColor.copy(alpha = 0.08f)
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = AppDimensions.Elevation.medium)
     ) {
         Column(
-            modifier = Modifier.padding(20.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(AppDimensions.Padding.xl),
+            verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large)
         ) {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.medium)
             ) {
-                Icon(
-                    imageVector = Icons.Filled.EmojiEvents,
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp)
-                )
-                Spacer(modifier = Modifier.width(12.dp))
-                Text(
-                    text = "Quiz Completed",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
-                )
+                Surface(
+                    shape = RoundedCornerShape(AppDimensions.CornerRadius.medium),
+                    color = scoreColor.copy(alpha = 0.15f)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.EmojiEvents,
+                        contentDescription = null,
+                        tint = scoreColor,
+                        modifier = Modifier
+                            .padding(AppDimensions.Padding.medium)
+                            .size(AppDimensions.IconSize.large)
+                    )
+                }
+
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = "Quiz Completed!",
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            fontWeight = FontWeight.Bold
+                        ),
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Text(
+                        text = "Completed on $completedAt",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                    )
+                }
             }
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                horizontalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large)
             ) {
-                ScoreMetric(
-                    label = "Score",
-                    value = "${score}%",
+                ScoreMetricCard(
+                    label = "Your Score",
+                    value = "$score%",
+                    color = scoreColor,
                     modifier = Modifier.weight(1f)
                 )
-                if (duration != null) {
-                    ScoreMetric(
+
+                if (duration.isNotEmpty()) {
+                    ScoreMetricCard(
                         label = "Duration",
                         value = duration,
+                        color = MaterialTheme.colorScheme.secondary,
                         modifier = Modifier.weight(1f)
                     )
                 }
             }
 
-            // Performance Level
-            Surface(
-                shape = RoundedCornerShape(8.dp),
-                color = MaterialTheme.colorScheme.surface.copy(alpha = 0.7f)
-            ) {
-                if (performanceLevel != null) {
+            if (performanceLevel.isNotEmpty()) {
+                Surface(
+                    shape = RoundedCornerShape(AppDimensions.CornerRadius.large),
+                    color = scoreColor.copy(alpha = 0.15f)
+                ) {
                     Text(
                         text = performanceLevel,
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        fontWeight = FontWeight.Medium,
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontWeight = FontWeight.SemiBold
+                        ),
+                        color = scoreColor,
+                        modifier = Modifier.padding(
+                            horizontal = AppDimensions.Padding.large,
+                            vertical = AppDimensions.Padding.medium
+                        ),
+                        textAlign = TextAlign.Center
                     )
                 }
             }
 
-
-                if (completionMessage != null) {
+            if (completionMessage.isNotEmpty()) {
+                Surface(
+                    shape = RoundedCornerShape(AppDimensions.CornerRadius.medium),
+                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                ) {
                     Text(
                         text = completionMessage,
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Medium
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            lineHeight = 20.sp
+                        ),
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+                        modifier = Modifier.padding(AppDimensions.Padding.large),
+                        textAlign = TextAlign.Center
                     )
                 }
-
-
-            Text(
-                text = "Completed on $completedAt",
-                style = MaterialTheme.typography.bodySmall,
-            )
+            }
         }
     }
 }
 
 @Composable
-private fun ActiveQuizCard(
+private fun ActiveQuizStatusCard(
     timeRemaining: String,
+    totalQuestions: Int,
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
+        shape = RoundedCornerShape(AppDimensions.CornerRadius.large),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f)
+            containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = AppDimensions.Elevation.medium)
     ) {
         Row(
-            modifier = Modifier.padding(20.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(AppDimensions.Padding.xl),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large)
         ) {
-            Icon(
-                imageVector = Icons.Default.Schedule,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(24.dp)
-            )
-            Spacer(modifier = Modifier.width(16.dp))
+            Surface(
+                shape = RoundedCornerShape(AppDimensions.CornerRadius.medium),
+                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.PlayArrow,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .padding(AppDimensions.Padding.medium)
+                        .size(AppDimensions.IconSize.xl)
+                )
+            }
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = "Quiz Available",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    fontWeight = FontWeight.Bold
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontWeight = FontWeight.Bold
+                    ),
+                    color = MaterialTheme.colorScheme.onSurface
                 )
+
+                Spacer(modifier = Modifier.height(AppDimensions.Spacing.xs))
+
                 Text(
-                    text = "Time remaining: $timeRemaining",
+                    text = "$totalQuestions questions • $timeRemaining remaining",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
             }
-            Icon(
-                imageVector = Icons.Default.PlayArrow,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(32.dp)
-            )
+
+            Surface(
+                shape = RoundedCornerShape(AppDimensions.CornerRadius.medium),
+                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowForward,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .padding(AppDimensions.Padding.small)
+                        .size(AppDimensions.IconSize.medium)
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun InactiveQuizCard(
+private fun InactiveQuizStatusCard(
     isExpired: Boolean,
+    expiresAt: String,
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
+        shape = RoundedCornerShape(AppDimensions.CornerRadius.large),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
+            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = AppDimensions.Elevation.small)
     ) {
-        Row(
-            modifier = Modifier.padding(20.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(AppDimensions.Padding.xl),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.medium)
         ) {
-            Icon(
-                imageVector = if (isExpired) Icons.Default.AccessTime else Icons.Default.Schedule,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
-                modifier = Modifier.size(24.dp)
-            )
-            Spacer(modifier = Modifier.width(12.dp))
-            Text(
-                text = if (isExpired) "Quiz has expired" else "Quiz is not active yet",
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontWeight = FontWeight.Medium
-            )
+            Surface(
+                shape = RoundedCornerShape(AppDimensions.CornerRadius.medium),
+                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f)
+            ) {
+                Icon(
+                    imageVector = if (isExpired) Icons.Default.AccessTime else Icons.Default.Schedule,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.outline,
+                    modifier = Modifier
+                        .padding(AppDimensions.Padding.medium)
+                        .size(AppDimensions.IconSize.xl)
+                )
+            }
+
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.xs)
+            ) {
+                Text(
+                    text = if (isExpired) "Quiz Expired" else "Quiz Not Active",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.SemiBold
+                    ),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center
+                )
+
+                if (expiresAt.isNotEmpty()) {
+                    Text(
+                        text = if (isExpired) "Expired on $expiresAt" else "Available until $expiresAt",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
         }
     }
 }
 
 @Composable
-private fun ScoreMetric(
+private fun ScoreMetricCard(
     label: String,
     value: String,
+    color: Color,
     modifier: Modifier = Modifier
 ) {
-    Column(
+    Surface(
         modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
+        shape = RoundedCornerShape(AppDimensions.CornerRadius.medium),
+        color = color.copy(alpha = 0.1f)
     ) {
-        Text(
-            text = value,
-            style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.onTertiaryContainer,
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onTertiaryContainer.copy(alpha = 0.7f)
-        )
+        Column(
+            modifier = Modifier.padding(AppDimensions.Padding.large),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.xs)
+        ) {
+            Text(
+                text = value,
+                style = MaterialTheme.typography.headlineMedium.copy(
+                    fontWeight = FontWeight.Bold
+                ),
+                color = color
+            )
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }

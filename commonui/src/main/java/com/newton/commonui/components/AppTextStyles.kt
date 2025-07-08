@@ -272,7 +272,8 @@ fun BodyMediumText(
     color: Color = MaterialTheme.colorScheme.onSurface,
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
+    fontWeight: FontWeight = FontWeight.Normal
 ) {
     Text(
         text = text,
@@ -281,7 +282,8 @@ fun BodyMediumText(
         textAlign = textAlign,
         overflow = overflow,
         maxLines = maxLines,
-        modifier = modifier
+        modifier = modifier,
+        fontWeight = fontWeight
     )
 }
 
@@ -295,7 +297,8 @@ fun BodySmallText(
     color: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
+    fontWeight: FontWeight = FontWeight.Normal
 ) {
     Text(
         text = text,
@@ -304,7 +307,8 @@ fun BodySmallText(
         textAlign = textAlign,
         overflow = overflow,
         maxLines = maxLines,
-        modifier = modifier
+        modifier = modifier,
+        fontWeight = fontWeight
     )
 }
 

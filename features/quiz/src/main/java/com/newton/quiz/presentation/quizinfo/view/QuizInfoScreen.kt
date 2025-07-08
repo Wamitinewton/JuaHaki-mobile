@@ -1,33 +1,23 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.newton.quiz.presentation.quizinfo.view
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.*
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.only
-import androidx.compose.foundation.layout.systemBars
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.text.font.FontWeight
-import com.newton.commonui.components.CivicErrorScreen
-import com.newton.commonui.components.CivicLoadingScreen
+import com.newton.commonui.theme.backgroundGradient
 import com.newton.quiz.presentation.quizinfo.event.QuizInfoUiEvent
 import com.newton.quiz.presentation.quizinfo.state.QuizInfoUiState
+import com.newton.quiz.presentation.quizinfo.view.components.*
 
-@OptIn(ExperimentalMaterial3Api::class)
+@ExperimentalMaterial3Api
 @Composable
 fun QuizInfoScreen(
     uiState: QuizInfoUiState,
@@ -36,85 +26,66 @@ fun QuizInfoScreen(
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val backgroundGradient = Brush.verticalGradient(
-        colors = listOf(
-            MaterialTheme.colorScheme.surface,
-            MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.3f),
-            MaterialTheme.colorScheme.surface
-        )
-    )
+    val scrollState = rememberScrollState()
+    var contentVisible by remember { mutableStateOf(false) }
+
+    LaunchedEffect(uiState.quizInfo) {
+        if (uiState.quizInfo != null) {
+            contentVisible = true
+        }
+    }
 
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(brush = backgroundGradient),
+            .background(brush = backgroundGradient()),
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            TopAppBar(
-                title = {
-                    Column {
-                        Text(
-                            text = "Daily Civic Quiz",
-                            style = MaterialTheme.typography.titleLarge.copy(
-                                fontWeight = FontWeight.Bold,
-                            ),
-                            color = MaterialTheme.colorScheme.onSurface
-                        )
-                    }
-                },
-                navigationIcon = {
-                    IconButton(
-                        onClick = onNavigateBack,
-                        colors = IconButtonDefaults.iconButtonColors(
-                            contentColor = MaterialTheme.colorScheme.onSurface
-                        )
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
-                ),
-                windowInsets = WindowInsets.systemBars.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)
+        Column(modifier = Modifier.fillMaxSize()) {
+            QuizInfoTopBar(
+                title = uiState.quizInfo?.description ?: "Daily Civic Quiz",
+                onNavigateBack = onNavigateBack
             )
 
             when {
                 uiState.isLoading -> {
-                    Box(
+                    QuizInfoLoadingContent(
                         modifier = Modifier.fillMaxSize()
-                    ) {
-                        CivicLoadingScreen(
-                            message = "Loading today's civic quiz...",
-                            modifier = Modifier.fillMaxSize(),
-                        )
-                    }
+                    )
                 }
 
                 uiState.error != null -> {
-                    Box(
+                    QuizInfoErrorContent(
+                        error = uiState.error,
+                        errorType = uiState.errorType,
+                        onRetry = { onQuizInfoEvent(QuizInfoUiEvent.OnRetryLoading) },
                         modifier = Modifier.fillMaxSize()
+                    )
+                }
+
+                uiState.quizInfo != null -> {
+                    AnimatedVisibility(
+                        visible = contentVisible,
+                        enter = fadeIn(
+                            animationSpec = tween(600, delayMillis = 200)
+                        ) + slideInVertically(
+                            animationSpec = tween(600, delayMillis = 200),
+                            initialOffsetY = { it / 3 }
+                        )
                     ) {
-                        CivicErrorScreen(
-                            errorMessage = uiState.error,
-                            errorType = uiState.errorType,
-                            onRetry = { onQuizInfoEvent(QuizInfoUiEvent.OnRetryLoading) },
-                            retryText = "Reload Quiz",
-                            modifier = Modifier.fillMaxSize(),
+                        QuizInfoContent(
+                            quizInfo = uiState.quizInfo,
+                            onQuizInfoEvent = onQuizInfoEvent,
+                            onViewLeaderboard = onViewLeaderboard,
+                            scrollState = scrollState,
+                            modifier = Modifier.fillMaxSize()
                         )
                     }
                 }
 
-                uiState.quizInfo != null -> {
-                    QuizInfoContent(
-                        quizInfo = uiState.quizInfo,
-                        onQuizInfoEvent = onQuizInfoEvent,
-                        onViewLeaderboard = onViewLeaderboard,
-                        modifier = Modifier.fillMaxSize(),
+                else -> {
+                    QuizInfoEmptyState(
+                        onRetry = { onQuizInfoEvent(QuizInfoUiEvent.OnRetryLoading) },
+                        modifier = Modifier.fillMaxSize()
                     )
                 }
             }
