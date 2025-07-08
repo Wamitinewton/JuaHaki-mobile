@@ -91,7 +91,7 @@ class OAuthCallbackActivity : ComponentActivity() {
 
                 oAuthViewModel.exchangeCodeForTokens(
                     OAuthProvider.GOOGLE,
-                    tokenRequest
+                    tokenRequest,
                 ) { success, message ->
                     navigateToMainActivity(success, message)
                 }

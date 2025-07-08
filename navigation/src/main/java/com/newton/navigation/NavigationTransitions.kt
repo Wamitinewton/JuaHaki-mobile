@@ -49,12 +49,13 @@ class NavigationTransitions {
                         initialScale = 0.85f,
                         animationSpec = tween(durationMillis = durationMs, easing = EaseIn),
                     ) +
-                            fadeIn(
-                                animationSpec = tween(
+                        fadeIn(
+                            animationSpec =
+                                tween(
                                     durationMillis = durationMs,
-                                    easing = LinearEasing
+                                    easing = LinearEasing,
                                 ),
-                            )
+                        )
 
                 TransitionType.NONE -> EnterTransition.None
             }
@@ -91,12 +92,13 @@ class NavigationTransitions {
                         targetScale = 1.1f,
                         animationSpec = tween(durationMillis = durationMs, easing = EaseOut),
                     ) +
-                            fadeOut(
-                                animationSpec = tween(
+                        fadeOut(
+                            animationSpec =
+                                tween(
                                     durationMillis = durationMs,
-                                    easing = LinearEasing
+                                    easing = LinearEasing,
                                 ),
-                            )
+                        )
 
                 TransitionType.NONE -> ExitTransition.None
             }
@@ -133,12 +135,13 @@ class NavigationTransitions {
                         initialScale = 1.1f,
                         animationSpec = tween(durationMillis = durationMs, easing = EaseIn),
                     ) +
-                            fadeIn(
-                                animationSpec = tween(
+                        fadeIn(
+                            animationSpec =
+                                tween(
                                     durationMillis = durationMs,
-                                    easing = LinearEasing
+                                    easing = LinearEasing,
                                 ),
-                            )
+                        )
 
                 TransitionType.NONE -> EnterTransition.None
             }
@@ -175,12 +178,13 @@ class NavigationTransitions {
                         targetScale = 0.85f,
                         animationSpec = tween(durationMillis = durationMs, easing = EaseOut),
                     ) +
-                            fadeOut(
-                                animationSpec = tween(
+                        fadeOut(
+                            animationSpec =
+                                tween(
                                     durationMillis = durationMs,
-                                    easing = LinearEasing
+                                    easing = LinearEasing,
                                 ),
-                            )
+                        )
 
                 TransitionType.NONE -> ExitTransition.None
             }

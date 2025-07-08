@@ -131,7 +131,7 @@ object DateUtils {
         val today = Calendar.getInstance()
 
         return calendar.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
-                calendar.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)
+            calendar.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)
     }
 
     fun String.isYesterday(): Boolean {
@@ -142,7 +142,7 @@ object DateUtils {
             }
 
         return calendar.get(Calendar.YEAR) == yesterday.get(Calendar.YEAR) &&
-                calendar.get(Calendar.DAY_OF_YEAR) == yesterday.get(Calendar.DAY_OF_YEAR)
+            calendar.get(Calendar.DAY_OF_YEAR) == yesterday.get(Calendar.DAY_OF_YEAR)
     }
 
     fun String.toRelativeDate(): String =

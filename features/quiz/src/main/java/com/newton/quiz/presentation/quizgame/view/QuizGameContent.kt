@@ -111,7 +111,7 @@ fun QuizGameContent(
             targetState = uiState.currentQuestionNumber ?: 0,
             transitionSpec = {
                 fadeIn(animationSpec = tween(300)) togetherWith
-                        fadeOut(animationSpec = tween(300))
+                    fadeOut(animationSpec = tween(300))
             },
             label = "question_transition",
         ) { questionNumber ->

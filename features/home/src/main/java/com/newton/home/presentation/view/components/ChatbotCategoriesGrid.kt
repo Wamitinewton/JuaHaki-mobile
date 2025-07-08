@@ -148,12 +148,11 @@ private fun ChatbotCategoryCard(
                             Brush.linearGradient(
                                 colors =
                                     category.gradientColors +
-                                            listOf(
-                                                MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
-                                            ),
+                                        listOf(
+                                            MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
+                                        ),
                             ),
-                    )
-                    .padding(AppDimensions.Padding.xl),
+                    ).padding(AppDimensions.Padding.xl),
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),

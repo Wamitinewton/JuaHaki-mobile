@@ -12,37 +12,37 @@ import javax.inject.Singleton
 
 @Singleton
 class CustomWorkerFactory
-@Inject
-constructor(
-    private val authRepository: AuthRepository,
-) : WorkerFactory() {
-    companion object {
-        private const val TAG = "CustomWorkerFactory"
-    }
-
-    override fun createWorker(
-        appContext: Context,
-        workerClassName: String,
-        workerParameters: WorkerParameters,
-    ): ListenableWorker? =
-        try {
-            when (workerClassName) {
-                TokenRefreshWorker::class.java.name -> {
-                    Timber.d("$TAG: Creating TokenRefreshWorker")
-                    TokenRefreshWorker(
-                        context = appContext,
-                        workerParameters = workerParameters,
-                        authRepository = authRepository,
-                    )
-                }
-
-                else -> {
-                    Timber.w("$TAG: Unknown worker class: $workerClassName")
-                    null // Return null to let the default factory handle it
-                }
-            }
-        } catch (e: Exception) {
-            Timber.e(e, "$TAG: Failed to create worker: $workerClassName")
-            null
+    @Inject
+    constructor(
+        private val authRepository: AuthRepository,
+    ) : WorkerFactory() {
+        companion object {
+            private const val TAG = "CustomWorkerFactory"
         }
-}
+
+        override fun createWorker(
+            appContext: Context,
+            workerClassName: String,
+            workerParameters: WorkerParameters,
+        ): ListenableWorker? =
+            try {
+                when (workerClassName) {
+                    TokenRefreshWorker::class.java.name -> {
+                        Timber.d("$TAG: Creating TokenRefreshWorker")
+                        TokenRefreshWorker(
+                            context = appContext,
+                            workerParameters = workerParameters,
+                            authRepository = authRepository,
+                        )
+                    }
+
+                    else -> {
+                        Timber.w("$TAG: Unknown worker class: $workerClassName")
+                        null // Return null to let the default factory handle it
+                    }
+                }
+            } catch (e: Exception) {
+                Timber.e(e, "$TAG: Failed to create worker: $workerClassName")
+                null
+            }
+    }

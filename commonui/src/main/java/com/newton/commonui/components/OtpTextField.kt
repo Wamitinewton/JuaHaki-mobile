@@ -196,8 +196,7 @@ private fun OtpCell(
                 .clip(RoundedCornerShape(cornerRadius))
                 .background(
                     if (enabled) backgroundColor else backgroundColor.copy(alpha = 0.6f),
-                )
-                .border(
+                ).border(
                     width = borderWidth,
                     color = borderColor,
                     shape = RoundedCornerShape(cornerRadius),

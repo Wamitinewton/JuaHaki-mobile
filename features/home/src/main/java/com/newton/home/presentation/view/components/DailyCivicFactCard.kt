@@ -72,8 +72,7 @@ fun DailyCivicFactCard(
                                     ),
                             ),
                         shape = RoundedCornerShape(AppDimensions.CornerRadius.xl),
-                    )
-                    .clip(RoundedCornerShape(AppDimensions.CornerRadius.xl)),
+                    ).clip(RoundedCornerShape(AppDimensions.CornerRadius.xl)),
         ) {
             Column(
                 modifier =

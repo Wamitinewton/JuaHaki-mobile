@@ -67,18 +67,18 @@ fun PromptChips(
             fadeIn(
                 animationSpec = tween(600, delayMillis = 500),
             ) +
-                    slideInVertically(
-                        animationSpec = tween(600, delayMillis = 500),
-                        initialOffsetY = { it / 2 },
-                    ),
+                slideInVertically(
+                    animationSpec = tween(600, delayMillis = 500),
+                    initialOffsetY = { it / 2 },
+                ),
         exit =
             fadeOut(
                 animationSpec = tween(400),
             ) +
-                    slideOutVertically(
-                        animationSpec = tween(400),
-                        targetOffsetY = { it / 2 },
-                    ),
+                slideOutVertically(
+                    animationSpec = tween(400),
+                    targetOffsetY = { it / 2 },
+                ),
     ) {
         Column(
             modifier = modifier,

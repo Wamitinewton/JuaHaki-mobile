@@ -62,8 +62,8 @@ fun ResetPasswordForm(
     val passwordsMatch by remember(formData.newPassword, formData.confirmPassword) {
         derivedStateOf {
             formData.newPassword == formData.confirmPassword &&
-                    formData.newPassword.isNotBlank() &&
-                    formData.confirmPassword.isNotBlank()
+                formData.newPassword.isNotBlank() &&
+                formData.confirmPassword.isNotBlank()
         }
     }
 

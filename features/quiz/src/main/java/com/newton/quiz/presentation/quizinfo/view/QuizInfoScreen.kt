@@ -81,10 +81,10 @@ fun QuizInfoScreen(
                             fadeIn(
                                 animationSpec = tween(600, delayMillis = 200),
                             ) +
-                                    slideInVertically(
-                                        animationSpec = tween(600, delayMillis = 200),
-                                        initialOffsetY = { it / 3 },
-                                    ),
+                                slideInVertically(
+                                    animationSpec = tween(600, delayMillis = 200),
+                                    initialOffsetY = { it / 3 },
+                                ),
                     ) {
                         QuizInfoContent(
                             quizInfo = uiState.quizInfo,

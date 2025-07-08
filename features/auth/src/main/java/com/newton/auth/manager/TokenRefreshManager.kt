@@ -17,97 +17,97 @@ import javax.inject.Singleton
 
 @Singleton
 class TokenRefreshManager
-@Inject
-constructor(
-    private val workManager: WorkManager,
-) {
-    companion object {
-        private const val TOKEN_REFRESH_INTERVAL_HOURS = 12L
-        private const val FLEX_TIME_HOURS = 2L
-        private const val INITIAL_BACKOFF_DELAY_MINUTES = 1L
-        private const val TAG = "TokenRefreshManager"
-    }
+    @Inject
+    constructor(
+        private val workManager: WorkManager,
+    ) {
+        companion object {
+            private const val TOKEN_REFRESH_INTERVAL_HOURS = 12L
+            private const val FLEX_TIME_HOURS = 2L
+            private const val INITIAL_BACKOFF_DELAY_MINUTES = 1L
+            private const val TAG = "TokenRefreshManager"
+        }
 
-    /**
-     * Starts periodic background token refresh
-     * Uses KEEP policy to avoid duplicate work
-     */
+        /**
+         * Starts periodic background token refresh
+         * Uses KEEP policy to avoid duplicate work
+         */
 
-    fun startPeriodicTokenRefresh() {
-        val constraints =
-            Constraints
-                .Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .setRequiresBatteryNotLow(true)
-                .setRequiresStorageNotLow(true)
-                .build()
+        fun startPeriodicTokenRefresh() {
+            val constraints =
+                Constraints
+                    .Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .setRequiresBatteryNotLow(true)
+                    .setRequiresStorageNotLow(true)
+                    .build()
 
-        val tokenRefreshWork =
-            PeriodicWorkRequestBuilder<TokenRefreshWorker>(
-                repeatInterval = TOKEN_REFRESH_INTERVAL_HOURS,
-                repeatIntervalTimeUnit = TimeUnit.HOURS,
-                flexTimeInterval = FLEX_TIME_HOURS,
-                flexTimeIntervalUnit = TimeUnit.HOURS,
-            ).setConstraints(constraints)
-                .setBackoffCriteria(
-                    BackoffPolicy.EXPONENTIAL,
-                    INITIAL_BACKOFF_DELAY_MINUTES,
-                    TimeUnit.MINUTES,
-                ).addTag(TokenRefreshWorker.TAG)
-                .build()
+            val tokenRefreshWork =
+                PeriodicWorkRequestBuilder<TokenRefreshWorker>(
+                    repeatInterval = TOKEN_REFRESH_INTERVAL_HOURS,
+                    repeatIntervalTimeUnit = TimeUnit.HOURS,
+                    flexTimeInterval = FLEX_TIME_HOURS,
+                    flexTimeIntervalUnit = TimeUnit.HOURS,
+                ).setConstraints(constraints)
+                    .setBackoffCriteria(
+                        BackoffPolicy.EXPONENTIAL,
+                        INITIAL_BACKOFF_DELAY_MINUTES,
+                        TimeUnit.MINUTES,
+                    ).addTag(TokenRefreshWorker.TAG)
+                    .build()
 
-        workManager.enqueueUniquePeriodicWork(
-            TokenRefreshWorker.WORK_NAME,
-            ExistingPeriodicWorkPolicy.KEEP,
-            tokenRefreshWork,
-        )
-    }
+            workManager.enqueueUniquePeriodicWork(
+                TokenRefreshWorker.WORK_NAME,
+                ExistingPeriodicWorkPolicy.KEEP,
+                tokenRefreshWork,
+            )
+        }
 
-    fun stopPeriodicTokenRefresh() {
-        workManager.cancelUniqueWork(TokenRefreshWorker.WORK_NAME)
-    }
+        fun stopPeriodicTokenRefresh() {
+            workManager.cancelUniqueWork(TokenRefreshWorker.WORK_NAME)
+        }
 
-    /**
-     * Forces immediate token refresh (one-time work)
-     */
-    fun forceTokenRefresh() {
-        val immediateRefreshWork =
-            OneTimeWorkRequestBuilder<TokenRefreshWorker>()
-                .setConstraints(
-                    Constraints
-                        .Builder()
-                        .setRequiredNetworkType(NetworkType.CONNECTED)
-                        .build(),
-                ).setBackoffCriteria(
-                    BackoffPolicy.EXPONENTIAL,
-                    INITIAL_BACKOFF_DELAY_MINUTES,
-                    TimeUnit.MINUTES,
-                ).addTag("${TokenRefreshWorker.TAG}_immediate")
-                .build()
+        /**
+         * Forces immediate token refresh (one-time work)
+         */
+        fun forceTokenRefresh() {
+            val immediateRefreshWork =
+                OneTimeWorkRequestBuilder<TokenRefreshWorker>()
+                    .setConstraints(
+                        Constraints
+                            .Builder()
+                            .setRequiredNetworkType(NetworkType.CONNECTED)
+                            .build(),
+                    ).setBackoffCriteria(
+                        BackoffPolicy.EXPONENTIAL,
+                        INITIAL_BACKOFF_DELAY_MINUTES,
+                        TimeUnit.MINUTES,
+                    ).addTag("${TokenRefreshWorker.TAG}_immediate")
+                    .build()
 
-        workManager.enqueue(immediateRefreshWork)
-    }
+            workManager.enqueue(immediateRefreshWork)
+        }
 
-    /**
-     * Observes the status of periodic token refresh work
-     */
-    fun observeTokenRefreshStatus(): Flow<Boolean> =
-        workManager
-            .getWorkInfosForUniqueWorkFlow(TokenRefreshWorker.WORK_NAME)
-            .map { workInfos ->
-                workInfos.any { it.state == WorkInfo.State.RUNNING }
-            }
-
-    /**
-     * Checks if periodic token refresh is scheduled
-     */
-    fun isTokenRefreshScheduled(): Flow<Boolean> =
-        workManager
-            .getWorkInfosForUniqueWorkFlow(TokenRefreshWorker.WORK_NAME)
-            .map { workInfos ->
-                workInfos.any {
-                    it.state == WorkInfo.State.ENQUEUED ||
-                            it.state == WorkInfo.State.RUNNING
+        /**
+         * Observes the status of periodic token refresh work
+         */
+        fun observeTokenRefreshStatus(): Flow<Boolean> =
+            workManager
+                .getWorkInfosForUniqueWorkFlow(TokenRefreshWorker.WORK_NAME)
+                .map { workInfos ->
+                    workInfos.any { it.state == WorkInfo.State.RUNNING }
                 }
-            }
-}
+
+        /**
+         * Checks if periodic token refresh is scheduled
+         */
+        fun isTokenRefreshScheduled(): Flow<Boolean> =
+            workManager
+                .getWorkInfosForUniqueWorkFlow(TokenRefreshWorker.WORK_NAME)
+                .map { workInfos ->
+                    workInfos.any {
+                        it.state == WorkInfo.State.ENQUEUED ||
+                            it.state == WorkInfo.State.RUNNING
+                    }
+                }
+    }

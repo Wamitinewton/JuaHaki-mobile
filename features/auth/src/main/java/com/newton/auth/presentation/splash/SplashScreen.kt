@@ -148,10 +148,10 @@ fun SplashScreen(
                             fadeIn(
                                 animationSpec = tween(800, easing = FastOutSlowInEasing),
                             ) +
-                                    scaleIn(
-                                        animationSpec = tween(1000, easing = FastOutSlowInEasing),
-                                        initialScale = 0.3f,
-                                    ),
+                                scaleIn(
+                                    animationSpec = tween(1000, easing = FastOutSlowInEasing),
+                                    initialScale = 0.3f,
+                                ),
                     ) {
                         Box(contentAlignment = Alignment.Center) {
                             if (showSubtleGlow) {
@@ -200,10 +200,10 @@ fun SplashScreen(
                             fadeIn(
                                 animationSpec = tween(600, easing = FastOutSlowInEasing),
                             ) +
-                                    scaleIn(
-                                        animationSpec = tween(800, easing = FastOutSlowInEasing),
-                                        initialScale = 0.5f,
-                                    ),
+                                scaleIn(
+                                    animationSpec = tween(800, easing = FastOutSlowInEasing),
+                                    initialScale = 0.5f,
+                                ),
                     ) {
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,

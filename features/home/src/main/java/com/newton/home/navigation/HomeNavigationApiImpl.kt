@@ -13,29 +13,29 @@ import com.newton.quiz.presentation.quizinfo.viewmodel.QuizInfoViewModel
 import javax.inject.Inject
 
 class HomeNavigationApiImpl
-@Inject
-constructor(
-    private val snackbarManager: SnackbarManager,
-) : HomeNavigationApi {
-    override fun registerNavigationGraph(
-        navGraphBuilder: NavGraphBuilder,
-        navHostController: NavHostController,
-    ) {
-        navGraphBuilder.navigation(
-            route = NavigationSubgraphRoutes.HomeSubgraph.route,
-            startDestination = NavigationRoutes.HomeScreenRoute.route,
+    @Inject
+    constructor(
+        private val snackbarManager: SnackbarManager,
+    ) : HomeNavigationApi {
+        override fun registerNavigationGraph(
+            navGraphBuilder: NavGraphBuilder,
+            navHostController: NavHostController,
         ) {
-            composable(
-                route = NavigationRoutes.HomeScreenRoute.route,
+            navGraphBuilder.navigation(
+                route = NavigationSubgraphRoutes.HomeSubgraph.route,
+                startDestination = NavigationRoutes.HomeScreenRoute.route,
             ) {
-                val quizInfoViewModel = hiltViewModel<QuizInfoViewModel>()
-                HomeScreenContainer(
-                    onNavigateToDailyCivicQuiz = {
-                        navHostController.navigate(NavigationRoutes.QuizInfoRoute.route)
-                    },
-                    viewModel = quizInfoViewModel,
-                )
+                composable(
+                    route = NavigationRoutes.HomeScreenRoute.route,
+                ) {
+                    val quizInfoViewModel = hiltViewModel<QuizInfoViewModel>()
+                    HomeScreenContainer(
+                        onNavigateToDailyCivicQuiz = {
+                            navHostController.navigate(NavigationRoutes.QuizInfoRoute.route)
+                        },
+                        viewModel = quizInfoViewModel,
+                    )
+                }
             }
         }
     }
-}

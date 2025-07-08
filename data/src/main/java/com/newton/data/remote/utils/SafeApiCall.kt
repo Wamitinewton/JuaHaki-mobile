@@ -117,8 +117,9 @@ private fun handleHttpError(error: HttpException): ErrorResponse {
 
         403 ->
             ErrorResponse(
-                message = serverMessage
-                    ?: "Access denied: You don't have permission to access this resource",
+                message =
+                    serverMessage
+                        ?: "Access denied: You don't have permission to access this resource",
                 errorType = ErrorType.AUTHORIZATION,
             )
 
@@ -136,8 +137,9 @@ private fun handleHttpError(error: HttpException): ErrorResponse {
 
         409 ->
             ErrorResponse(
-                message = serverMessage
-                    ?: "Conflict: The request couldn't be completed due to a conflict",
+                message =
+                    serverMessage
+                        ?: "Conflict: The request couldn't be completed due to a conflict",
                 errorType = ErrorType.CONFLICT,
             )
 
@@ -230,10 +232,10 @@ private fun parseAsRawMessage(errorBody: String): String? =
     errorBody
         .takeIf {
             it.isNotBlank() &&
-                    it.length <= 500 &&
-                    !it.contains("<!DOCTYPE") &&
-                    // Not HTML
-                    !it.contains("<html") // Not HTML
+                it.length <= 500 &&
+                !it.contains("<!DOCTYPE") &&
+                // Not HTML
+                !it.contains("<html") // Not HTML
         }?.trim()
 
 data class ErrorResponse(

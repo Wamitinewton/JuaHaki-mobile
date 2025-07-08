@@ -59,10 +59,10 @@ fun QuizInsightsSection(
             fadeIn(
                 animationSpec = tween(600, delayMillis = 200, easing = FastOutSlowInEasing),
             ) +
-                    slideInVertically(
-                        animationSpec = tween(600, delayMillis = 200, easing = FastOutSlowInEasing),
-                        initialOffsetY = { it / 3 },
-                    ),
+                slideInVertically(
+                    animationSpec = tween(600, delayMillis = 200, easing = FastOutSlowInEasing),
+                    initialOffsetY = { it / 3 },
+                ),
     ) {
         Column(
             modifier = modifier,

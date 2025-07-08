@@ -49,10 +49,10 @@ fun QuizStatusSection(
             fadeIn(
                 animationSpec = tween(600, delayMillis = 100, easing = FastOutSlowInEasing),
             ) +
-                    slideInVertically(
-                        animationSpec = tween(600, delayMillis = 100, easing = FastOutSlowInEasing),
-                        initialOffsetY = { it / 3 },
-                    ),
+                slideInVertically(
+                    animationSpec = tween(600, delayMillis = 100, easing = FastOutSlowInEasing),
+                    initialOffsetY = { it / 3 },
+                ),
     ) {
         when {
             quizInfo.hasUserAttempted && quizInfo.userLastAttempt != null -> {

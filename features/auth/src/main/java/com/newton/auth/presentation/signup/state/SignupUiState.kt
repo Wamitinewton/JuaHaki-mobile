@@ -25,17 +25,17 @@ data class SignupUiState(
 ) {
     fun hasAnyError(): Boolean =
         firstNameError != null ||
-                lastNameError != null ||
-                usernameError != null ||
-                phoneNumberError != null ||
-                emailError != null ||
-                passwordError != null
+            lastNameError != null ||
+            usernameError != null ||
+            phoneNumberError != null ||
+            emailError != null ||
+            passwordError != null
 
     fun areAllFieldsFilled(): Boolean =
         firstName.isNotBlank() &&
-                lastName.isNotBlank() &&
-                username.isNotBlank() &&
-                phoneNumber.isNotBlank() &&
-                email.isNotBlank() &&
-                password.isNotBlank()
+            lastName.isNotBlank() &&
+            username.isNotBlank() &&
+            phoneNumber.isNotBlank() &&
+            email.isNotBlank() &&
+            password.isNotBlank()
 }

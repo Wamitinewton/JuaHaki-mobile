@@ -52,10 +52,10 @@ fun QuizActionsSection(
             fadeIn(
                 animationSpec = tween(600, delayMillis = 300, easing = FastOutSlowInEasing),
             ) +
-                    slideInVertically(
-                        animationSpec = tween(600, delayMillis = 300, easing = FastOutSlowInEasing),
-                        initialOffsetY = { it / 3 },
-                    ),
+                slideInVertically(
+                    animationSpec = tween(600, delayMillis = 300, easing = FastOutSlowInEasing),
+                    initialOffsetY = { it / 3 },
+                ),
     ) {
         Column(
             modifier = modifier,
@@ -89,13 +89,15 @@ private fun PrimaryActionCard(
             CardDefaults.cardColors(
                 containerColor =
                     when {
-                        quizInfo.hasUserAttempted -> MaterialTheme.colorScheme.tertiaryContainer.copy(
-                            alpha = 0.3f
-                        )
+                        quizInfo.hasUserAttempted ->
+                            MaterialTheme.colorScheme.tertiaryContainer.copy(
+                                alpha = 0.3f,
+                            )
 
-                        quizInfo.isActive && !quizInfo.isExpired -> MaterialTheme.colorScheme.primaryContainer.copy(
-                            alpha = 0.3f
-                        )
+                        quizInfo.isActive && !quizInfo.isExpired ->
+                            MaterialTheme.colorScheme.primaryContainer.copy(
+                                alpha = 0.3f,
+                            )
 
                         else -> MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
                     },

@@ -54,10 +54,10 @@ fun QuizHeroSection(
             fadeIn(
                 animationSpec = tween(800, easing = FastOutSlowInEasing),
             ) +
-                    slideInVertically(
-                        animationSpec = tween(800, easing = FastOutSlowInEasing),
-                        initialOffsetY = { it / 2 },
-                    ),
+                slideInVertically(
+                    animationSpec = tween(800, easing = FastOutSlowInEasing),
+                    initialOffsetY = { it / 2 },
+                ),
     ) {
         Card(
             modifier = modifier,
@@ -80,10 +80,10 @@ fun QuizHeroSection(
                                         colors =
                                             listOf(
                                                 MaterialTheme.colorScheme.primaryContainer.copy(
-                                                    alpha = 0.8f
+                                                    alpha = 0.8f,
                                                 ),
                                                 MaterialTheme.colorScheme.primaryContainer.copy(
-                                                    alpha = 0.4f
+                                                    alpha = 0.4f,
                                                 ),
                                                 Color.Transparent,
                                             ),

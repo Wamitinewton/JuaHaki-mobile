@@ -48,8 +48,7 @@ fun QuizInfoTopBar(
                     .padding(
                         horizontal = AppDimensions.Padding.large,
                         vertical = AppDimensions.Padding.medium,
-                    )
-                    .statusBarsPadding(),
+                    ).statusBarsPadding(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Surface(

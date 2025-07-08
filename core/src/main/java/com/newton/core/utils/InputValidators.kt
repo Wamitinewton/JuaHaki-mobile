@@ -108,9 +108,10 @@ object InputValidator {
             !password.any { it.isUpperCase() } -> ValidationResult.Invalid(ValidationError.PasswordNoUppercase)
             !password.any { it.isLowerCase() } -> ValidationResult.Invalid(ValidationError.PasswordNoLowercase)
             !password.any { it.isDigit() } -> ValidationResult.Invalid(ValidationError.PasswordNoNumber)
-            !password.any { it in "!@#$%^&*()_+-=[]{}|;:,.<>?" } -> ValidationResult.Invalid(
-                ValidationError.PasswordNoSpecialChar
-            )
+            !password.any { it in "!@#$%^&*()_+-=[]{}|;:,.<>?" } ->
+                ValidationResult.Invalid(
+                    ValidationError.PasswordNoSpecialChar,
+                )
 
             else -> ValidationResult.Valid
         }

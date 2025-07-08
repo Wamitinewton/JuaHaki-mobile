@@ -156,9 +156,14 @@ fun CustomTextField(
             readOnly = readOnly,
             textStyle =
                 textStyle.copy(
-                    color = if (enabled) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurface.copy(
-                        alpha = 0.6f
-                    ),
+                    color =
+                        if (enabled) {
+                            MaterialTheme.colorScheme.onSurface
+                        } else {
+                            MaterialTheme.colorScheme.onSurface.copy(
+                                alpha = 0.6f,
+                            )
+                        },
                 ),
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
@@ -177,13 +182,11 @@ fun CustomTextField(
                             .clip(RoundedCornerShape(cornerRadius))
                             .background(
                                 if (enabled) backgroundColor else backgroundColor.copy(alpha = 0.6f),
-                            )
-                            .border(
+                            ).border(
                                 width = currentBorderWidth,
                                 color = currentBorderColor,
                                 shape = RoundedCornerShape(cornerRadius),
-                            )
-                            .padding(horizontal = horizontalPadding, vertical = verticalPadding),
+                            ).padding(horizontal = horizontalPadding, vertical = verticalPadding),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     leadingIcon?.let { icon ->
@@ -191,9 +194,14 @@ fun CustomTextField(
                             imageVector = icon,
                             contentDescription = null,
                             modifier = Modifier.size(20.dp),
-                            tint = if (isError) errorBorderColor else MaterialTheme.colorScheme.onSurface.copy(
-                                alpha = 0.6f
-                            ),
+                            tint =
+                                if (isError) {
+                                    errorBorderColor
+                                } else {
+                                    MaterialTheme.colorScheme.onSurface.copy(
+                                        alpha = 0.6f,
+                                    )
+                                },
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                     }
@@ -233,9 +241,14 @@ fun CustomTextField(
                                 imageVector = icon,
                                 contentDescription = null,
                                 modifier = Modifier.size(20.dp),
-                                tint = if (isError) errorBorderColor else MaterialTheme.colorScheme.onSurface.copy(
-                                    alpha = 0.6f
-                                ),
+                                tint =
+                                    if (isError) {
+                                        errorBorderColor
+                                    } else {
+                                        MaterialTheme.colorScheme.onSurface.copy(
+                                            alpha = 0.6f,
+                                        )
+                                    },
                             )
                         }
                     }
@@ -255,9 +268,14 @@ fun CustomTextField(
             Text(
                 text = text,
                 style = if (isError) errorTextStyle else helperTextStyle,
-                color = if (isError) errorBorderColor else MaterialTheme.colorScheme.onSurface.copy(
-                    alpha = 0.7f
-                ),
+                color =
+                    if (isError) {
+                        errorBorderColor
+                    } else {
+                        MaterialTheme.colorScheme.onSurface.copy(
+                            alpha = 0.7f,
+                        )
+                    },
                 modifier = Modifier.padding(start = 4.dp),
             )
         }

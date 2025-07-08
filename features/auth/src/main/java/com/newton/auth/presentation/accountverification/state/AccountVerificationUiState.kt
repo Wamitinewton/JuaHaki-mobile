@@ -15,12 +15,11 @@ data class AccountVerificationUiState(
 ) {
     fun areAllFieldsFilled(): Boolean = email.isNotBlank() && otp.isNotBlank() && otp.length >= 6
 
-    fun isOtpValid(): Boolean =
-        otp.isNotBlank() && otp.all { it.isLetterOrDigit() } && otp.length in 4..6
+    fun isOtpValid(): Boolean = otp.isNotBlank() && otp.all { it.isLetterOrDigit() } && otp.length in 4..6
 
     fun isEmailValid(): Boolean =
         email.isNotBlank() &&
-                android.util.Patterns.EMAIL_ADDRESS
-                    .matcher(email)
-                    .matches()
+            android.util.Patterns.EMAIL_ADDRESS
+                .matcher(email)
+                .matches()
 }

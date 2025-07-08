@@ -73,8 +73,8 @@ fun ResetPasswordScreen(
     val passwordsMatch by remember(uiState.newPassword, uiState.confirmPassword) {
         derivedStateOf {
             uiState.newPassword == uiState.confirmPassword &&
-                    uiState.newPassword.isNotBlank() &&
-                    uiState.confirmPassword.isNotBlank()
+                uiState.newPassword.isNotBlank() &&
+                uiState.confirmPassword.isNotBlank()
         }
     }
 
@@ -266,9 +266,10 @@ fun ResetPasswordScreen(
                                         style =
                                             MaterialTheme.typography.bodySmall.copy(
                                                 fontWeight = FontWeight.Medium,
-                                                color = MaterialTheme.colorScheme.onSurface.copy(
-                                                    alpha = 0.8f
-                                                ),
+                                                color =
+                                                    MaterialTheme.colorScheme.onSurface.copy(
+                                                        alpha = 0.8f,
+                                                    ),
                                             ),
                                     )
 

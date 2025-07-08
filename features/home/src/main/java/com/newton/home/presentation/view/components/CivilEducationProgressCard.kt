@@ -60,7 +60,7 @@ fun CivilEducationProgressCard(
                 .fillMaxWidth()
                 .padding(
                     horizontal = AppDimensions.Padding.screen,
-                    vertical = AppDimensions.Padding.small
+                    vertical = AppDimensions.Padding.small,
                 ),
         onClick = onCardClick,
     ) {
@@ -131,10 +131,9 @@ private fun CivilEducationCardHeader(
                                     ),
                             ),
                         shape = CircleShape,
-                    )
-                    .padding(
+                    ).padding(
                         horizontal = AppDimensions.Padding.medium,
-                        vertical = AppDimensions.Padding.small
+                        vertical = AppDimensions.Padding.small,
                     ),
         ) {
             Row(

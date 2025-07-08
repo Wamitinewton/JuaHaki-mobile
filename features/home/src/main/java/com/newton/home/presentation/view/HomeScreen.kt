@@ -64,8 +64,7 @@ fun HomeScreen(
                 .fillMaxSize()
                 .background(
                     brush = backgroundGradient(),
-                )
-                .pointerInput(Unit) {
+                ).pointerInput(Unit) {
                     detectTapGestures(
                         onTap = {
                             hidePrompts = true

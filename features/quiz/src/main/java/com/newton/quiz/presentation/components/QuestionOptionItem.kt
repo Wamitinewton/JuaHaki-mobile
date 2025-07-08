@@ -69,8 +69,7 @@ fun QuizOptionItem(
                     width = if (borderColor != Color.Transparent) AppDimensions.BorderWidth.medium else AppDimensions.BorderWidth.thin,
                     color = borderColor,
                     shape = RoundedCornerShape(AppDimensions.CornerRadius.medium),
-                )
-                .clickable(enabled = !showResult) { onOptionSelected() }
+                ).clickable(enabled = !showResult) { onOptionSelected() }
                 .padding(AppDimensions.Padding.large),
         verticalAlignment = Alignment.CenterVertically,
     ) {
