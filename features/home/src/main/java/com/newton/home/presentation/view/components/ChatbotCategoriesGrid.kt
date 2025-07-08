@@ -15,11 +15,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.newton.commonui.theme.AppDimensions
+import com.newton.commonui.components.*
 
 data class ChatbotCategory(
     val title: String,
@@ -29,7 +29,6 @@ data class ChatbotCategory(
     val onClick: () -> Unit,
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChatbotCategoriesGrid(
     modifier: Modifier = Modifier,
@@ -64,27 +63,20 @@ fun ChatbotCategoriesGrid(
 
     Column(
         modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.medium),
     ) {
         Column(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
+            modifier = Modifier.padding(horizontal = AppDimensions.Padding.screen),
+            verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.xs),
         ) {
-            Text(
+            HeadlineSmallText(
                 text = "Specialized AI Assistants",
-                style =
-                    MaterialTheme.typography.headlineSmall.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onSurface,
-                    ),
+                color = MaterialTheme.colorScheme.onSurface,
             )
 
-            Text(
+            BodyMediumText(
                 text = "Choose a specialized assistant for targeted help",
-                style =
-                    MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                    ),
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
             )
         }
 
@@ -92,9 +84,9 @@ fun ChatbotCategoriesGrid(
             modifier =
                 Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
+                    .padding(horizontal = AppDimensions.Padding.screen)
                     .height(300.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.medium),
         ) {
             categories.forEach { category ->
                 ChatbotCategoryCard(
@@ -109,7 +101,6 @@ fun ChatbotCategoriesGrid(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ChatbotCategoryCard(
     category: ChatbotCategory,
@@ -118,13 +109,13 @@ private fun ChatbotCategoryCard(
     Card(
         modifier =
             modifier
-                .clip(RoundedCornerShape(20.dp))
+                .clip(RoundedCornerShape(AppDimensions.CornerRadius.xl))
                 .clickable { category.onClick() },
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(AppDimensions.CornerRadius.xl),
         elevation =
             CardDefaults.cardElevation(
-                defaultElevation = 8.dp,
-                pressedElevation = 12.dp,
+                defaultElevation = AppDimensions.Elevation.large,
+                pressedElevation = AppDimensions.Elevation.xl,
             ),
         colors =
             CardDefaults.cardColors(
@@ -140,11 +131,11 @@ private fun ChatbotCategoryCard(
                             Brush.linearGradient(
                                 colors =
                                     category.gradientColors +
-                                        listOf(
-                                            MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
-                                        ),
+                                            listOf(
+                                                MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
+                                            ),
                             ),
-                    ).padding(20.dp),
+                    ).padding(AppDimensions.Padding.xl),
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -153,13 +144,13 @@ private fun ChatbotCategoryCard(
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.medium),
                 ) {
                     Box(
                         modifier =
                             Modifier
                                 .size(64.dp)
-                                .clip(RoundedCornerShape(18.dp))
+                                .clip(RoundedCornerShape(AppDimensions.CornerRadius.large))
                                 .background(
                                     MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
                                 ),
@@ -168,18 +159,13 @@ private fun ChatbotCategoryCard(
                         Icon(
                             imageVector = category.icon,
                             contentDescription = category.title,
-                            modifier = Modifier.size(32.dp),
+                            modifier = Modifier.size(AppDimensions.IconSize.xl),
                             tint = MaterialTheme.colorScheme.primary,
                         )
                     }
 
-                    Text(
+                    TitleMediumText(
                         text = category.title,
-                        style =
-                            MaterialTheme.typography.titleMedium.copy(
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 18.sp,
-                            ),
                         color = MaterialTheme.colorScheme.onSurface,
                         textAlign = TextAlign.Center,
                         maxLines = 2,
@@ -194,13 +180,8 @@ private fun ChatbotCategoryCard(
                             .height(80.dp),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Text(
+                    BodySmallText(
                         text = category.description,
-                        style =
-                            MaterialTheme.typography.bodySmall.copy(
-                                fontSize = 13.sp,
-                                lineHeight = 18.sp,
-                            ),
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
                         textAlign = TextAlign.Center,
                         maxLines = 4,
@@ -213,19 +194,14 @@ private fun ChatbotCategoryCard(
                         Modifier
                             .fillMaxWidth()
                             .height(40.dp),
-                    shape = RoundedCornerShape(16.dp),
+                    shape = RoundedCornerShape(AppDimensions.CornerRadius.large),
                     color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
                 ) {
                     Box(
                         contentAlignment = Alignment.Center,
                     ) {
-                        Text(
+                        LabelMediumText(
                             text = "View Documents",
-                            style =
-                                MaterialTheme.typography.labelMedium.copy(
-                                    fontWeight = FontWeight.SemiBold,
-                                    fontSize = 13.sp,
-                                ),
                             color = MaterialTheme.colorScheme.primary,
                         )
                     }

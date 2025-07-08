@@ -51,7 +51,6 @@ fun QuizGameContainer(
     QuizGameScreen(
         uiState = uiState,
         onQuizGameEvent = viewModel::onEvent,
-        onQuizComplete = onQuizComplete,
         onNavigateBack = { viewModel.onEvent(QuizGameUiEvent.OnAbandonQuiz) },
         modifier = modifier,
     )

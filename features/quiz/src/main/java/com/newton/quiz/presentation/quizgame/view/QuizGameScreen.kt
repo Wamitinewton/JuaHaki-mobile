@@ -27,7 +27,6 @@ import com.newton.quiz.presentation.quizgame.state.QuizGameUiState
 fun QuizGameScreen(
     uiState: QuizGameUiState,
     onQuizGameEvent: (QuizGameUiEvent) -> Unit,
-    onQuizComplete: (String) -> Unit,
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {

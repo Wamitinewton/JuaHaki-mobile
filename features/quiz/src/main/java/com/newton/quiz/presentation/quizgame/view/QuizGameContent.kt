@@ -24,13 +24,14 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
+import com.newton.commonui.components.BodyMediumText
+import com.newton.commonui.components.LabelMediumText
 import com.newton.commonui.components.PrimaryButton
+import com.newton.commonui.components.TitleMediumText
+import com.newton.commonui.theme.AppDimensions
 import com.newton.quiz.presentation.components.QuizProgressBar
 import com.newton.quiz.presentation.components.QuizQuestionCard
 import com.newton.quiz.presentation.quizgame.state.QuizGameUiState
@@ -51,7 +52,7 @@ fun QuizGameContent(
         modifier =
             modifier
                 .verticalScroll(scrollState)
-                .padding(16.dp),
+                .padding(AppDimensions.Padding.screen),
     ) {
         if (uiState.currentQuestionNumber != null && uiState.currentSession != null) {
             QuizProgressBar(
@@ -61,56 +62,54 @@ fun QuizGameContent(
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(AppDimensions.Spacing.medium))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Card(
-                shape = RoundedCornerShape(12.dp),
+                shape = RoundedCornerShape(AppDimensions.CornerRadius.medium),
                 colors =
                     CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.7f),
                     ),
             ) {
-                Text(
+                LabelMediumText(
                     text = "Score: ${uiState.score}",
-                    style =
-                        MaterialTheme.typography.labelMedium.copy(
-                            fontWeight = FontWeight.Bold,
-                        ),
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                    modifier = Modifier.padding(
+                        horizontal = AppDimensions.Padding.medium,
+                        vertical = AppDimensions.Padding.xs
+                    ),
                 )
             }
 
             Card(
-                shape = RoundedCornerShape(12.dp),
+                shape = RoundedCornerShape(AppDimensions.CornerRadius.medium),
                 colors =
                     CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.7f),
                     ),
             ) {
-                Text(
+                LabelMediumText(
                     text = formatTime(uiState.timeSpent),
-                    style =
-                        MaterialTheme.typography.labelMedium.copy(
-                            fontWeight = FontWeight.Bold,
-                        ),
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                    modifier = Modifier.padding(
+                        horizontal = AppDimensions.Padding.medium,
+                        vertical = AppDimensions.Padding.xs
+                    ),
                 )
             }
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(AppDimensions.Spacing.large))
 
         AnimatedContent(
             targetState = uiState.currentQuestionNumber ?: 0,
             transitionSpec = {
                 fadeIn(animationSpec = tween(300)) togetherWith
-                    fadeOut(animationSpec = tween(300))
+                        fadeOut(animationSpec = tween(300))
             },
             label = "question_transition",
         ) { questionNumber ->
@@ -126,12 +125,12 @@ fun QuizGameContent(
             }
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(AppDimensions.Spacing.large))
 
         if (uiState.showExplanation && uiState.answerResult != null) {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
+                shape = RoundedCornerShape(AppDimensions.CornerRadius.large),
                 colors =
                     CardDefaults.cardColors(
                         containerColor =
@@ -143,7 +142,7 @@ fun QuizGameContent(
                     ),
             ) {
                 Column(
-                    modifier = Modifier.padding(20.dp),
+                    modifier = Modifier.padding(AppDimensions.Padding.xl),
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -157,44 +156,35 @@ fun QuizGameContent(
                                 } else {
                                     MaterialTheme.colorScheme.error
                                 },
-                            modifier = Modifier.size(24.dp),
+                            modifier = Modifier.size(AppDimensions.IconSize.large),
                         )
 
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(AppDimensions.Spacing.small))
 
-                        Text(
+                        TitleMediumText(
                             text = uiState.answerResult.message,
-                            style =
-                                MaterialTheme.typography.titleMedium.copy(
-                                    fontWeight = FontWeight.Bold,
-                                ),
                             color = MaterialTheme.colorScheme.onSurface,
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(AppDimensions.Spacing.medium))
 
-                    Text(
+                    BodyMediumText(
                         text = "Correct Answer: ${uiState.answerResult.correctAnswer} - ${uiState.answerResult.correctOptionText}",
-                        style =
-                            MaterialTheme.typography.bodyMedium.copy(
-                                fontWeight = FontWeight.Medium,
-                            ),
                         color = MaterialTheme.colorScheme.primary,
                     )
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(AppDimensions.Spacing.small))
 
-                    Text(
+                    BodyMediumText(
                         text = uiState.answerResult.explanation,
-                        style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
                     )
                 }
             }
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(AppDimensions.Spacing.large))
 
         if (uiState.showExplanation) {
             PrimaryButton(
@@ -211,7 +201,7 @@ fun QuizGameContent(
             )
         }
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(AppDimensions.Spacing.xl))
     }
 }
 

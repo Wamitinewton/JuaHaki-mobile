@@ -17,14 +17,15 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.QuestionMark
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
+import com.newton.commonui.components.BodyMediumText
+import com.newton.commonui.components.LabelMediumText
+import com.newton.commonui.theme.AppDimensions
 import com.newton.domain.models.quiz.QuizOption
 
 @Composable
@@ -63,20 +64,20 @@ fun QuizOptionItem(
     Row(
         modifier =
             modifier
-                .clip(RoundedCornerShape(12.dp))
+                .clip(RoundedCornerShape(AppDimensions.CornerRadius.medium))
                 .background(backgroundColor)
                 .border(
-                    width = if (borderColor != Color.Transparent) 2.dp else 0.dp,
+                    width = if (borderColor != Color.Transparent) AppDimensions.BorderWidth.medium else AppDimensions.BorderWidth.thin,
                     color = borderColor,
-                    shape = RoundedCornerShape(12.dp),
+                    shape = RoundedCornerShape(AppDimensions.CornerRadius.medium),
                 ).clickable(enabled = !showResult) { onOptionSelected() }
-                .padding(16.dp),
+                .padding(AppDimensions.Padding.large),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
             modifier =
                 Modifier
-                    .size(32.dp)
+                    .size(AppDimensions.IconSize.xl)
                     .clip(CircleShape)
                     .background(
                         if (isSelected || (showResult && (isCorrect || isUserAnswer))) {
@@ -87,12 +88,8 @@ fun QuizOptionItem(
                     ),
             contentAlignment = Alignment.Center,
         ) {
-            Text(
+            LabelMediumText(
                 text = option.optionLetter,
-                style =
-                    MaterialTheme.typography.labelMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                    ),
                 color =
                     if (isSelected || (showResult && (isCorrect || isUserAnswer))) {
                         MaterialTheme.colorScheme.onPrimary
@@ -102,17 +99,16 @@ fun QuizOptionItem(
             )
         }
 
-        Spacer(modifier = Modifier.width(12.dp))
+        Spacer(modifier = Modifier.width(AppDimensions.Spacing.medium))
 
-        Text(
+        BodyMediumText(
             text = option.optionText,
-            style = MaterialTheme.typography.bodyMedium,
             color = textColor,
             modifier = Modifier.weight(1f),
         )
 
         if (showResult) {
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(AppDimensions.Spacing.small))
 
             Icon(
                 imageVector =
@@ -130,7 +126,7 @@ fun QuizOptionItem(
                         isUserAnswer -> MaterialTheme.colorScheme.error
                         else -> Color.Transparent
                     },
-                modifier = Modifier.size(20.dp),
+                modifier = Modifier.size(AppDimensions.IconSize.medium),
             )
         }
     }

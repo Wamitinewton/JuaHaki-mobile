@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.newton.commonui.theme.AppDimensions
 import com.newton.core.enums.QuizPerformanceLevel
 import com.newton.domain.models.quiz.LeaderboardEntry
 
@@ -44,7 +45,7 @@ fun LeaderboardItem(
 
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(AppDimensions.CornerRadius.medium),
         colors =
             CardDefaults.cardColors(
                 containerColor =

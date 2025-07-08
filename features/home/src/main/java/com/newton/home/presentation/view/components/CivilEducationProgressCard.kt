@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -19,12 +20,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.TrendingUp
 import androidx.compose.material.icons.filled.School
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -41,11 +39,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.newton.commonui.components.BodyMediumText
 import com.newton.commonui.components.FeatureCard
+import com.newton.commonui.components.LabelMediumText
+import com.newton.commonui.components.LabelSmallText
+import com.newton.commonui.components.TitleMediumText
+import com.newton.commonui.theme.AppDimensions
 
 @Composable
 fun CivilEducationProgressCard(
@@ -57,28 +58,28 @@ fun CivilEducationProgressCard(
         modifier =
             modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+                .padding(horizontal = AppDimensions.Padding.screen, vertical = AppDimensions.Padding.small),
         onClick = onCardClick,
     ) {
         Column(
             modifier =
                 Modifier
                     .fillMaxWidth()
-                    .padding(20.dp),
+                    .padding(AppDimensions.Padding.xl),
         ) {
             CivilEducationCardHeader(
                 level = stats.level,
                 totalPoints = stats.totalPoints,
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(AppDimensions.Spacing.large))
 
             CivilEducationProgressSection(
                 progressToNextLevel = stats.progressToNextLevel,
                 averageScore = stats.averageScore,
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(AppDimensions.Spacing.large))
 
             CivilEducationStatsRow(
                 dailyQuizzesCompleted = stats.dailyQuizzesCompleted,
@@ -103,18 +104,13 @@ private fun CivilEducationCardHeader(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Column {
-            Text(
+            TitleMediumText(
                 text = "Civil Education Progress",
-                style =
-                    MaterialTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.SemiBold,
-                    ),
                 color = MaterialTheme.colorScheme.onSurface,
             )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
+            Spacer(modifier = Modifier.height(AppDimensions.Spacing.xs))
+            BodyMediumText(
                 text = "Level: $level",
-                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary,
             )
         }
@@ -132,7 +128,7 @@ private fun CivilEducationCardHeader(
                                     ),
                             ),
                         shape = CircleShape,
-                    ).padding(horizontal = 12.dp, vertical = 6.dp),
+                    ).padding(horizontal = AppDimensions.Padding.medium, vertical = AppDimensions.Padding.small),
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -141,15 +137,11 @@ private fun CivilEducationCardHeader(
                     imageVector = Icons.Default.School,
                     contentDescription = "Points",
                     tint = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier.size(16.dp),
+                    modifier = Modifier.size(AppDimensions.IconSize.small),
                 )
-                Spacer(modifier = Modifier.width(4.dp))
-                Text(
+                Spacer(modifier = Modifier.width(AppDimensions.Spacing.xs))
+                LabelMediumText(
                     text = "$totalPoints pts",
-                    style =
-                        MaterialTheme.typography.labelMedium.copy(
-                            fontWeight = FontWeight.Bold,
-                        ),
                     color = MaterialTheme.colorScheme.onPrimary,
                 )
             }
@@ -176,22 +168,17 @@ private fun CivilEducationProgressSection(
             CircularProgressIndicator(
                 progress = progressToNextLevel,
                 size = 80.dp,
-                strokeWidth = 8.dp,
+                strokeWidth = AppDimensions.Spacing.small,
                 backgroundColor = MaterialTheme.colorScheme.surfaceVariant,
                 progressColor = MaterialTheme.colorScheme.primary,
             )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
+            Spacer(modifier = Modifier.height(AppDimensions.Spacing.small))
+            LabelSmallText(
                 text = "Next Level",
-                style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            Text(
+            LabelMediumText(
                 text = "${(progressToNextLevel * 100).toInt()}%",
-                style =
-                    MaterialTheme.typography.labelMedium.copy(
-                        fontWeight = FontWeight.SemiBold,
-                    ),
                 color = MaterialTheme.colorScheme.primary,
             )
         }
@@ -212,27 +199,21 @@ private fun CivilEducationProgressSection(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    Text(
+                    TitleMediumText(
                         text = "${(averageScore * 100).toInt()}%",
-                        style =
-                            MaterialTheme.typography.titleMedium.copy(
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 18.sp,
-                            ),
                         color = MaterialTheme.colorScheme.primary,
                     )
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.TrendingUp,
                         contentDescription = "Average Score",
                         tint = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.size(16.dp),
+                        modifier = Modifier.size(AppDimensions.IconSize.small),
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
+            Spacer(modifier = Modifier.height(AppDimensions.Spacing.small))
+            LabelSmallText(
                 text = "Avg Score",
-                style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
@@ -251,22 +232,17 @@ private fun CivilEducationStatsRow(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(
+            LabelMediumText(
                 text = "Today's Progress",
-                style =
-                    MaterialTheme.typography.labelMedium.copy(
-                        fontWeight = FontWeight.Medium,
-                    ),
                 color = MaterialTheme.colorScheme.onSurface,
             )
-            Text(
+            LabelMediumText(
                 text = "$dailyQuizzesCompleted/$totalQuizzesAvailable quizzes",
-                style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(AppDimensions.Spacing.small))
 
         LinearProgressIndicator(
             progress = {
@@ -279,43 +255,34 @@ private fun CivilEducationStatsRow(
             modifier =
                 Modifier
                     .fillMaxWidth()
-                    .height(8.dp)
-                    .clip(RoundedCornerShape(4.dp)),
+                    .heightIn(AppDimensions.Spacing.small)
+                    .clip(RoundedCornerShape(AppDimensions.CornerRadius.xs)),
             color = MaterialTheme.colorScheme.primary,
             trackColor = MaterialTheme.colorScheme.surfaceVariant,
             strokeCap = StrokeCap.Butt,
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(AppDimensions.Spacing.medium))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(
+            LabelMediumText(
                 text = "Current Streak",
-                style =
-                    MaterialTheme.typography.labelMedium.copy(
-                        fontWeight = FontWeight.Medium,
-                    ),
                 color = MaterialTheme.colorScheme.onSurface,
             )
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text(
+                TitleMediumText(
                     text = "🔥",
-                    style = MaterialTheme.typography.titleMedium,
                 )
-                Spacer(modifier = Modifier.width(4.dp))
-                Text(
+                Spacer(modifier = Modifier.width(AppDimensions.Spacing.xs))
+                LabelMediumText(
                     text = "$currentStreak days",
-                    style =
-                        MaterialTheme.typography.labelMedium.copy(
-                            fontWeight = FontWeight.SemiBold,
-                        ),
                     color = MaterialTheme.colorScheme.primary,
                 )
             }

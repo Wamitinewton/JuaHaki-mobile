@@ -6,8 +6,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.newton.commonui.components.BodySmallText
+import com.newton.commonui.components.TitleMediumText
+import com.newton.commonui.theme.AppDimensions
 import com.newton.domain.models.quiz.AnswerResult
 import com.newton.domain.models.quiz.QuizQuestion
 
@@ -22,15 +23,15 @@ fun QuizQuestionCard(
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(AppDimensions.CornerRadius.large),
         colors =
             CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surface,
             ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = AppDimensions.Elevation.medium),
     ) {
         Column(
-            modifier = Modifier.padding(20.dp),
+            modifier = Modifier.padding(AppDimensions.Padding.xl),
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -42,23 +43,19 @@ fun QuizQuestionCard(
                     modifier = Modifier.weight(1f, false),
                 )
 
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(AppDimensions.Spacing.small))
 
                 QuizDifficultyChip(difficulty = question.difficulty)
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(AppDimensions.Spacing.medium))
 
-            Text(
+            TitleMediumText(
                 text = question.questionText,
-                style =
-                    MaterialTheme.typography.titleMedium.copy(
-                        lineHeight = 24.sp,
-                    ),
                 color = MaterialTheme.colorScheme.onSurface,
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(AppDimensions.Spacing.xl))
 
             question.options.forEach { option ->
                 QuizOptionItem(
@@ -71,15 +68,14 @@ fun QuizQuestionCard(
                     modifier = Modifier.fillMaxWidth(),
                 )
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(AppDimensions.Spacing.medium))
             }
 
             if (question.sourceReference.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(AppDimensions.Spacing.small))
 
-                Text(
+                BodySmallText(
                     text = "Source: ${question.sourceReference}",
-                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                     modifier = Modifier.fillMaxWidth(),
                 )

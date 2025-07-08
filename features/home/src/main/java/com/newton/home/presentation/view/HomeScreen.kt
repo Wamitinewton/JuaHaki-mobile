@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
+import com.newton.commonui.theme.AppDimensions
 import com.newton.commonui.theme.backgroundGradient
 import com.newton.home.presentation.view.components.ChatbotCategoriesGrid
 import com.newton.home.presentation.view.components.CivicFact
@@ -76,7 +77,7 @@ fun HomeScreen(
                 Modifier
                     .fillMaxSize()
                     .verticalScroll(scrollState)
-                    .padding(top = 16.dp, bottom = 100.dp,),
+                    .padding(top = AppDimensions.Padding.screen, bottom = 100.dp),
         ) {
             CivilEducationProgressCard(
                 stats = civilEducationStats,

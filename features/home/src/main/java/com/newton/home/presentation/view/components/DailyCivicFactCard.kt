@@ -17,6 +17,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.newton.commonui.components.FeatureCard
+import com.newton.commonui.components.TitleMediumText
+import com.newton.commonui.components.LabelMediumText
+import com.newton.commonui.components.BodyLargeText
+import com.newton.commonui.components.BodySmallText
+import com.newton.commonui.components.DisplayMediumText
+import com.newton.commonui.theme.AppDimensions
 
 data class CivicFact(
     val fact: String,
@@ -38,7 +44,7 @@ fun DailyCivicFactCard(
         modifier =
             modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = AppDimensions.Padding.screen),
     ) {
         Box(
             modifier =
@@ -53,14 +59,14 @@ fun DailyCivicFactCard(
                                         MaterialTheme.colorScheme.secondary,
                                     ),
                             ),
-                        shape = RoundedCornerShape(20.dp),
-                    ).clip(RoundedCornerShape(20.dp)),
+                        shape = RoundedCornerShape(AppDimensions.CornerRadius.xl),
+                    ).clip(RoundedCornerShape(AppDimensions.CornerRadius.xl)),
         ) {
             Column(
                 modifier =
                     Modifier
                         .fillMaxWidth()
-                        .padding(24.dp),
+                        .padding(AppDimensions.Padding.xxl),
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -70,98 +76,80 @@ fun DailyCivicFactCard(
                         imageVector = Icons.Default.FormatQuote,
                         contentDescription = "Quote",
                         tint = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.9f),
-                        modifier = Modifier.size(24.dp),
+                        modifier = Modifier.size(AppDimensions.IconSize.large),
                     )
 
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(AppDimensions.Spacing.small))
 
-                    Text(
+                    TitleMediumText(
                         text = "Daily Civic Fact",
-                        style =
-                            MaterialTheme.typography.titleMedium.copy(
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onPrimary,
-                            ),
+                        color = MaterialTheme.colorScheme.onPrimary,
                     )
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(AppDimensions.Spacing.medium))
 
                 Surface(
-                    shape = RoundedCornerShape(12.dp),
+                    shape = RoundedCornerShape(AppDimensions.CornerRadius.medium),
                     color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f),
                     modifier = Modifier.wrapContentSize(),
                 ) {
-                    Text(
+                    LabelMediumText(
                         text = fact.category,
-                        style =
-                            MaterialTheme.typography.labelMedium.copy(
-                                fontWeight = FontWeight.Medium,
-                                color = MaterialTheme.colorScheme.onPrimary,
-                            ),
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier.padding(
+                            horizontal = AppDimensions.Padding.medium,
+                            vertical = AppDimensions.Padding.xs
+                        ),
                     )
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(AppDimensions.Spacing.medium))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    Text(
+                    DisplayMediumText(
                         text = "\"",
-                        style =
-                            MaterialTheme.typography.displayMedium.copy(
-                                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.6f),
-                                fontWeight = FontWeight.Bold,
-                            ),
-                        modifier = Modifier.offset(y = (-8).dp),
+                        color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.6f),
+                        modifier = Modifier.offset(y = (-AppDimensions.Spacing.small)),
                     )
 
                     Column(
                         modifier =
                             Modifier
                                 .weight(1f)
-                                .padding(horizontal = 8.dp),
+                                .padding(horizontal = AppDimensions.Padding.small),
                     ) {
                         Text(
                             text = fact.fact,
-                            style =
-                                MaterialTheme.typography.bodyLarge.copy(
-                                    color = MaterialTheme.colorScheme.onPrimary,
-                                    fontStyle = FontStyle.Italic,
-                                    lineHeight = 24.sp,
-                                    fontWeight = FontWeight.Medium,
-                                ),
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                color = MaterialTheme.colorScheme.onPrimary,
+                                fontStyle = FontStyle.Italic,
+                                lineHeight = 24.sp,
+                                fontWeight = FontWeight.Medium,
+                            ),
                             textAlign = TextAlign.Start,
                         )
                     }
 
-                    Text(
+                    DisplayMediumText(
                         text = "\"",
-                        style =
-                            MaterialTheme.typography.displayMedium.copy(
-                                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.6f),
-                                fontWeight = FontWeight.Bold,
-                            ),
-                        modifier = Modifier.offset(y = 8.dp),
+                        color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.6f),
+                        modifier = Modifier.offset(y = AppDimensions.Spacing.small),
                     )
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(AppDimensions.Spacing.medium))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End,
                 ) {
-                    Text(
+                    BodySmallText(
                         text = "— ${fact.source}",
-                        style =
-                            MaterialTheme.typography.bodySmall.copy(
-                                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f),
-                                fontStyle = FontStyle.Italic,
-                                fontWeight = FontWeight.Light,
-                            ),
+                        color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f),
+                        modifier = Modifier
                     )
                 }
             }
