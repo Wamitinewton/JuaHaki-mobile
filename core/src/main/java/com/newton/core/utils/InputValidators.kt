@@ -10,23 +10,30 @@ sealed class ValidationError(
 
     object InvalidEmail : ValidationError("Please enter a valid email address")
 
-    object InvalidPhoneNumber : ValidationError("Phone number must be 10 digits starting with 07 or 01")
+    object InvalidPhoneNumber :
+        ValidationError("Phone number must be 10 digits starting with 07 or 01")
 
-    object InvalidName : ValidationError("Name must contain only letters and be at least 2 characters")
+    object InvalidName :
+        ValidationError("Name must contain only letters and be at least 2 characters")
 
-    object InvalidUsername : ValidationError("Username must be 3-20 characters, alphanumeric and underscores only")
+    object InvalidUsername :
+        ValidationError("Username must be 3-20 characters, alphanumeric and underscores only")
 
-    object WeakPassword : ValidationError("Password must be at least 8 characters with uppercase, lowercase, number and special character")
+    object WeakPassword :
+        ValidationError("Password must be at least 8 characters with uppercase, lowercase, number and special character")
 
     object PasswordTooShort : ValidationError("Password must be at least 8 characters")
 
-    object PasswordNoUppercase : ValidationError("Password must contain at least one uppercase letter")
+    object PasswordNoUppercase :
+        ValidationError("Password must contain at least one uppercase letter")
 
-    object PasswordNoLowercase : ValidationError("Password must contain at least one lowercase letter")
+    object PasswordNoLowercase :
+        ValidationError("Password must contain at least one lowercase letter")
 
     object PasswordNoNumber : ValidationError("Password must contain at least one number")
 
-    object PasswordNoSpecialChar : ValidationError("Password must contain at least one special character")
+    object PasswordNoSpecialChar :
+        ValidationError("Password must contain at least one special character")
 
     object InvalidOtp : ValidationError("Please enter a valid 6-character verification code")
 
@@ -101,7 +108,10 @@ object InputValidator {
             !password.any { it.isUpperCase() } -> ValidationResult.Invalid(ValidationError.PasswordNoUppercase)
             !password.any { it.isLowerCase() } -> ValidationResult.Invalid(ValidationError.PasswordNoLowercase)
             !password.any { it.isDigit() } -> ValidationResult.Invalid(ValidationError.PasswordNoNumber)
-            !password.any { it in "!@#$%^&*()_+-=[]{}|;:,.<>?" } -> ValidationResult.Invalid(ValidationError.PasswordNoSpecialChar)
+            !password.any { it in "!@#$%^&*()_+-=[]{}|;:,.<>?" } -> ValidationResult.Invalid(
+                ValidationError.PasswordNoSpecialChar
+            )
+
             else -> ValidationResult.Valid
         }
 

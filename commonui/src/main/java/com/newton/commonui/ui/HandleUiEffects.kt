@@ -18,9 +18,11 @@ fun <T : SnackbarUiEffect> HandleUiEffects(
                 is SnackbarUiEffect.ShowSnackbar -> {
                     onShowSnackbar(effect.toSnackbarData())
                 }
+
                 is SnackbarUiEffect.ShowToast -> {
                     onShowToast?.invoke(effect.message)
                 }
+
                 else -> {
                     onCustomEffect?.invoke(effect)
                 }

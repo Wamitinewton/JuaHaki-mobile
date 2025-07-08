@@ -33,6 +33,7 @@ fun SignUpContainer(
                 is SignupUiEffect.NavigateToLogin -> {
                     onNavigateToLogin()
                 }
+
                 is SignupUiEffect.NavigateToEmailVerification -> {
                     onNavigateToEmailVerification(effect.email)
                 }

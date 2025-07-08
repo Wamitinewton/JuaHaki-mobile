@@ -8,16 +8,16 @@ import javax.inject.Singleton
 
 @Singleton
 class SnackbarManager
-    @Inject
-    constructor() {
-        private val _snackbarState = MutableStateFlow<SnackbarData?>(null)
-        val snackbarState: StateFlow<SnackbarData?> = _snackbarState.asStateFlow()
+@Inject
+constructor() {
+    private val _snackbarState = MutableStateFlow<SnackbarData?>(null)
+    val snackbarState: StateFlow<SnackbarData?> = _snackbarState.asStateFlow()
 
-        fun showSnackbar(snackbarData: SnackbarData) {
-            _snackbarState.value = snackbarData
-        }
-
-        fun dismissSnackbar() {
-            _snackbarState.value = null
-        }
+    fun showSnackbar(snackbarData: SnackbarData) {
+        _snackbarState.value = snackbarData
     }
+
+    fun dismissSnackbar() {
+        _snackbarState.value = null
+    }
+}

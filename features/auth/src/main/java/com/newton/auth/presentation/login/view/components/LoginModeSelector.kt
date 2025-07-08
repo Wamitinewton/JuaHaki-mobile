@@ -95,7 +95,8 @@ fun LoginModeButton(
                     width = if (isSelected) 0.dp else 1.dp,
                     color = MaterialTheme.colorScheme.outline.copy(alpha = alpha),
                     shape = RoundedCornerShape(8.dp),
-                ).clickable(enabled = enabled) { onClick() }
+                )
+                .clickable(enabled = enabled) { onClick() }
                 .padding(vertical = 12.dp, horizontal = 16.dp),
         contentAlignment = Alignment.Center,
     ) {

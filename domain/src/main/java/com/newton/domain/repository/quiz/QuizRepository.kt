@@ -1,7 +1,13 @@
 package com.newton.domain.repository.quiz
 
 import com.newton.core.utils.Resource
-import com.newton.domain.models.quiz.*
+import com.newton.domain.models.quiz.AnswerResult
+import com.newton.domain.models.quiz.AnswerSubmission
+import com.newton.domain.models.quiz.QuizInfo
+import com.newton.domain.models.quiz.QuizLeaderboard
+import com.newton.domain.models.quiz.QuizSession
+import com.newton.domain.models.quiz.QuizStatistics
+import com.newton.domain.models.quiz.UserQuizSummary
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 

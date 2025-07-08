@@ -78,10 +78,11 @@ fun QuizGameContent(
                 LabelMediumText(
                     text = "Score: ${uiState.score}",
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    modifier = Modifier.padding(
-                        horizontal = AppDimensions.Padding.medium,
-                        vertical = AppDimensions.Padding.xs
-                    ),
+                    modifier =
+                        Modifier.padding(
+                            horizontal = AppDimensions.Padding.medium,
+                            vertical = AppDimensions.Padding.xs,
+                        ),
                 )
             }
 
@@ -95,10 +96,11 @@ fun QuizGameContent(
                 LabelMediumText(
                     text = formatTime(uiState.timeSpent),
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
-                    modifier = Modifier.padding(
-                        horizontal = AppDimensions.Padding.medium,
-                        vertical = AppDimensions.Padding.xs
-                    ),
+                    modifier =
+                        Modifier.padding(
+                            horizontal = AppDimensions.Padding.medium,
+                            vertical = AppDimensions.Padding.xs,
+                        ),
                 )
             }
         }

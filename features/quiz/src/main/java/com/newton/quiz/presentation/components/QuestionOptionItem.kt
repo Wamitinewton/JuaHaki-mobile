@@ -22,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import com.newton.commonui.components.BodyMediumText
 import com.newton.commonui.components.LabelMediumText
 import com.newton.commonui.theme.AppDimensions
@@ -70,7 +69,8 @@ fun QuizOptionItem(
                     width = if (borderColor != Color.Transparent) AppDimensions.BorderWidth.medium else AppDimensions.BorderWidth.thin,
                     color = borderColor,
                     shape = RoundedCornerShape(AppDimensions.CornerRadius.medium),
-                ).clickable(enabled = !showResult) { onOptionSelected() }
+                )
+                .clickable(enabled = !showResult) { onOptionSelected() }
                 .padding(AppDimensions.Padding.large),
         verticalAlignment = Alignment.CenterVertically,
     ) {

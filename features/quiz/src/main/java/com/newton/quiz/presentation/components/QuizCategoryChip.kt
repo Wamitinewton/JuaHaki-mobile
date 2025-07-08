@@ -22,10 +22,11 @@ fun QuizCategoryChip(
         LabelSmallText(
             text = category,
             color = MaterialTheme.colorScheme.onSecondaryContainer,
-            modifier = Modifier.padding(
-                horizontal = AppDimensions.Padding.medium,
-                vertical = AppDimensions.Padding.xs
-            ),
+            modifier =
+                Modifier.padding(
+                    horizontal = AppDimensions.Padding.medium,
+                    vertical = AppDimensions.Padding.xs,
+                ),
         )
     }
 }

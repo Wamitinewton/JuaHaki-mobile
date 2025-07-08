@@ -20,11 +20,9 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.newton.commonui.components.BodyLargeText
@@ -37,30 +35,29 @@ import com.newton.commonui.ui.ShimmerText
 import com.newton.core.enums.ErrorType
 
 @Composable
-fun QuizInfoLoadingContent(
-    modifier: Modifier = Modifier
-) {
+fun QuizInfoLoadingContent(modifier: Modifier = Modifier) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(AppDimensions.Padding.screen),
-        verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large)
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(AppDimensions.Padding.screen),
+        verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large),
     ) {
         Spacer(modifier = Modifier.height(AppDimensions.Spacing.medium))
 
         // Hero Section Shimmer
         QuizHeroSectionSkeleton(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
 
         // Status Section Shimmer
         QuizStatusSectionSkeleton(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
 
         // Actions Section Shimmer
         QuizActionsSectionSkeleton(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }
@@ -70,71 +67,75 @@ fun QuizInfoErrorContent(
     error: String,
     errorType: ErrorType?,
     onRetry: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     CivicErrorScreen(
         errorMessage = error,
         errorType = errorType,
         onRetry = onRetry,
         retryText = "Reload Quiz",
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
 @Composable
 fun QuizInfoEmptyState(
     onRetry: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Card(
             shape = RoundedCornerShape(AppDimensions.CornerRadius.xl),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            ),
+            colors =
+                CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                ),
             elevation = CardDefaults.cardElevation(defaultElevation = AppDimensions.Elevation.large),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(AppDimensions.Padding.xl)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(AppDimensions.Padding.xl),
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(AppDimensions.Padding.xxl),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(AppDimensions.Padding.xxl),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large)
+                verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large),
             ) {
                 Surface(
                     shape = RoundedCornerShape(AppDimensions.CornerRadius.large),
-                    color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+                    color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f),
                 ) {
                     Icon(
                         imageVector = Icons.Default.Quiz,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier
-                            .padding(AppDimensions.Padding.xl)
-                            .size(48.dp)
+                        modifier =
+                            Modifier
+                                .padding(AppDimensions.Padding.xl)
+                                .size(48.dp),
                     )
                 }
 
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.medium)
+                    verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.medium),
                 ) {
                     TitleLargeText(
                         text = "No Quiz Available",
                         color = MaterialTheme.colorScheme.onSurface,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
                     )
 
                     BodyLargeText(
                         text = "We couldn't find any quiz information at the moment. Please check your connection and try again.",
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
                     )
                 }
 
@@ -142,7 +143,7 @@ fun QuizInfoEmptyState(
                     text = "Try Again",
                     onClick = onRetry,
                     leadingIcon = Icons.Default.Refresh,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
         }
@@ -150,52 +151,54 @@ fun QuizInfoEmptyState(
 }
 
 @Composable
-private fun QuizHeroSectionSkeleton(
-    modifier: Modifier = Modifier
-) {
+private fun QuizHeroSectionSkeleton(modifier: Modifier = Modifier) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(AppDimensions.CornerRadius.xl),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = AppDimensions.Elevation.large)
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+            ),
+        elevation = CardDefaults.cardElevation(defaultElevation = AppDimensions.Elevation.large),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(AppDimensions.Padding.xl),
-            verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(AppDimensions.Padding.xl),
+            verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large),
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 ShimmerBox(
-                    modifier = Modifier
-                        .width(120.dp)
-                        .height(32.dp),
-                    cornerRadius = AppDimensions.CornerRadius.large
+                    modifier =
+                        Modifier
+                            .width(120.dp)
+                            .height(32.dp),
+                    cornerRadius = AppDimensions.CornerRadius.large,
                 )
 
                 ShimmerBox(
-                    modifier = Modifier
-                        .width(80.dp)
-                        .height(32.dp),
-                    cornerRadius = AppDimensions.CornerRadius.large
+                    modifier =
+                        Modifier
+                            .width(80.dp)
+                            .height(32.dp),
+                    cornerRadius = AppDimensions.CornerRadius.large,
                 )
             }
 
             Column(
-                verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.medium)
+                verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.medium),
             ) {
                 ShimmerText(
                     modifier = Modifier.fillMaxWidth(0.9f),
-                    height = 28.dp
+                    height = 28.dp,
                 )
                 ShimmerText(
                     modifier = Modifier.fillMaxWidth(0.7f),
-                    height = 28.dp
+                    height = 28.dp,
                 )
 
                 Spacer(modifier = Modifier.height(AppDimensions.Spacing.small))
@@ -203,7 +206,7 @@ private fun QuizHeroSectionSkeleton(
                 repeat(3) {
                     ShimmerText(
                         modifier = Modifier.fillMaxWidth(if (it == 2) 0.6f else 1f),
-                        height = 20.dp
+                        height = 20.dp,
                     )
                 }
             }
@@ -211,14 +214,15 @@ private fun QuizHeroSectionSkeleton(
             // Quick stats
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.medium)
+                horizontalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.medium),
             ) {
                 repeat(2) {
                     ShimmerBox(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(60.dp),
-                        cornerRadius = AppDimensions.CornerRadius.medium
+                        modifier =
+                            Modifier
+                                .weight(1f)
+                                .height(60.dp),
+                        cornerRadius = AppDimensions.CornerRadius.medium,
                     )
                 }
             }
@@ -227,132 +231,136 @@ private fun QuizHeroSectionSkeleton(
 }
 
 @Composable
-private fun QuizStatusSectionSkeleton(
-    modifier: Modifier = Modifier
-) {
+private fun QuizStatusSectionSkeleton(modifier: Modifier = Modifier) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(AppDimensions.CornerRadius.large),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = AppDimensions.Elevation.medium)
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+            ),
+        elevation = CardDefaults.cardElevation(defaultElevation = AppDimensions.Elevation.medium),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(AppDimensions.Padding.xl),
-            verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(AppDimensions.Padding.xl),
+            verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large),
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.medium)
+                horizontalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.medium),
             ) {
                 ShimmerBox(
                     modifier = Modifier.size(56.dp),
-                    cornerRadius = AppDimensions.CornerRadius.medium
+                    cornerRadius = AppDimensions.CornerRadius.medium,
                 )
 
                 Column(
                     modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.xs)
+                    verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.xs),
                 ) {
                     ShimmerText(
                         modifier = Modifier.fillMaxWidth(0.6f),
-                        height = 24.dp
+                        height = 24.dp,
                     )
                     ShimmerText(
                         modifier = Modifier.fillMaxWidth(0.4f),
-                        height = 16.dp
+                        height = 16.dp,
                     )
                 }
             }
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large)
+                horizontalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large),
             ) {
                 repeat(2) {
                     ShimmerBox(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(80.dp),
-                        cornerRadius = AppDimensions.CornerRadius.medium
+                        modifier =
+                            Modifier
+                                .weight(1f)
+                                .height(80.dp),
+                        cornerRadius = AppDimensions.CornerRadius.medium,
                     )
                 }
             }
 
             ShimmerBox(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(40.dp),
-                cornerRadius = AppDimensions.CornerRadius.large
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(40.dp),
+                cornerRadius = AppDimensions.CornerRadius.large,
             )
         }
     }
 }
 
 @Composable
-private fun QuizActionsSectionSkeleton(
-    modifier: Modifier = Modifier
-) {
+private fun QuizActionsSectionSkeleton(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large)
+        verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large),
     ) {
         // Primary action card
         Card(
             shape = RoundedCornerShape(AppDimensions.CornerRadius.large),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            ),
-            elevation = CardDefaults.cardElevation(defaultElevation = AppDimensions.Elevation.medium)
+            colors =
+                CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                ),
+            elevation = CardDefaults.cardElevation(defaultElevation = AppDimensions.Elevation.medium),
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(AppDimensions.Padding.xl),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(AppDimensions.Padding.xl),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large)
+                verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large),
             ) {
                 ShimmerBox(
                     modifier = Modifier.size(80.dp),
-                    cornerRadius = AppDimensions.CornerRadius.large
+                    cornerRadius = AppDimensions.CornerRadius.large,
                 )
 
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.small)
+                    verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.small),
                 ) {
                     ShimmerText(
                         modifier = Modifier.width(200.dp),
-                        height = 24.dp
+                        height = 24.dp,
                     )
                     ShimmerText(
                         modifier = Modifier.width(160.dp),
-                        height = 16.dp
+                        height = 16.dp,
                     )
                 }
 
                 ShimmerBox(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(48.dp),
-                    cornerRadius = AppDimensions.CornerRadius.large
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(48.dp),
+                    cornerRadius = AppDimensions.CornerRadius.large,
                 )
             }
         }
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.medium)
+            horizontalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.medium),
         ) {
             repeat(2) {
                 ShimmerBox(
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(48.dp),
-                    cornerRadius = AppDimensions.CornerRadius.large
+                    modifier =
+                        Modifier
+                            .weight(1f)
+                            .height(48.dp),
+                    cornerRadius = AppDimensions.CornerRadius.large,
                 )
             }
         }

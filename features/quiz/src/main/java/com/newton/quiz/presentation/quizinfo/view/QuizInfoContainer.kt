@@ -45,6 +45,7 @@ fun QuizInfoContainer(
                         }
                     }
                 }
+
                 is QuizInfoUiEffect.NavigateBack -> onNavigateBack()
             }
         },

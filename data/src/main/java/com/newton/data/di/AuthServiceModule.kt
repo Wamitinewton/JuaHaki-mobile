@@ -15,13 +15,16 @@ import javax.inject.Singleton
 object AuthServiceModule {
     @Provides
     @Singleton
-    fun provideAuthService(retrofit: Retrofit): AuthApiService = retrofit.create(AuthApiService::class.java)
+    fun provideAuthService(retrofit: Retrofit): AuthApiService =
+        retrofit.create(AuthApiService::class.java)
 
     @Provides
     @Singleton
-    fun provideUserService(retrofit: Retrofit): UserApiService = retrofit.create(UserApiService::class.java)
+    fun provideUserService(retrofit: Retrofit): UserApiService =
+        retrofit.create(UserApiService::class.java)
 
     @Provides
     @Singleton
-    fun provideOAuthService(retrofit: Retrofit): OAuthApiService = retrofit.create(OAuthApiService::class.java)
+    fun provideOAuthService(retrofit: Retrofit): OAuthApiService =
+        retrofit.create(OAuthApiService::class.java)
 }

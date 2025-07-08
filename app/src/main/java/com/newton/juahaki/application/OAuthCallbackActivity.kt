@@ -89,7 +89,10 @@ class OAuthCallbackActivity : ComponentActivity() {
                         state = state,
                     )
 
-                oAuthViewModel.exchangeCodeForTokens(OAuthProvider.GOOGLE, tokenRequest) { success, message ->
+                oAuthViewModel.exchangeCodeForTokens(
+                    OAuthProvider.GOOGLE,
+                    tokenRequest
+                ) { success, message ->
                     navigateToMainActivity(success, message)
                 }
             } catch (e: Exception) {

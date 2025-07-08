@@ -19,11 +19,11 @@ data class ResetPasswordUiState(
 ) {
     fun hasAnyError(): Boolean =
         otpError != null ||
-            newPasswordError != null ||
-            confirmPasswordError != null
+                newPasswordError != null ||
+                confirmPasswordError != null
 
     fun areAllFieldsFilled(): Boolean =
         otp.isNotBlank() &&
-            newPassword.isNotBlank() &&
-            confirmPassword.isNotBlank()
+                newPassword.isNotBlank() &&
+                confirmPassword.isNotBlank()
 }

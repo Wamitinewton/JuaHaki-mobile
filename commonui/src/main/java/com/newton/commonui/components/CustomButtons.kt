@@ -361,6 +361,7 @@ fun CompactButton(
                 minHeight = minHeight,
                 textStyle = textStyle,
             )
+
         ButtonVariant.FilledTonal ->
             CustomFilledTonalButton(
                 text = text,
@@ -373,6 +374,7 @@ fun CompactButton(
                 minHeight = minHeight,
                 textStyle = textStyle,
             )
+
         ButtonVariant.Elevated ->
             CustomElevatedButton(
                 text = text,
@@ -385,6 +387,7 @@ fun CompactButton(
                 minHeight = minHeight,
                 textStyle = textStyle,
             )
+
         ButtonVariant.Text ->
             CustomTextButton(
                 text = text,

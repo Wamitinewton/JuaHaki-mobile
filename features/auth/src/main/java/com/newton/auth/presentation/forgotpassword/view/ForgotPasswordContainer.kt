@@ -30,6 +30,7 @@ fun ForgotPasswordContainer(
                 is InitiatePasswordResetUiEffect.NavigateToLogin -> {
                     onNavigateToLogin()
                 }
+
                 is InitiatePasswordResetUiEffect.NavigateToResetPassword -> {
                     onNavigateToResetPassword(effect.email)
                 }

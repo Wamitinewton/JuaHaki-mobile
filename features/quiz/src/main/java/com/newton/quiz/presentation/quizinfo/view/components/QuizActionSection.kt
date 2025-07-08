@@ -44,31 +44,33 @@ fun QuizActionsSection(
     onQuizInfoEvent: (QuizInfoUiEvent) -> Unit,
     onViewLeaderboard: () -> Unit,
     isVisible: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     AnimatedVisibility(
         visible = isVisible,
-        enter = fadeIn(
-            animationSpec = tween(600, delayMillis = 300, easing = FastOutSlowInEasing)
-        ) + slideInVertically(
-            animationSpec = tween(600, delayMillis = 300, easing = FastOutSlowInEasing),
-            initialOffsetY = { it / 3 }
-        )
+        enter =
+            fadeIn(
+                animationSpec = tween(600, delayMillis = 300, easing = FastOutSlowInEasing),
+            ) +
+                    slideInVertically(
+                        animationSpec = tween(600, delayMillis = 300, easing = FastOutSlowInEasing),
+                        initialOffsetY = { it / 3 },
+                    ),
     ) {
         Column(
             modifier = modifier,
-            verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large)
+            verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large),
         ) {
             PrimaryActionCard(
                 quizInfo = quizInfo,
                 onQuizInfoEvent = onQuizInfoEvent,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
 
             SecondaryActionsRow(
                 quizInfo = quizInfo,
                 onViewLeaderboard = onViewLeaderboard,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
@@ -78,26 +80,35 @@ fun QuizActionsSection(
 private fun PrimaryActionCard(
     quizInfo: QuizInfo,
     onQuizInfoEvent: (QuizInfoUiEvent) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(AppDimensions.CornerRadius.large),
-        colors = CardDefaults.cardColors(
-            containerColor = when {
-                quizInfo.hasUserAttempted -> MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.3f)
-                quizInfo.isActive && !quizInfo.isExpired -> MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
-                else -> MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
-            }
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = AppDimensions.Elevation.medium)
+        colors =
+            CardDefaults.cardColors(
+                containerColor =
+                    when {
+                        quizInfo.hasUserAttempted -> MaterialTheme.colorScheme.tertiaryContainer.copy(
+                            alpha = 0.3f
+                        )
+
+                        quizInfo.isActive && !quizInfo.isExpired -> MaterialTheme.colorScheme.primaryContainer.copy(
+                            alpha = 0.3f
+                        )
+
+                        else -> MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                    },
+            ),
+        elevation = CardDefaults.cardElevation(defaultElevation = AppDimensions.Elevation.medium),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(AppDimensions.Padding.xl),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(AppDimensions.Padding.xl),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large)
+            verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.large),
         ) {
             PrimaryActionHeader(quizInfo = quizInfo)
 
@@ -107,7 +118,7 @@ private fun PrimaryActionCard(
                         text = "Start Quiz",
                         onClick = { onQuizInfoEvent(QuizInfoUiEvent.OnStartQuiz) },
                         trailingIcon = Icons.Default.PlayArrow,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     )
                 }
 
@@ -116,25 +127,27 @@ private fun PrimaryActionCard(
                         text = "View Detailed Results",
                         onClick = { onQuizInfoEvent(QuizInfoUiEvent.OnStartQuiz) },
                         trailingIcon = Icons.Default.Analytics,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     )
                 }
 
                 quizInfo.isExpired -> {
                     Surface(
                         shape = RoundedCornerShape(AppDimensions.CornerRadius.large),
-                        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f)
+                        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f),
                     ) {
                         Text(
                             text = "Quiz Expired",
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                fontWeight = FontWeight.Medium
-                            ),
+                            style =
+                                MaterialTheme.typography.titleMedium.copy(
+                                    fontWeight = FontWeight.Medium,
+                                ),
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(
-                                horizontal = AppDimensions.Padding.xl,
-                                vertical = AppDimensions.Padding.large
-                            )
+                            modifier =
+                                Modifier.padding(
+                                    horizontal = AppDimensions.Padding.xl,
+                                    vertical = AppDimensions.Padding.large,
+                                ),
                         )
                     }
                 }
@@ -142,18 +155,20 @@ private fun PrimaryActionCard(
                 else -> {
                     Surface(
                         shape = RoundedCornerShape(AppDimensions.CornerRadius.large),
-                        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f)
+                        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f),
                     ) {
                         Text(
                             text = "Quiz Not Available",
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                fontWeight = FontWeight.Medium
-                            ),
+                            style =
+                                MaterialTheme.typography.titleMedium.copy(
+                                    fontWeight = FontWeight.Medium,
+                                ),
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(
-                                horizontal = AppDimensions.Padding.xl,
-                                vertical = AppDimensions.Padding.large
-                            )
+                            modifier =
+                                Modifier.padding(
+                                    horizontal = AppDimensions.Padding.xl,
+                                    vertical = AppDimensions.Padding.large,
+                                ),
                         )
                     }
                 }
@@ -165,65 +180,74 @@ private fun PrimaryActionCard(
 @Composable
 private fun PrimaryActionHeader(
     quizInfo: QuizInfo,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val (icon, title, subtitle, iconColor) = when {
-        quizInfo.hasUserAttempted -> Quadruple(
-            Icons.Default.Analytics,
-            "Review Your Performance",
-            "See detailed breakdown and insights",
-            MaterialTheme.colorScheme.tertiary
-        )
-        quizInfo.isActive && !quizInfo.isExpired -> Quadruple(
-            Icons.Default.PlayArrow,
-            "Ready to Test Your Knowledge?",
-            "Answer ${quizInfo.totalQuestions} questions about civic rights",
-            MaterialTheme.colorScheme.primary
-        )
-        quizInfo.isExpired -> Quadruple(
-            Icons.Default.AccessTime,
-            "Quiz Time Expired",
-            "This quiz is no longer available",
-            MaterialTheme.colorScheme.outline
-        )
-        else -> Quadruple(
-            Icons.Default.Schedule,
-            "Quiz Coming Soon",
-            "Check back when it becomes available",
-            MaterialTheme.colorScheme.outline
-        )
-    }
+    val (icon, title, subtitle, iconColor) =
+        when {
+            quizInfo.hasUserAttempted ->
+                Quadruple(
+                    Icons.Default.Analytics,
+                    "Review Your Performance",
+                    "See detailed breakdown and insights",
+                    MaterialTheme.colorScheme.tertiary,
+                )
+
+            quizInfo.isActive && !quizInfo.isExpired ->
+                Quadruple(
+                    Icons.Default.PlayArrow,
+                    "Ready to Test Your Knowledge?",
+                    "Answer ${quizInfo.totalQuestions} questions about civic rights",
+                    MaterialTheme.colorScheme.primary,
+                )
+
+            quizInfo.isExpired ->
+                Quadruple(
+                    Icons.Default.AccessTime,
+                    "Quiz Time Expired",
+                    "This quiz is no longer available",
+                    MaterialTheme.colorScheme.outline,
+                )
+
+            else ->
+                Quadruple(
+                    Icons.Default.Schedule,
+                    "Quiz Coming Soon",
+                    "Check back when it becomes available",
+                    MaterialTheme.colorScheme.outline,
+                )
+        }
 
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.medium)
+        verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.medium),
     ) {
         Surface(
             shape = RoundedCornerShape(AppDimensions.CornerRadius.large),
-            color = iconColor.copy(alpha = 0.15f)
+            color = iconColor.copy(alpha = 0.15f),
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
                 tint = iconColor,
-                modifier = Modifier
-                    .padding(AppDimensions.Padding.large)
-                    .size(AppDimensions.IconSize.xl)
+                modifier =
+                    Modifier
+                        .padding(AppDimensions.Padding.large)
+                        .size(AppDimensions.IconSize.xl),
             )
         }
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.xs)
+            verticalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.xs),
         ) {
             TitleLargeText(
                 text = title,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
             )
             LabelMediumText(
                 text = subtitle,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
             )
         }
     }
@@ -233,17 +257,17 @@ private fun PrimaryActionHeader(
 private fun SecondaryActionsRow(
     quizInfo: QuizInfo,
     onViewLeaderboard: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.medium)
+        horizontalArrangement = Arrangement.spacedBy(AppDimensions.Spacing.medium),
     ) {
         SecondaryButton(
             text = "Leaderboard",
             onClick = onViewLeaderboard,
             leadingIcon = Icons.Default.EmojiEvents,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
 
         if (quizInfo.hasUserAttempted) {
@@ -251,14 +275,14 @@ private fun SecondaryActionsRow(
                 text = "Share Score",
                 onClick = { },
                 leadingIcon = Icons.Default.Share,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             )
         } else {
             SecondaryButton(
                 text = "History",
-                onClick = {  },
+                onClick = { },
                 leadingIcon = Icons.Default.History,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             )
         }
     }
@@ -268,5 +292,5 @@ private data class Quadruple<A, B, C, D>(
     val first: A,
     val second: B,
     val third: C,
-    val fourth: D
+    val fourth: D,
 )

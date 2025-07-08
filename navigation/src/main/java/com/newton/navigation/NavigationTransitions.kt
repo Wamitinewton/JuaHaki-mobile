@@ -1,8 +1,17 @@
 package com.newton.navigation
 
-import androidx.compose.animation.*
-import androidx.compose.animation.core.*
-import androidx.navigation.*
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.EaseIn
+import androidx.compose.animation.core.EaseOut
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.navigation.NavBackStackEntry
 import com.newton.core.enums.TransitionType
 
 /**
@@ -40,9 +49,12 @@ class NavigationTransitions {
                         initialScale = 0.85f,
                         animationSpec = tween(durationMillis = durationMs, easing = EaseIn),
                     ) +
-                        fadeIn(
-                            animationSpec = tween(durationMillis = durationMs, easing = LinearEasing),
-                        )
+                            fadeIn(
+                                animationSpec = tween(
+                                    durationMillis = durationMs,
+                                    easing = LinearEasing
+                                ),
+                            )
 
                 TransitionType.NONE -> EnterTransition.None
             }
@@ -79,9 +91,12 @@ class NavigationTransitions {
                         targetScale = 1.1f,
                         animationSpec = tween(durationMillis = durationMs, easing = EaseOut),
                     ) +
-                        fadeOut(
-                            animationSpec = tween(durationMillis = durationMs, easing = LinearEasing),
-                        )
+                            fadeOut(
+                                animationSpec = tween(
+                                    durationMillis = durationMs,
+                                    easing = LinearEasing
+                                ),
+                            )
 
                 TransitionType.NONE -> ExitTransition.None
             }
@@ -118,9 +133,12 @@ class NavigationTransitions {
                         initialScale = 1.1f,
                         animationSpec = tween(durationMillis = durationMs, easing = EaseIn),
                     ) +
-                        fadeIn(
-                            animationSpec = tween(durationMillis = durationMs, easing = LinearEasing),
-                        )
+                            fadeIn(
+                                animationSpec = tween(
+                                    durationMillis = durationMs,
+                                    easing = LinearEasing
+                                ),
+                            )
 
                 TransitionType.NONE -> EnterTransition.None
             }
@@ -157,9 +175,12 @@ class NavigationTransitions {
                         targetScale = 0.85f,
                         animationSpec = tween(durationMillis = durationMs, easing = EaseOut),
                     ) +
-                        fadeOut(
-                            animationSpec = tween(durationMillis = durationMs, easing = LinearEasing),
-                        )
+                            fadeOut(
+                                animationSpec = tween(
+                                    durationMillis = durationMs,
+                                    easing = LinearEasing
+                                ),
+                            )
 
                 TransitionType.NONE -> ExitTransition.None
             }

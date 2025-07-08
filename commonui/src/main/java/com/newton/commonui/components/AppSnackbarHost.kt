@@ -32,6 +32,7 @@ fun AppSnackbarHost(
                     data.onDismiss?.invoke()
                     snackbarManager.dismissSnackbar()
                 }
+
                 androidx.compose.material3.SnackbarResult.ActionPerformed -> {
                     data.onActionClick?.invoke()
                     snackbarManager.dismissSnackbar()

@@ -55,6 +55,7 @@ fun LoginContainer(
                 is OAuthUiEffect.LaunchOAuthFlow -> {
                     customTabsManager.launchOAuthFlow(context, effect.authorizationUrl)
                 }
+
                 is OAuthUiEffect.NavigateToHome -> onNavigateToHome()
                 is OAuthUiEffect.ShowOAuthError -> {
                 }

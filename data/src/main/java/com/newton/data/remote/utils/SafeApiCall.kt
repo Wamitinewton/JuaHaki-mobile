@@ -102,54 +102,63 @@ private fun <T> handleException(
  */
 private fun handleHttpError(error: HttpException): ErrorResponse {
     val serverMessage = extractServerErrorMessage(error)
-    val code = error.code()
-
-    return when (code) {
+    return when (val code = error.code()) {
         400 ->
             ErrorResponse(
                 message = serverMessage ?: "Invalid request: Please check your input",
                 errorType = ErrorType.CLIENT_ERROR,
             )
+
         401 ->
             ErrorResponse(
                 message = serverMessage ?: "Unauthorized: Please log in again",
                 errorType = ErrorType.AUTHENTICATION,
             )
+
         403 ->
             ErrorResponse(
-                message = serverMessage ?: "Access denied: You don't have permission to access this resource",
+                message = serverMessage
+                    ?: "Access denied: You don't have permission to access this resource",
                 errorType = ErrorType.AUTHORIZATION,
             )
+
         404 ->
             ErrorResponse(
                 message = "Resource not found",
                 errorType = ErrorType.NOT_FOUND,
             )
+
         408 ->
             ErrorResponse(
                 message = serverMessage ?: "Request timeout: Please try again",
                 errorType = ErrorType.TIMEOUT,
             )
+
         409 ->
             ErrorResponse(
-                message = serverMessage ?: "Conflict: The request couldn't be completed due to a conflict",
+                message = serverMessage
+                    ?: "Conflict: The request couldn't be completed due to a conflict",
                 errorType = ErrorType.CONFLICT,
             )
+
         422 ->
             ErrorResponse(
                 message = serverMessage ?: "Validation failed: Please check your input",
                 errorType = ErrorType.VALIDATION,
             )
+
         429 ->
             ErrorResponse(
                 message = serverMessage ?: "Too many requests: Please try again later",
                 errorType = ErrorType.RATE_LIMIT,
             )
+
         in 500..599 ->
             ErrorResponse(
                 message = serverMessage ?: "Server error: Please try again later",
                 errorType = ErrorType.SERVER_ERROR,
             )
+
         else ->
             ErrorResponse(
                 message = serverMessage ?: "Network error (Code: $code): ${error.message()}",
@@ -221,10 +230,10 @@ private fun parseAsRawMessage(errorBody: String): String? =
     errorBody
         .takeIf {
             it.isNotBlank() &&
-                it.length <= 500 &&
-                !it.contains("<!DOCTYPE") &&
-                // Not HTML
-                !it.contains("<html") // Not HTML
+                    it.length <= 500 &&
+                    !it.contains("<!DOCTYPE") &&
+                    // Not HTML
+                    !it.contains("<html") // Not HTML
         }?.trim()
 
 data class ErrorResponse(

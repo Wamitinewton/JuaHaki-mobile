@@ -89,6 +89,7 @@ fun LoginForm(
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
+
             LoginMode.USERNAME -> {
                 CustomTextField(
                     value = email,

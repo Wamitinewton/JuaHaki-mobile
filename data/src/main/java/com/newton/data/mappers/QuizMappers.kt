@@ -1,7 +1,32 @@
 package com.newton.data.mappers
 
-import com.newton.data.dto.quiz.*
-import com.newton.domain.models.quiz.*
+import com.newton.data.dto.quiz.CategoryPerformanceDto
+import com.newton.data.dto.quiz.CategoryStatsDto
+import com.newton.data.dto.quiz.CivicQuizInfoResponse
+import com.newton.data.dto.quiz.LeaderboardEntryDto
+import com.newton.data.dto.quiz.QuestionResultDto
+import com.newton.data.dto.quiz.QuizLeaderboardResponse
+import com.newton.data.dto.quiz.QuizOptionDto
+import com.newton.data.dto.quiz.QuizQuestionDto
+import com.newton.data.dto.quiz.QuizStatisticsDto
+import com.newton.data.dto.quiz.StartCivicQuizResponse
+import com.newton.data.dto.quiz.SubmitCivicAnswerRequest
+import com.newton.data.dto.quiz.SubmitCivicAnswerResponse
+import com.newton.data.dto.quiz.UserQuizMetadataDto
+import com.newton.data.dto.quiz.UserQuizSummaryDto
+import com.newton.domain.models.quiz.AnswerResult
+import com.newton.domain.models.quiz.AnswerSubmission
+import com.newton.domain.models.quiz.CategoryPerformance
+import com.newton.domain.models.quiz.CategoryStats
+import com.newton.domain.models.quiz.LeaderboardEntry
+import com.newton.domain.models.quiz.QuestionResult
+import com.newton.domain.models.quiz.QuizInfo
+import com.newton.domain.models.quiz.QuizLeaderboard
+import com.newton.domain.models.quiz.QuizOption
+import com.newton.domain.models.quiz.QuizQuestion
+import com.newton.domain.models.quiz.QuizSession
+import com.newton.domain.models.quiz.QuizStatistics
+import com.newton.domain.models.quiz.UserQuizSummary
 
 fun CivicQuizInfoResponse.toQuizInfo(): QuizInfo =
     QuizInfo(

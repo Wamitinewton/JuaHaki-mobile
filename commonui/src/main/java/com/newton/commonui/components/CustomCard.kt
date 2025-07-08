@@ -3,19 +3,27 @@ package com.newton.commonui.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.newton.core.enums.CardVariant
-
 
 @Composable
 fun CustomCard(
@@ -31,56 +39,70 @@ fun CustomCard(
     gradient: Brush? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    val cardModifier = if (onClick != null) {
-        modifier
-            .clip(shape)
-            .clickable(enabled = enabled) { onClick() }
-    } else {
-        modifier
-    }
+    val cardModifier =
+        if (onClick != null) {
+            modifier
+                .clip(shape)
+                .clickable(enabled = enabled) { onClick() }
+        } else {
+            modifier
+        }
 
     Card(
         modifier = cardModifier,
         shape = shape,
-        colors = when (variant) {
-            CardVariant.Default -> colors
-            CardVariant.Primary -> CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
-            )
-            CardVariant.Secondary -> CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.3f)
-            )
-            CardVariant.Surface -> CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
-            CardVariant.Outlined -> CardDefaults.outlinedCardColors()
-        },
-        elevation = when (variant) {
-            CardVariant.Outlined -> CardDefaults.cardElevation(defaultElevation = 0.dp)
-            else -> elevation
-        },
-        border = when (variant) {
-            CardVariant.Outlined -> BorderStroke(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
-            )
-            else -> border
-        },
+        colors =
+            when (variant) {
+                CardVariant.Default -> colors
+                CardVariant.Primary ->
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f),
+                    )
+
+                CardVariant.Secondary ->
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.3f),
+                    )
+
+                CardVariant.Surface ->
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surface,
+                    )
+
+                CardVariant.Outlined -> CardDefaults.outlinedCardColors()
+            },
+        elevation =
+            when (variant) {
+                CardVariant.Outlined -> CardDefaults.cardElevation(defaultElevation = 0.dp)
+                else -> elevation
+            },
+        border =
+            when (variant) {
+                CardVariant.Outlined ->
+                    BorderStroke(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
+                    )
+
+                else -> border
+            },
     ) {
         Box {
             gradient?.let {
                 Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(brush = it, shape = shape)
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .background(brush = it, shape = shape),
                 )
             }
 
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(contentPadding),
-                content = content
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(contentPadding),
+                content = content,
             )
         }
     }
@@ -105,7 +127,7 @@ fun CompactCard(
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         contentPadding = PaddingValues(12.dp),
-        content = content
+        content = content,
     )
 }
 
@@ -129,7 +151,7 @@ fun FeatureCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         contentPadding = PaddingValues(20.dp),
         gradient = gradient,
-        content = content
+        content = content,
     )
 }
 
@@ -151,7 +173,7 @@ fun InfoCard(
         shape = RoundedCornerShape(14.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
         contentPadding = PaddingValues(14.dp),
-        content = content
+        content = content,
     )
 }
 
@@ -174,6 +196,6 @@ fun StatusCard(
         shape = RoundedCornerShape(12.dp),
         border = BorderStroke(2.dp, statusColor.copy(alpha = 0.3f)),
         contentPadding = PaddingValues(16.dp),
-        content = content
+        content = content,
     )
 }

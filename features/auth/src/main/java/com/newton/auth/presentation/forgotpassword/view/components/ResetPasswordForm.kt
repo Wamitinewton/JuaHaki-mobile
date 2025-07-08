@@ -62,8 +62,8 @@ fun ResetPasswordForm(
     val passwordsMatch by remember(formData.newPassword, formData.confirmPassword) {
         derivedStateOf {
             formData.newPassword == formData.confirmPassword &&
-                formData.newPassword.isNotBlank() &&
-                formData.confirmPassword.isNotBlank()
+                    formData.newPassword.isNotBlank() &&
+                    formData.confirmPassword.isNotBlank()
         }
     }
 
@@ -138,7 +138,8 @@ fun ResetPasswordForm(
             leadingIcon = Icons.Default.Lock,
             isError = errors.confirmPassword != null || (formData.confirmPassword.isNotBlank() && !passwordsMatch),
             errorMessage =
-                errors.confirmPassword ?: if (formData.confirmPassword.isNotBlank() && !passwordsMatch) "Passwords do not match" else null,
+                errors.confirmPassword
+                    ?: if (formData.confirmPassword.isNotBlank() && !passwordsMatch) "Passwords do not match" else null,
             enabled = enabled,
             size = TextFieldSize.Medium,
             visibilityIcon = Icons.Default.Visibility,

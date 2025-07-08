@@ -1,9 +1,21 @@
 package com.newton.data.remote
 
-import com.newton.data.dto.quiz.*
+import com.newton.data.dto.quiz.CivicQuizInfoResponse
+import com.newton.data.dto.quiz.CivicQuizSessionResponse
+import com.newton.data.dto.quiz.QuizLeaderboardResponse
+import com.newton.data.dto.quiz.QuizStatisticsDto
+import com.newton.data.dto.quiz.StartCivicQuizResponse
+import com.newton.data.dto.quiz.SubmitCivicAnswerRequest
+import com.newton.data.dto.quiz.SubmitCivicAnswerResponse
+import com.newton.data.dto.quiz.UserQuizMetadataDto
+import com.newton.data.dto.quiz.UserQuizSummaryDto
 import com.newton.data.remote.utils.ApiConstants
 import com.newton.data.remote.utils.ApiResponse
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface QuizApiService {
     @GET(ApiConstants.GET_TODAY_QUIZ)

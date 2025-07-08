@@ -52,7 +52,8 @@ fun LoginScreen(
     onNavigateToSignUp: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val isLoading = loginUiState.isLoading || oAuthUiState.isLoading || oAuthUiState.isAuthenticating
+    val isLoading =
+        loginUiState.isLoading || oAuthUiState.isLoading || oAuthUiState.isAuthenticating
 
     Scaffold(
         topBar = {

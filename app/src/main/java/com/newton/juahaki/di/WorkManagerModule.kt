@@ -22,5 +22,6 @@ object WorkManagerModule {
 
     @Provides
     @Singleton
-    fun provideWorkerFactory(customWorkerFactory: CustomWorkerFactory): WorkerFactory = customWorkerFactory
+    fun provideWorkerFactory(customWorkerFactory: CustomWorkerFactory): WorkerFactory =
+        customWorkerFactory
 }

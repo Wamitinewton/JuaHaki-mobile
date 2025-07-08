@@ -24,18 +24,19 @@ fun DisplayLargeText(
     color: Color = MaterialTheme.colorScheme.onSurface,
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.displayLarge.copy(
-            fontWeight = FontWeight.Bold
-        ),
+        style =
+            MaterialTheme.typography.displayLarge.copy(
+                fontWeight = FontWeight.Bold,
+            ),
         color = color,
         textAlign = textAlign,
         overflow = overflow,
         maxLines = maxLines,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -49,18 +50,19 @@ fun DisplayMediumText(
     color: Color = MaterialTheme.colorScheme.onSurface,
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.displayMedium.copy(
-            fontWeight = FontWeight.Bold
-        ),
+        style =
+            MaterialTheme.typography.displayMedium.copy(
+                fontWeight = FontWeight.Bold,
+            ),
         color = color,
         textAlign = textAlign,
         overflow = overflow,
         maxLines = maxLines,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -74,18 +76,19 @@ fun DisplaySmallText(
     color: Color = MaterialTheme.colorScheme.onSurface,
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.displaySmall.copy(
-            fontWeight = FontWeight.Bold
-        ),
+        style =
+            MaterialTheme.typography.displaySmall.copy(
+                fontWeight = FontWeight.Bold,
+            ),
         color = color,
         textAlign = textAlign,
         overflow = overflow,
         maxLines = maxLines,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -99,18 +102,19 @@ fun HeadlineLargeText(
     color: Color = MaterialTheme.colorScheme.onSurface,
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.headlineLarge.copy(
-            fontWeight = FontWeight.Bold
-        ),
+        style =
+            MaterialTheme.typography.headlineLarge.copy(
+                fontWeight = FontWeight.Bold,
+            ),
         color = color,
         textAlign = textAlign,
         overflow = overflow,
         maxLines = maxLines,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -124,18 +128,19 @@ fun HeadlineMediumText(
     color: Color = MaterialTheme.colorScheme.onSurface,
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.headlineMedium.copy(
-            fontWeight = FontWeight.SemiBold
-        ),
+        style =
+            MaterialTheme.typography.headlineMedium.copy(
+                fontWeight = FontWeight.SemiBold,
+            ),
         color = color,
         textAlign = textAlign,
         overflow = overflow,
         maxLines = maxLines,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -149,18 +154,19 @@ fun HeadlineSmallText(
     color: Color = MaterialTheme.colorScheme.onSurface,
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.headlineSmall.copy(
-            fontWeight = FontWeight.SemiBold
-        ),
+        style =
+            MaterialTheme.typography.headlineSmall.copy(
+                fontWeight = FontWeight.SemiBold,
+            ),
         color = color,
         textAlign = textAlign,
         overflow = overflow,
         maxLines = maxLines,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -174,18 +180,19 @@ fun TitleLargeText(
     color: Color = MaterialTheme.colorScheme.onSurface,
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.titleLarge.copy(
-            fontWeight = FontWeight.Medium
-        ),
+        style =
+            MaterialTheme.typography.titleLarge.copy(
+                fontWeight = FontWeight.Medium,
+            ),
         color = color,
         textAlign = textAlign,
         overflow = overflow,
         maxLines = maxLines,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -199,18 +206,19 @@ fun TitleMediumText(
     color: Color = MaterialTheme.colorScheme.onSurface,
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.titleMedium.copy(
-            fontWeight = FontWeight.Medium
-        ),
+        style =
+            MaterialTheme.typography.titleMedium.copy(
+                fontWeight = FontWeight.Medium,
+            ),
         color = color,
         textAlign = textAlign,
         overflow = overflow,
         maxLines = maxLines,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -224,18 +232,19 @@ fun TitleSmallText(
     color: Color = MaterialTheme.colorScheme.onSurface,
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.titleSmall.copy(
-            fontWeight = FontWeight.Medium
-        ),
+        style =
+            MaterialTheme.typography.titleSmall.copy(
+                fontWeight = FontWeight.Medium,
+            ),
         color = color,
         textAlign = textAlign,
         overflow = overflow,
         maxLines = maxLines,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -249,7 +258,7 @@ fun BodyLargeText(
     color: Color = MaterialTheme.colorScheme.onSurface,
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
@@ -258,7 +267,7 @@ fun BodyLargeText(
         textAlign = textAlign,
         overflow = overflow,
         maxLines = maxLines,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -273,7 +282,7 @@ fun BodyMediumText(
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
     maxLines: Int = Int.MAX_VALUE,
-    fontWeight: FontWeight = FontWeight.Normal
+    fontWeight: FontWeight = FontWeight.Normal,
 ) {
     Text(
         text = text,
@@ -283,7 +292,7 @@ fun BodyMediumText(
         overflow = overflow,
         maxLines = maxLines,
         modifier = modifier,
-        fontWeight = fontWeight
+        fontWeight = fontWeight,
     )
 }
 
@@ -298,7 +307,7 @@ fun BodySmallText(
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
     maxLines: Int = Int.MAX_VALUE,
-    fontWeight: FontWeight = FontWeight.Normal
+    fontWeight: FontWeight = FontWeight.Normal,
 ) {
     Text(
         text = text,
@@ -308,7 +317,7 @@ fun BodySmallText(
         overflow = overflow,
         maxLines = maxLines,
         modifier = modifier,
-        fontWeight = fontWeight
+        fontWeight = fontWeight,
     )
 }
 
@@ -322,18 +331,19 @@ fun LabelLargeText(
     color: Color = MaterialTheme.colorScheme.onSurface,
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.labelLarge.copy(
-            fontWeight = FontWeight.Medium
-        ),
+        style =
+            MaterialTheme.typography.labelLarge.copy(
+                fontWeight = FontWeight.Medium,
+            ),
         color = color,
         textAlign = textAlign,
         overflow = overflow,
         maxLines = maxLines,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -347,18 +357,19 @@ fun LabelMediumText(
     color: Color = MaterialTheme.colorScheme.onSurface,
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.labelMedium.copy(
-            fontWeight = FontWeight.Medium
-        ),
+        style =
+            MaterialTheme.typography.labelMedium.copy(
+                fontWeight = FontWeight.Medium,
+            ),
         color = color,
         textAlign = textAlign,
         overflow = overflow,
         maxLines = maxLines,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -372,7 +383,7 @@ fun LabelSmallText(
     color: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
@@ -381,7 +392,7 @@ fun LabelSmallText(
         textAlign = textAlign,
         overflow = overflow,
         maxLines = maxLines,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -396,7 +407,7 @@ fun CustomText(
     color: Color = MaterialTheme.colorScheme.onSurface,
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
-    maxLines: Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE,
 ) {
     Text(
         text = text,
@@ -405,6 +416,6 @@ fun CustomText(
         textAlign = textAlign,
         overflow = overflow,
         maxLines = maxLines,
-        modifier = modifier
+        modifier = modifier,
     )
 }

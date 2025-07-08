@@ -7,7 +7,6 @@ import java.util.Date
 import java.util.Locale
 
 object DateUtils {
-
     // Date formatters
     private val apiDateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.US)
     private val timestampFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS", Locale.US)
@@ -17,23 +16,18 @@ object DateUtils {
     private val shortDateFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.US)
     private val shortTimeFormatter = SimpleDateFormat("HH:mm", Locale.US)
 
-
-    fun Calendar.toApiString(): String {
-        return apiDateFormatter.format(this.time)
-    }
-
+    fun Calendar.toApiString(): String = apiDateFormatter.format(this.time)
 
     @SuppressLint("NewApi")
     fun java.time.LocalDate.toApiString(): String {
-        val calendar = Calendar.getInstance().apply {
-            set(year, monthValue - 1, dayOfMonth)
-        }
+        val calendar =
+            Calendar.getInstance().apply {
+                set(year, monthValue - 1, dayOfMonth)
+            }
         return apiDateFormatter.format(calendar.time)
     }
 
-
     fun getTodayApiFormat(): String = apiDateFormatter.format(Date())
-
 
     fun String.toCalendar(): Calendar? {
         return try {
@@ -44,7 +38,6 @@ object DateUtils {
         }
     }
 
-
     @SuppressLint("NewApi")
     fun String.toLocalDate(): java.time.LocalDate? {
         return try {
@@ -53,24 +46,24 @@ object DateUtils {
             java.time.LocalDate.of(
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH) + 1,
-                calendar.get(Calendar.DAY_OF_MONTH)
+                calendar.get(Calendar.DAY_OF_MONTH),
             )
         } catch (e: Exception) {
             null
         }
     }
 
-
     fun String.parseTimestamp(): Calendar? {
         return try {
-            val normalizedTimestamp = if (this.contains('.')) {
-                val parts = this.split('.')
-                val wholePart = parts[0]
-                val fractionalPart = parts[1].padEnd(6, '0').take(6)
-                "$wholePart.$fractionalPart"
-            } else {
-                this
-            }
+            val normalizedTimestamp =
+                if (this.contains('.')) {
+                    val parts = this.split('.')
+                    val wholePart = parts[0]
+                    val fractionalPart = parts[1].padEnd(6, '0').take(6)
+                    "$wholePart.$fractionalPart"
+                } else {
+                    this
+                }
 
             val date = timestampFormatter.parse(normalizedTimestamp) ?: return null
             Calendar.getInstance().apply { time = date }
@@ -78,7 +71,6 @@ object DateUtils {
             null
         }
     }
-
 
     fun String.toReadableDate(): String {
         val calendar = parseTimestamp()
@@ -101,7 +93,6 @@ object DateUtils {
         }
     }
 
-
     fun String.toReadableDateTime(): String {
         val calendar = parseTimestamp()
         return if (calendar != null) {
@@ -110,7 +101,6 @@ object DateUtils {
             this
         }
     }
-
 
     fun String.toShortDate(): String {
         val calendar = parseTimestamp()
@@ -121,7 +111,6 @@ object DateUtils {
         }
     }
 
-
     fun String.toShortTime(): String {
         val calendar = parseTimestamp()
         return if (calendar != null) {
@@ -131,21 +120,11 @@ object DateUtils {
         }
     }
 
+    fun Calendar.toReadableDate(): String = readableDateFormatter.format(this.time)
 
-    fun Calendar.toReadableDate(): String {
-        return readableDateFormatter.format(this.time)
-    }
+    fun Calendar.toReadableTime(): String = readableTimeFormatter.format(this.time)
 
-
-    fun Calendar.toReadableTime(): String {
-        return readableTimeFormatter.format(this.time)
-    }
-
-
-    fun Calendar.toReadableDateTime(): String {
-        return readableDateTimeFormatter.format(this.time)
-    }
-
+    fun Calendar.toReadableDateTime(): String = readableDateTimeFormatter.format(this.time)
 
     fun String.isToday(): Boolean {
         val calendar = parseTimestamp() ?: return false
@@ -155,26 +134,23 @@ object DateUtils {
                 calendar.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR)
     }
 
-
     fun String.isYesterday(): Boolean {
         val calendar = parseTimestamp() ?: return false
-        val yesterday = Calendar.getInstance().apply {
-            add(Calendar.DAY_OF_YEAR, -1)
-        }
+        val yesterday =
+            Calendar.getInstance().apply {
+                add(Calendar.DAY_OF_YEAR, -1)
+            }
 
         return calendar.get(Calendar.YEAR) == yesterday.get(Calendar.YEAR) &&
                 calendar.get(Calendar.DAY_OF_YEAR) == yesterday.get(Calendar.DAY_OF_YEAR)
     }
 
-
-    fun String.toRelativeDate(): String {
-        return when {
+    fun String.toRelativeDate(): String =
+        when {
             isToday() -> "Today"
             isYesterday() -> "Yesterday"
             else -> toReadableDate()
         }
-    }
-
 
     fun String.toTimeAgo(): String {
         val calendar = parseTimestamp() ?: return this
@@ -194,20 +170,14 @@ object DateUtils {
         }
     }
 
-
-    fun String.toQuizDate(): String {
-        return when {
+    fun String.toQuizDate(): String =
+        when {
             isToday() -> "Today"
             isYesterday() -> "Yesterday"
             else -> toReadableDate()
         }
-    }
 
-
-    fun getCurrentTimestamp(): String {
-        return timestampFormatter.format(Date())
-    }
-
+    fun getCurrentTimestamp(): String = timestampFormatter.format(Date())
 
     fun String.isAfter(other: String): Boolean {
         val thisCalendar = parseTimestamp()

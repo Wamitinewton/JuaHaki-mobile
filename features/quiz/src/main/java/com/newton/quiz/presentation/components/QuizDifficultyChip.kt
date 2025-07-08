@@ -30,10 +30,11 @@ fun QuizDifficultyChip(
         LabelSmallText(
             text = difficultyEnum.displayName,
             color = difficultyEnum.color,
-            modifier = Modifier.padding(
-                horizontal = AppDimensions.Padding.medium,
-                vertical = AppDimensions.Padding.xs
-            ),
+            modifier =
+                Modifier.padding(
+                    horizontal = AppDimensions.Padding.medium,
+                    vertical = AppDimensions.Padding.xs,
+                ),
         )
     }
 }

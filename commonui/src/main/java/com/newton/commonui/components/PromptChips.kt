@@ -1,16 +1,28 @@
 package com.newton.commonui.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -55,18 +67,18 @@ fun PromptChips(
             fadeIn(
                 animationSpec = tween(600, delayMillis = 500),
             ) +
-                slideInVertically(
-                    animationSpec = tween(600, delayMillis = 500),
-                    initialOffsetY = { it / 2 },
-                ),
+                    slideInVertically(
+                        animationSpec = tween(600, delayMillis = 500),
+                        initialOffsetY = { it / 2 },
+                    ),
         exit =
             fadeOut(
                 animationSpec = tween(400),
             ) +
-                slideOutVertically(
-                    animationSpec = tween(400),
-                    targetOffsetY = { it / 2 },
-                ),
+                    slideOutVertically(
+                        animationSpec = tween(400),
+                        targetOffsetY = { it / 2 },
+                    ),
     ) {
         Column(
             modifier = modifier,

@@ -30,6 +30,7 @@ fun ResetPasswordContainer(
                 is ResetPasswordUiEffect.NavigateToLogin -> {
                     onNavigateToLogin()
                 }
+
                 is ResetPasswordUiEffect.NavigateToInitiatePasswordReset -> {
                     onNavigateToInitiatePasswordReset()
                 }

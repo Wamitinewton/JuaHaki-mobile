@@ -7,25 +7,31 @@ import org.gradle.kotlin.dsl.project
  */
 
 // String version
-fun DependencyHandler.implementation(dependencyNotation: String): Dependency? = add("implementation", dependencyNotation)
+fun DependencyHandler.implementation(dependencyNotation: String): Dependency? =
+    add("implementation", dependencyNotation)
 
 // Generic version that accepts any dependency notation
-fun DependencyHandler.implementation(dependencyNotation: Any): Dependency? = add("implementation", dependencyNotation)
+fun DependencyHandler.implementation(dependencyNotation: Any): Dependency? =
+    add("implementation", dependencyNotation)
 
 fun DependencyHandler.api(dependencyNotation: String): Dependency? = add("api", dependencyNotation)
 
-fun DependencyHandler.kapt(dependencyNotation: String): Dependency? = add("kapt", dependencyNotation)
+fun DependencyHandler.kapt(dependencyNotation: String): Dependency? =
+    add("kapt", dependencyNotation)
 
 fun DependencyHandler.ksp(dependencyNotation: String): Dependency? = add("ksp", dependencyNotation)
 
-fun DependencyHandler.testImplementation(dependencyNotation: String): Dependency? = add("testImplementation", dependencyNotation)
+fun DependencyHandler.testImplementation(dependencyNotation: String): Dependency? =
+    add("testImplementation", dependencyNotation)
 
 fun DependencyHandler.androidTestImplementation(dependencyNotation: String): Dependency? =
     add("androidTestImplementation", dependencyNotation)
 
-fun DependencyHandler.debugImplementation(dependencyNotation: String): Dependency? = add("debugImplementation", dependencyNotation)
+fun DependencyHandler.debugImplementation(dependencyNotation: String): Dependency? =
+    add("debugImplementation", dependencyNotation)
 
-fun DependencyHandler.projectImplementation(path: String): Dependency? = add("implementation", project(path))
+fun DependencyHandler.projectImplementation(path: String): Dependency? =
+    add("implementation", project(path))
 
 /**
  * Adds core dependencies to a module

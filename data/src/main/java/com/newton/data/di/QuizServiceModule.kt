@@ -13,5 +13,6 @@ import javax.inject.Singleton
 object QuizServiceModule {
     @Provides
     @Singleton
-    fun provideQuizService(retrofit: Retrofit): QuizApiService = retrofit.create(QuizApiService::class.java)
+    fun provideQuizService(retrofit: Retrofit): QuizApiService =
+        retrofit.create(QuizApiService::class.java)
 }

@@ -64,7 +64,8 @@ fun HomeScreen(
                 .fillMaxSize()
                 .background(
                     brush = backgroundGradient(),
-                ).pointerInput(Unit) {
+                )
+                .pointerInput(Unit) {
                     detectTapGestures(
                         onTap = {
                             hidePrompts = true
@@ -101,7 +102,7 @@ fun HomeScreen(
                 },
                 onRetry = {
                     onRetryQuizLoading()
-                }
+                },
             )
 
             Spacer(modifier = Modifier.height(24.dp))
